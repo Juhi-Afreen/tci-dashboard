@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+   <meta charset="utf-8" />
+   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+   <title>TCI – Grammar Quizzes</title>
+   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+   <script id="tailwind-config">
+      tailwind.config = {
+         darkMode: "class",
+         theme: {
+            extend: {
+               colors: {
+                  "primary": "#1f8e6d",
+                  "background-light": "#f8fafc",
+                  "background-dark": "#12201c",
+                  "accent-purple": "#8b5cf6",
+               },
+               fontFamily: {
+                  "display": ["Inter", "sans-serif"]
+               },
+               borderRadius: {
+                  "DEFAULT": "0.5rem",
+                  "lg": "1rem",
+                  "xl": "1.5rem",
+                  "full": "9999px"
+               },
+            },
+         },
+      }
+   </script>
+   <style>
+      .material-symbols-outlined {
+         font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+
+      :root {
+         --green: #1F8F6D;
+         --green-light: #E8F5F1;
+         --green-mid: #2aa880;
+         --purple: #7C6FCD;
+         --purple-light: #EEF0FF;
+         --bg: #F4F7F6;
+         --surface: #FFFFFF;
+         --surface-2: #F9FAFB;
+         --border: #E8EDEC;
+         --text-primary: #111827;
+         --text-secondary: #6B7280;
+         --text-muted: #9CA3AF;
+         --rose: #F43F5E;
+         --rose-light: #FFF1F4;
+         --orange: #F59E0B;
+         --orange-light: #FEF3C7;
+         --blue: #3B82F6;
+         --blue-light: #EFF6FF;
+         --red: #EF4444;
+         --red-light: #FEE2E2;
+         --sidebar-w: 240px;
+         --sidebar-collapsed: 64px;
+         --header-h: 68px;
+         --radius-sm: 8px;
+      }
+
+      html {
+         font-size: 15px;
+      }
+
+      body {
+         font-family: 'Inter', sans-serif;
+         background: var(--bg);
+         color: var(--text-primary);
+         min-height: 100vh;
+         display: flex;
+      }
+
+      .sidebar {
+         width: var(--sidebar-w);
+         min-height: 100vh;
+         background: var(--surface);
+         border-right: 1px solid var(--border);
+         display: flex;
+         flex-direction: column;
+         position: fixed;
+         top: 0;
+         left: 0;
+         z-index: 100;
+         padding: 0 0 24px;
+         transition: width .28s cubic-bezier(.4, 0, .2, 1);
+         overflow: visible;
+      }
+
+      .sidebar.collapsed {
+         width: var(--sidebar-collapsed);
+      }
+
+      .sidebar.collapsed .logo-text,
+      .sidebar.collapsed .logo-sub,
+      .sidebar.collapsed .nav-label,
+      .sidebar.collapsed .user-name,
+      .sidebar.collapsed .user-role {
+         opacity: 0;
+         pointer-events: none;
+         max-width: 0;
+         overflow: hidden;
+         white-space: nowrap;
+         transition: opacity .18s, max-width .28s;
+      }
+
+      .sidebar.collapsed .nav-item .nav-text,
+      .sidebar.collapsed .nav-item .nav-badge {
+         display: none;
+      }
+
+      .sidebar.collapsed .nav-item {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         padding: 10px 0;
+         gap: 0;
+      }
+
+      .sidebar.collapsed .nav-item.active::before {
+         display: none;
+      }
+
+      .sidebar.collapsed .nav-icon-wrap {
+         margin: 0;
+      }
+
+      .sidebar.collapsed .nav-dot {
+         display: flex;
+      }
+
+      .sidebar.collapsed .sidebar-logo {
+         justify-content: center;
+         padding: 20px 0 18px;
+         gap: 0;
+      }
+
+      .sidebar.collapsed .nav-section {
+         padding: 14px 0 6px;
+      }
+
+      .sidebar.collapsed .user-card {
+         justify-content: center;
+         padding: 10px 0;
+         gap: 0;
+      }
+
+      .sidebar.collapsed .sidebar-footer {
+         padding: 16px 0 0;
+      }
+
+      .sidebar.collapsed .nav-item {
+         position: relative;
+      }
+
+      .sidebar.collapsed .nav-item::after {
+         content: attr(data-tooltip);
+         position: absolute;
+         left: calc(100% + 10px);
+         top: 50%;
+         transform: translateY(-50%);
+         background: #1a1a2e;
+         color: white;
+         font-size: 12px;
+         font-weight: 600;
+         padding: 5px 10px;
+         border-radius: 7px;
+         white-space: nowrap;
+         opacity: 0;
+         pointer-events: none;
+         transition: opacity .15s;
+         z-index: 200;
+         box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
+      }
+
+      .sidebar.collapsed .nav-item:hover::after {
+         opacity: 1;
+      }
+
+      .sidebar-toggle {
+         position: absolute;
+         top: 20px;
+         right: -13px;
+         width: 26px;
+         height: 26px;
+         border-radius: 50%;
+         background: var(--surface);
+         border: 1.5px solid var(--border);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         cursor: pointer;
+         z-index: 110;
+         box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+         transition: background .15s, transform .28s cubic-bezier(.4, 0, .2, 1);
+         color: var(--text-secondary);
+      }
+
+      .sidebar-toggle:hover {
+         background: var(--green-light);
+         color: var(--green);
+         border-color: var(--green);
+      }
+
+      .sidebar.collapsed .sidebar-toggle {
+         transform: rotate(180deg);
+      }
+
+      .sidebar-logo {
+         display: flex;
+         align-items: center;
+         gap: 10px;
+         padding: 20px 20px 18px;
+         border-bottom: 1px solid var(--border);
+         position: relative;
+         transition: padding .28s, gap .28s;
+         flex-shrink: 0;
+      }
+
+      .nav-section {
+         padding: 18px 12px 6px;
+         transition: padding .28s;
+      }
+
+      .nav-label {
+         font-size: 10px;
+         font-weight: 600;
+         letter-spacing: 1px;
+         text-transform: uppercase;
+         color: var(--text-muted);
+         padding: 0 8px;
+         margin-bottom: 6px;
+         transition: opacity .18s, max-width .28s;
+         white-space: nowrap;
+         overflow: hidden;
+      }
+
+      .nav-item {
+         display: flex;
+         align-items: center;
+         gap: 10px;
+         padding: 9px 10px;
+         border-radius: var(--radius-sm);
+         cursor: pointer;
+         font-size: 13.5px;
+         font-weight: 500;
+         color: var(--text-secondary);
+         transition: background .15s, color .15s, padding .28s, gap .28s;
+         text-decoration: none;
+         margin-bottom: 1px;
+         position: relative;
+         white-space: nowrap;
+      }
+
+      .nav-item:hover {
+         background: var(--green-light);
+         color: var(--green);
+      }
+
+      .nav-item.active {
+         background: var(--green-light);
+         color: var(--green);
+         font-weight: 600;
+      }
+
+      .nav-item.active::before {
+         content: '';
+         position: absolute;
+         left: 0;
+         top: 50%;
+         transform: translateY(-50%);
+         width: 3px;
+         height: 60%;
+         background: var(--green);
+         border-radius: 0 3px 3px 0;
+      }
+
+      .nav-text {
+         transition: opacity .18s, max-width .28s;
+         overflow: hidden;
+      }
+
+      .nav-icon {
+         width: 18px;
+         height: 18px;
+         opacity: .8;
+         flex-shrink: 0;
+      }
+
+      .nav-icon-wrap {
+         position: relative;
+         display: inline-flex;
+         flex-shrink: 0;
+      }
+
+      .nav-dot {
+         display: none;
+         position: absolute;
+         top: -5px;
+         right: -6px;
+         background: var(--rose);
+         color: white;
+         font-size: 9px;
+         font-weight: 700;
+         min-width: 15px;
+         height: 15px;
+         border-radius: 20px;
+         align-items: center;
+         justify-content: center;
+         border: 1.5px solid white;
+         padding: 0 3px;
+         line-height: 1;
+      }
+
+      .nav-badge {
+         margin-left: auto;
+         background: var(--rose);
+         color: white;
+         font-size: 10px;
+         font-weight: 700;
+         padding: 2px 6px;
+         border-radius: 20px;
+         white-space: nowrap;
+      }
+
+      .sidebar-footer {
+         margin-top: auto;
+         padding: 16px 12px 0;
+         border-top: 1px solid var(--border);
+         transition: padding .28s;
+      }
+
+      .user-card {
+         display: flex;
+         align-items: center;
+         gap: 10px;
+         padding: 10px;
+         border-radius: var(--radius-sm);
+         cursor: pointer;
+         transition: background .15s, padding .28s, gap .28s;
+      }
+
+      .user-card:hover {
+         background: var(--surface-2);
+      }
+
+      .user-avatar {
+         width: 34px;
+         height: 34px;
+         border-radius: 50%;
+         background: linear-gradient(135deg, #a78bfa, var(--purple));
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         color: white;
+         font-size: 13px;
+         font-weight: 700;
+         flex-shrink: 0;
+      }
+
+      .user-name {
+         font-size: 13px;
+         font-weight: 600;
+         transition: opacity .18s, max-width .28s;
+         overflow: hidden;
+         white-space: nowrap;
+      }
+
+      .user-role {
+         font-size: 11px;
+         color: var(--text-muted);
+         transition: opacity .18s;
+         white-space: nowrap;
+      }
+
+      .main-wrap {
+         margin-left: var(--sidebar-w);
+         flex: 1;
+         display: flex;
+         flex-direction: column;
+         min-height: 100vh;
+         transition: margin-left .28s cubic-bezier(.4, 0, .2, 1);
+      }
+
+      .main-wrap.collapsed {
+         margin-left: var(--sidebar-collapsed);
+      }
+
+      .header {
+         height: var(--header-h);
+         background: var(--surface);
+         border-bottom: 1px solid var(--border);
+         display: flex;
+         align-items: center;
+         padding: 0 32px;
+         gap: 16px;
+         position: sticky;
+         top: 0;
+         z-index: 50;
+      }
+
+      .header-title {
+         font-size: 16px;
+         font-weight: 700;
+         letter-spacing: -.3px;
+      }
+
+      .search-wrap {
+         flex: 1;
+         max-width: 440px;
+         margin-left: auto;
+         margin-right: 16px;
+         position: relative;
+      }
+
+      .search-wrap input {
+         width: 100%;
+         padding: 9px 14px 9px 40px;
+         border: 1.5px solid var(--border);
+         border-radius: 40px;
+         font-family: inherit;
+         font-size: 13.5px;
+         background: var(--bg);
+         color: var(--text-primary);
+         outline: none;
+         transition: border-color .2s;
+      }
+
+      .search-wrap input:focus {
+         border-color: var(--green);
+         background: white;
+      }
+
+      .search-wrap input::placeholder {
+         color: var(--text-muted);
+      }
+
+      .search-icon {
+         position: absolute;
+         left: 13px;
+         top: 50%;
+         transform: translateY(-50%);
+         color: var(--text-muted);
+      }
+
+      .header-actions {
+         display: flex;
+         align-items: center;
+         gap: 10px;
+      }
+
+      .icon-btn {
+         width: 38px;
+         height: 38px;
+         border-radius: 50%;
+         background: var(--bg);
+         border: 1.5px solid var(--border);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         cursor: pointer;
+         color: var(--text-secondary);
+         position: relative;
+         transition: all .15s;
+      }
+
+      .icon-btn:hover {
+         border-color: var(--green);
+         color: var(--green);
+         background: var(--green-light);
+      }
+
+      .notif-dot {
+         position: absolute;
+         top: 7px;
+         right: 7px;
+         width: 8px;
+         height: 8px;
+         border-radius: 50%;
+         background: var(--rose);
+         border: 2px solid white;
+      }
+
+      .header-avatar {
+         width: 38px;
+         height: 38px;
+         border-radius: 50%;
+         background: linear-gradient(135deg, #a78bfa, var(--purple));
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         color: white;
+         font-size: 14px;
+         font-weight: 700;
+         cursor: pointer;
+         border: 2.5px solid var(--green);
+      }
+
+      .page-content {
+         padding: 28px 32px 40px;
+         display: flex;
+         justify-content: center;
+         align-items: start;
+      }
+
+      .nav-dropdown {
+         position: relative;
+      }
+
+      .nav-dropdown-toggle {
+         width: 100%;
+         background: none;
+         border: none;
+         cursor: pointer;
+         font-family: inherit;
+         text-align: left;
+      }
+
+      .nav-chevron {
+         width: 14px;
+         height: 14px;
+         margin-left: auto;
+         flex-shrink: 0;
+         transition: transform .2s ease;
+         opacity: .55;
+      }
+
+      .nav-dropdown.open .nav-chevron {
+         transform: rotate(180deg);
+      }
+
+      .nav-dropdown-menu {
+         display: none;
+         flex-direction: column;
+         padding-left: 12px;
+         padding-top: 2px;
+         padding-bottom: 2px;
+      }
+
+      .nav-dropdown.open .nav-dropdown-menu {
+         display: flex;
+      }
+
+      .nav-sub-item {
+         display: flex;
+         align-items: center;
+         gap: 8px;
+         padding: 7px 10px;
+         border-radius: var(--radius-sm);
+         cursor: pointer;
+         font-size: 12.5px;
+         font-weight: 500;
+         color: var(--text-secondary);
+         transition: background .15s, color .15s;
+         text-decoration: none;
+         margin-bottom: 1px;
+         white-space: nowrap;
+         overflow: hidden;
+      }
+
+      .nav-sub-item:hover {
+         background: var(--green-light);
+         color: var(--green);
+      }
+
+      .nav-sub-item.active {
+         color: var(--green);
+         font-weight: 600;
+      }
+
+      .nav-sub-dot {
+         width: 6px;
+         height: 6px;
+         border-radius: 50%;
+         background: var(--text-muted);
+         flex-shrink: 0;
+         transition: background .15s;
+      }
+
+      .nav-sub-item:hover .nav-sub-dot,
+      .nav-sub-item.active .nav-sub-dot {
+         background: var(--green);
+      }
+
+      .sidebar.collapsed .nav-dropdown-menu {
+         display: none !important;
+      }
+
+      .sidebar.collapsed .nav-chevron {
+         display: none;
+      }
+
+      .stat-card {
+         background: #ffffff;
+         padding: 24px;
+         border-radius: 12px;
+         box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+         border-left: 4px solid transparent;
+      }
+
+      .quiz-category-card {
+         background: #ffffff;
+         padding: 20px;
+         border-radius: 12px;
+         box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+         transition: box-shadow .2s, transform .2s;
+         cursor: pointer;
+      }
+
+      .quiz-category-card:hover {
+         box-shadow: 0 4px 16px rgba(0, 0, 0, .1);
+         transform: translateY(-2px);
+      }
+
+      .category-icon {
+         width: 48px;
+         height: 48px;
+         border-radius: 12px;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         font-size: 24px;
+         margin-bottom: 12px;
+      }
+
+      .side-card {
+         background: #ffffff;
+         padding: 24px;
+         border-radius: 12px;
+         box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+      }
+
+      .filter-btn {
+         padding: 8px 16px;
+         border-radius: 8px;
+         font-size: 13px;
+         font-weight: 600;
+         color: var(--text-secondary);
+         cursor: pointer;
+         transition: all .15s;
+         white-space: nowrap;
+         border: none;
+         background: transparent;
+      }
+
+      .filter-btn:hover {
+         background: var(--green-light);
+         color: var(--green);
+      }
+
+      .filter-btn.active {
+         background: var(--green);
+         color: white;
+      }
+
+      .difficulty-badge {
+         display: inline-flex;
+         align-items: center;
+         padding: 4px 10px;
+         border-radius: 20px;
+         font-size: 10px;
+         font-weight: 700;
+         text-transform: uppercase;
+      }
+
+      .difficulty-badge.beginner {
+         background: #d1fae5;
+         color: #059669;
+      }
+
+      .difficulty-badge.intermediate {
+         background: #fef3c7;
+         color: #d97706;
+      }
+
+      .difficulty-badge.advanced {
+         background: #fee2e2;
+         color: #dc2626;
+      }
+
+      .status-dot {
+         width: 10px;
+         height: 10px;
+         border-radius: 50%;
+         flex-shrink: 0;
+      }
+
+      .status-dot.completed {
+         background: var(--green);
+      }
+
+      .status-dot.in-progress {
+         background: var(--blue);
+      }
+
+      .status-dot.not-started {
+         background: var(--border);
+      }
+
+      .activity-item {
+         display: flex;
+         align-items: flex-start;
+         gap: 10px;
+      }
+
+      .activity-dot {
+         width: 8px;
+         height: 8px;
+         border-radius: 50%;
+         background: var(--green);
+         margin-top: 5px;
+         flex-shrink: 0;
+      }
+
+      .activity-content {
+         flex: 1;
+      }
+
+      .activity-text {
+         font-size: 12.5px;
+         color: var(--text-secondary);
+         line-height: 1.45;
+      }
+
+      .activity-text strong {
+         color: var(--text-primary);
+         font-weight: 600;
+      }
+
+      .activity-time {
+         font-size: 10.5px;
+         color: var(--text-muted);
+         margin-top: 3px;
+      }
+
+      .hidden {
+         display: none !important;
+      }
+
+      .quiz-progress-bar {
+         height: 6px;
+         border-radius: 3px;
+         background: var(--border);
+         overflow: hidden;
+      }
+
+      .quiz-progress-fill {
+         height: 100%;
+         border-radius: 3px;
+         background: var(--green);
+         transition: width .3s ease;
+      }
+
+      .question-option {
+         padding: 16px;
+         border: 2px solid var(--border);
+         border-radius: 10px;
+         cursor: pointer;
+         transition: all .15s;
+         font-size: 14px;
+         font-weight: 500;
+      }
+
+      .question-option:hover {
+         border-color: var(--green);
+         background: var(--green-light);
+      }
+
+      .question-option.selected {
+         border-color: var(--green);
+         background: var(--green-light);
+      }
+
+      .question-option.correct {
+         border-color: var(--green);
+         background: #d1fae5;
+      }
+
+      .question-option.wrong {
+         border-color: var(--red);
+         background: #fee2e2;
+      }
+
+      .option-letter {
+         width: 28px;
+         height: 28px;
+         border-radius: 50%;
+         background: var(--border);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         font-weight: 700;
+         font-size: 13px;
+         flex-shrink: 0;
+      }
+
+      .question-option.selected .option-letter {
+         background: var(--green);
+         color: white;
+      }
+
+      .score-circle {
+         width: 120px;
+         height: 120px;
+         border-radius: 50%;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+      }
+
+      .score-circle.pass {
+         background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+         border: 4px solid #059669;
+      }
+
+      .score-circle.fail {
+         background: linear-gradient(135deg, #fee2e2, #fecaca);
+         border: 4px solid #dc2626;
+      }
+
+      .timer-badge {
+         background: var(--surface-2);
+         padding: 8px 16px;
+         border-radius: 20px;
+         font-size: 14px;
+         font-weight: 600;
+         display: flex;
+         align-items: center;
+         gap: 6px;
+      }
+
+      .timer-badge.warning {
+         background: var(--orange-light);
+         color: var(--orange);
+      }
+
+      .timer-badge.danger {
+         background: var(--rose-light);
+         color: var(--rose);
+      }
+
+      .tips-card {
+         background: var(--surface-2);
+         padding: 0px 24px 24px 24px;
+         border-radius: 12px;
+      }
+   </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+
+   <aside class="sidebar" id="sidebar">
+      <button class="sidebar-toggle" id="sidebarToggle" title="Toggle sidebar">
+         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <polyline points="15 18 9 12 15 6" />
+         </svg>
+      </button>
+
+      <div class="sidebar-logo">
+         <img src="https://www.transcriptioncertificationinstitute.org/images/tci-logo.png" alt="TCI Logo" style="width:100%;max-width:160px;height:auto;">
+      </div>
+
+      <div class="nav-section">
+         <div class="nav-label">Main</div>
+         <a class="nav-item" href="code.html" data-tooltip="Dashboard">
+            <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+               <rect x="3" y="3" width="7" height="7" rx="1" />
+               <rect x="14" y="3" width="7" height="7" rx="1" />
+               <rect x="3" y="14" width="7" height="7" rx="1" />
+               <rect x="14" y="14" width="7" height="7" rx="1" />
+            </svg>
+            <span class="nav-text">Dashboard</span>
+         </a>
+
+         <div class="nav-dropdown" id="coursesDropdown">
+            <button class="nav-item nav-dropdown-toggle" data-tooltip="My Courses">
+               <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+               </svg>
+               <span class="nav-text">My Courses</span>
+               <svg class="nav-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="6 9 12 15 18 9" />
+               </svg>
+            </button>
+            <div class="nav-dropdown-menu">
+               <a class="nav-sub-item" href="general-transcription-course.html">
+                  <span class="nav-sub-dot"></span>
+                  <span class="nav-text">General Transcription</span>
+               </a>
+               <a class="nav-sub-item" href="legal-transcription-course.html">
+                  <span class="nav-sub-dot"></span>
+                  <span class="nav-text">Legal Transcription</span>
+               </a>
+            </div>
+         </div>
+
+         <div class="nav-dropdown open" id="resourcesDropdown">
+            <button class="nav-item nav-dropdown-toggle" data-tooltip="Resources">
+               <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+               </svg>
+               <span class="nav-text">Resources</span>
+               <svg class="nav-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="6 9 12 15 18 9" />
+               </svg>
+            </button>
+            <div class="nav-dropdown-menu">
+               <a class="nav-sub-item" href="assignment-tracking.html">
+                  <span class="nav-sub-dot"></span>
+                  <span class="nav-text">Assignment Tracking</span>
+               </a>
+               <a class="nav-sub-item active" href="grammar-quizzes.html">
+                  <span class="nav-sub-dot"></span>
+                  <span class="nav-text">Grammar Quizzes</span>
+               </a>
+               <a class="nav-sub-item" href="#">
+                  <span class="nav-sub-dot"></span>
+                  <span class="nav-text">Legal Transcription</span>
+               </a>
+               <a class="nav-sub-item" href="#">
+                  <span class="nav-sub-dot"></span>
+                  <span class="nav-text">Tips and Tricks</span>
+               </a>
+               <a class="nav-sub-item" href="#">
+                  <span class="nav-sub-dot"></span>
+                  <span class="nav-text">Practice Transcription</span>
+               </a>
+            </div>
+         </div>
+
+         <a class="nav-item" href="#" data-tooltip="Progress">
+            <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+               <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+            <span class="nav-text">Progress</span>
+         </a>
+
+         <a class="nav-item" href="#" data-tooltip="Schedule">
+            <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+               <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+               <line x1="16" y1="2" x2="16" y2="6" />
+               <line x1="8" y1="2" x2="8" y2="6" />
+               <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+            <span class="nav-text">Schedule</span>
+         </a>
+      </div>
+
+      <div class="nav-section">
+         <div class="nav-label">Resources</div>
+
+         <a class="nav-item" href="accuracy-assessment-tool.html" data-tooltip="Accuracy Tool">
+            <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+               <path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+               <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span class="nav-text">Accuracy Tool</span>
+         </a>
+
+         <a class="nav-item" href="#" data-tooltip="Job Board">
+            <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+               <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            <span class="nav-text">Job Board</span>
+         </a>
+
+         <a class="nav-item" href="#" data-tooltip="Settings">
+            <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+               <path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+            </svg>
+            <span class="nav-text">Settings</span>
+         </a>
+      </div>
+
+      <div class="sidebar-footer">
+         <div class="user-card">
+            <div class="user-avatar">JD</div>
+            <div>
+               <div class="user-name">Jane Doe</div>
+               <div class="user-role">Student · Free Plan</div>
+            </div>
+         </div>
+      </div>
+   </aside>
+
+   <div class="main-wrap" id="mainWrap">
+
+      <header class="header">
+         <div class="header-title">Grammar Quizzes</div>
+         <div class="search-wrap">
+            <svg class="search-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+               <circle cx="11" cy="11" r="8" />
+               <path d="m21 21-4.35-4.35" />
+            </svg>
+            <input type="text" placeholder="Search quizzes..." id="searchInput">
+         </div>
+         <div class="header-actions">
+            <div class="icon-btn" title="Notifications">
+               <div class="notif-dot"></div>
+               <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+               </svg>
+            </div>
+            <div class="icon-btn" title="Messages">
+               <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+               </svg>
+            </div>
+            <div class="header-avatar">JD</div>
+         </div>
+      </header>
+
+      <div class="page-content">
+         <main class="w-full max-w-[1440px] mx-auto space-y-10">
+
+            <section>
+               <nav class="flex items-center gap-2 text-xs font-semibold text-slate-400 mb-3 uppercase tracking-widest">
+                  <a href="code.html" class="hover:text-primary transition-colors">Dashboard</a>
+                  <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                     <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                  <span style="color: var(--green);">Grammar Quizzes</span>
+               </nav>
+               <h2 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight mb-1">Grammar Quizzes</h2>
+
+               <div class="mt-4 flex items-start gap-3 rounded-xl px-5 py-4" style="background: var(--green-light); border: 1.5px solid #a7d7c8;">
+                  <span class="material-symbols-outlined text-[22px] shrink-0 mt-0.5" style="color: var(--green);">quiz</span>
+                  <p class="text-sm leading-relaxed" style="color: #1a5c47;">
+                     Practice transcription grammar rules to improve your accuracy. Master punctuation, capitalization, numbers, and more.&nbsp;
+                     <a href="#" class="font-extrabold uppercase tracking-wide underline underline-offset-2" style="color: var(--green); text-decoration-color: var(--green);">View All Topics.</a>
+                  </p>
+               </div>
+            </section>
+
+            <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+               <div class="stat-card" style="border-left-color: var(--blue);">
+                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-2">Quizzes Completed</p>
+                  <div class="flex items-end justify-between">
+                     <span class="text-2xl font-black text-slate-900" id="statsCompleted">8</span>
+                     <span class="material-symbols-outlined text-3xl" style="color: var(--blue); opacity:.15;">check_circle</span>
+                  </div>
+               </div>
+               <div class="stat-card" style="border-left-color: var(--green);">
+                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-2">Average Score</p>
+                  <div class="flex items-end justify-between">
+                     <span class="text-2xl font-black text-slate-900" id="statsAverage">87%</span>
+                     <span class="material-symbols-outlined text-3xl" style="color: var(--green); opacity:.2;">analytics</span>
+                  </div>
+               </div>
+               <div class="stat-card" style="border-left-color: var(--orange);">
+                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-2">Current Streak</p>
+                  <div class="flex items-end justify-between">
+                     <span class="text-2xl font-black text-slate-900" id="statsStreak">5</span>
+                     <span class="material-symbols-outlined text-3xl text-orange-400" style="opacity:.2;">local_fire_department</span>
+                  </div>
+               </div>
+               <div class="stat-card" style="border-left-color: var(--purple);">
+                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-2">Topics Mastered</p>
+                  <div class="flex items-end justify-between">
+                     <span class="text-2xl font-black text-slate-900" id="statsMastered">3</span>
+                     <span class="material-symbols-outlined text-3xl" style="color: var(--purple); opacity:.2;">workspace_premium</span>
+                  </div>
+               </div>
+            </section>
+
+            <div class="flex flex-col lg:flex-row gap-8">
+
+               <div class="flex-1 min-w-0 space-y-8">
+
+                  <section>
+                     <div class="flex flex-wrap items-center gap-3">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="not-started">Not Started</button>
+                        <button class="filter-btn" data-filter="in-progress">In Progress</button>
+                        <button class="filter-btn" data-filter="completed">Completed</button>
+                     </div>
+                  </section>
+
+                  <section>
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="quizzesList">
+
+                        <!-- Quiz Card 1 -->
+                        <div class="quiz-category-card" data-status="completed" data-category="punctuation" data-quiz='{"id":1,"title":"Punctuation Basics","description":"Master commas, periods, colons, and semicolons in transcription","questions":10,"time":5,"difficulty":"beginner","bestScore":95}'>
+                           <div class="flex items-center justify-between mb-3">
+                              <div class="category-icon" style="background: var(--green-light); color: var(--green);">
+                                 <span class="material-symbols-outlined">format_size</span>
+                              </div>
+                              <span class="status-dot completed"></span>
+                           </div>
+                           <h4 class="font-bold text-slate-900 mb-1">Punctuation Basics</h4>
+                           <p class="text-sm text-slate-500 mb-3">Master commas, periods, colons, and semicolons in transcription</p>
+                           <div class="flex items-center gap-2 mb-3">
+                              <span class="difficulty-badge beginner">Beginner</span>
+                              <span class="text-xs text-slate-400">10 questions</span>
+                           </div>
+                           <div class="flex items-center justify-between">
+                              <span class="text-sm font-bold text-green-600">Best: 95%</span>
+                              <button class="action-btn primary" onclick="startQuiz(1)">Retake</button>
+                           </div>
+                        </div>
+
+                        <!-- Quiz Card 2 -->
+                        <div class="quiz-category-card" data-status="completed" data-category="capitalization" data-quiz='{"id":2,"title":"Capitalization Rules","description":"Learn when to capitalize words, sentences, and titles","questions":10,"time":5,"difficulty":"beginner","bestScore":90}'>
+                           <div class="flex items-center justify-between mb-3">
+                              <div class="category-icon" style="background: var(--blue-light); color: var(--blue);">
+                                 <span class="material-symbols-outlined">text_fields</span>
+                              </div>
+                              <span class="status-dot completed"></span>
+                           </div>
+                           <h4 class="font-bold text-slate-900 mb-1">Capitalization Rules</h4>
+                           <p class="text-sm text-slate-500 mb-3">Learn when to capitalize words, sentences, and titles</p>
+                           <div class="flex items-center gap-2 mb-3">
+                              <span class="difficulty-badge beginner">Beginner</span>
+                              <span class="text-xs text-slate-400">10 questions</span>
+                           </div>
+                           <div class="flex items-center justify-between">
+                              <span class="text-sm font-bold text-green-600">Best: 90%</span>
+                              <button class="action-btn primary" onclick="startQuiz(2)">Retake</button>
+                           </div>
+                        </div>
+
+                        <!-- Quiz Card 3 -->
+                        <div class="quiz-category-card" data-status="completed" data-category="abbreviations" data-quiz='{"id":3,"title":"Abbreviations","description":"Common abbreviations in medical and legal transcription","questions":10,"time":5,"difficulty":"intermediate","bestScore":85}'>
+                           <div class="flex items-center justify-between mb-3">
+                              <div class="category-icon" style="background: var(--purple-light); color: var(--purple);">
+                                 <span class="material-symbols-outlined">short_text</span>
+                              </div>
+                              <span class="status-dot completed"></span>
+                           </div>
+                           <h4 class="font-bold text-slate-900 mb-1">Abbreviations</h4>
+                           <p class="text-sm text-slate-500 mb-3">Common abbreviations in medical and legal transcription</p>
+                           <div class="flex items-center gap-2 mb-3">
+                              <span class="difficulty-badge intermediate">Intermediate</span>
+                              <span class="text-xs text-slate-400">10 questions</span>
+                           </div>
+                           <div class="flex items-center justify-between">
+                              <span class="text-sm font-bold text-green-600">Best: 85%</span>
+                              <button class="action-btn primary" onclick="startQuiz(3)">Retake</button>
+                           </div>
+                        </div>
+
+                        <!-- Quiz Card 4 -->
+                        <div class="quiz-category-card" data-status="completed" data-category="numbers" data-quiz='{"id":4,"title":"Numbers & Dates","description":"Format numbers, dates, times, and currency correctly","questions":10,"time":5,"difficulty":"intermediate","bestScore":80}'>
+                           <div class="flex items-center justify-between mb-3">
+                              <div class="category-icon" style="background: var(--orange-light); color: var(--orange);">
+                                 <span class="material-symbols-outlined">pin</span>
+                              </div>
+                              <span class="status-dot completed"></span>
+                           </div>
+                           <h4 class="font-bold text-slate-900 mb-1">Numbers & Dates</h4>
+                           <p class="text-sm text-slate-500 mb-3">Format numbers, dates, times, and currency correctly</p>
+                           <div class="flex items-center gap-2 mb-3">
+                              <span class="difficulty-badge intermediate">Intermediate</span>
+                              <span class="text-xs text-slate-400">10 questions</span>
+                           </div>
+                           <div class="flex items-center justify-between">
+                              <span class="text-sm font-bold text-green-600">Best: 80%</span>
+                              <button class="action-btn primary" onclick="startQuiz(4)">Retake</button>
+                           </div>
+                        </div>
+
+                        <!-- Quiz Card 5 -->
+                        <div class="quiz-category-card" data-status="completed" data-category="speaker-labels" data-quiz='{"id":5,"title":"Speaker Labels","description":"Proper use of speaker labels in transcription","questions":10,"time":5,"difficulty":"beginner","bestScore":100}'>
+                           <div class="flex items-center justify-between mb-3">
+                              <div class="category-icon" style="background: var(--green-light); color: var(--green);">
+                                 <span class="material-symbols-outlined">record_voice_over</span>
+                              </div>
+                              <span class="status-dot completed"></span>
+                           </div>
+                           <h4 class="font-bold text-slate-900 mb-1">Speaker Labels</h4>
+                           <p class="text-sm text-slate-500 mb-3">Proper use of speaker labels in transcription</p>
+                           <div class="flex items-center gap-2 mb-3">
+                              <span class="difficulty-badge beginner">Beginner</span>
+                              <span class="text-xs text-slate-400">10 questions</span>
+                           </div>
+                           <div class="flex items-center justify-between">
+                              <span class="text-sm font-bold text-green-600">Best: 100%</span>
+                              <button class="action-btn primary" onclick="startQuiz(5)">Retake</button>
+                           </div>
+                        </div>
+
+                        <!-- Quiz Card 6 -->
+                        <div class="quiz-category-card" data-status="completed" data-category="punctuation" data-quiz='{"id":6,"title":"Advanced Punctuation","description":"Ellipses, dashes, hyphens, and more","questions":10,"time":5,"difficulty":"intermediate","bestScore":75}'>
+                           <div class="flex items-center justify-between mb-3">
+                              <div class="category-icon" style="background: var(--green-light); color: var(--green);">
+                                 <span class="material-symbols-outlined">format_size</span>
+                              </div>
+                              <span class="status-dot completed"></span>
+                           </div>
+                           <h4 class="font-bold text-slate-900 mb-1">Advanced Punctuation</h4>
+                           <p class="text-sm text-slate-500 mb-3">Ellipses, dashes, hyphens, and more</p>
+                           <div class="flex items-center gap-2 mb-3">
+                              <span class="difficulty-badge intermediate">Intermediate</span>
+                              <span class="text-xs text-slate-400">10 questions</span>
+                           </div>
+                           <div class="flex items-center justify-between">
+                              <span class="text-sm font-bold text-green-600">Best: 75%</span>
+                              <button class="action-btn primary" onclick="startQuiz(6)">Retake</button>
+                           </div>
+                        </div>
+
+                        <!-- Quiz Card 7 -->
+                        <div class="quiz-category-card" data-status="in-progress" data-quiz='{"id":7,"title":"Medical Terms","description":"Medical terminology and abbreviations","questions":10,"time":5,"difficulty":"advanced"}'>
+                           <div class="flex items-center justify-between mb-3">
+                              <div class="category-icon" style="background: var(--rose-light); color: var(--rose);">
+                                 <span class="material-symbols-outlined">medical_services</span>
+                              </div>
+                              <span class="status-dot in-progress"></span>
+                           </div>
+                           <h4 class="font-bold text-slate-900 mb-1">Medical Terms</h4>
+                           <p class="text-sm text-slate-500 mb-3">Medical terminology and abbreviations</p>
+                           <div class="flex items-center gap-2 mb-3">
+                              <span class="difficulty-badge advanced">Advanced</span>
+                              <span class="text-xs text-slate-400">10 questions</span>
+                           </div>
+                           <div class="flex items-center justify-between">
+                              <span class="text-sm text-blue-600">In Progress</span>
+                              <button class="action-btn secondary" onclick="startQuiz(7)">Continue</button>
+                           </div>
+                        </div>
+
+                        <!-- Quiz Card 8 -->
+                        <div class="quiz-category-card" data-status="in-progress" data-quiz='{"id":8,"title":"Legal Terms","description":"Legal terminology and court transcription","questions":10,"time":5,"difficulty":"advanced"}'>
+                           <div class="flex items-center justify-between mb-3">
+                              <div class="category-icon" style="background: var(--purple-light); color: var(--purple);">
+                                 <span class="material-symbols-outlined">gavel</span>
+                              </div>
+                              <span class="status-dot in-progress"></span>
+                           </div>
+                           <h4 class="font-bold text-slate-900 mb-1">Legal Terms</h4>
+                           <p class="text-sm text-slate-500 mb-3">Legal terminology and court transcription</p>
+                           <div class="flex items-center gap-2 mb-3">
+                              <span class="difficulty-badge advanced">Advanced</span>
+                              <span class="text-xs text-slate-400">10 questions</span>
+                           </div>
+                           <div class="flex items-center justify-between">
+                              <span class="text-sm text-blue-600">In Progress</span>
+                              <button class="action-btn secondary" onclick="startQuiz(8)">Continue</button>
+                           </div>
+                        </div>
+
+                        <!-- Quiz Card 9 -->
+                        <div class="quiz-category-card" data-status="not-started" data-quiz='{"id":9,"title":"Formatting Rules","description":"Headers, bullets, tables, and document formatting","questions":10,"time":5,"difficulty":"beginner"}'>
+                           <div class="flex items-center justify-between mb-3">
+                              <div class="category-icon" style="background: var(--blue-light); color: var(--blue);">
+                                 <span class="material-symbols-outlined">table_chart</span>
+                              </div>
+                              <span class="status-dot not-started"></span>
+                           </div>
+                           <h4 class="font-bold text-slate-900 mb-1">Formatting Rules</h4>
+                           <p class="text-sm text-slate-500 mb-3">Headers, bullets, tables, and document formatting</p>
+                           <div class="flex items-center gap-2 mb-3">
+                              <span class="difficulty-badge beginner">Beginner</span>
+                              <span class="text-xs text-slate-400">10 questions</span>
+                           </div>
+                           <div class="flex items-center justify-between">
+                              <span class="text-sm text-slate-400">Not started</span>
+                              <button class="action-btn primary" onclick="startQuiz(9)">Start</button>
+                           </div>
+                        </div>
+
+                        <!-- Quiz Card 10 -->
+                        <div class="quiz-category-card" data-status="not-started" data-quiz='{"id":10,"title":"Quotation Marks","description":"Using quotes, brackets, and parentheticals correctly","questions":10,"time":5,"difficulty":"intermediate"}'>
+                           <div class="flex items-center justify-between mb-3">
+                              <div class="category-icon" style="background: var(--green-light); color: var(--green);">
+                                 <span class="material-symbols-outlined">format_quote</span>
+                              </div>
+                              <span class="status-dot not-started"></span>
+                           </div>
+                           <h4 class="font-bold text-slate-900 mb-1">Quotation Marks</h4>
+                           <p class="text-sm text-slate-500 mb-3">Using quotes, brackets, and parentheticals correctly</p>
+                           <div class="flex items-center gap-2 mb-3">
+                              <span class="difficulty-badge intermediate">Intermediate</span>
+                              <span class="text-xs text-slate-400">10 questions</span>
+                           </div>
+                           <div class="flex items-center justify-between">
+                              <span class="text-sm text-slate-400">Not started</span>
+                              <button class="action-btn primary" onclick="startQuiz(10)">Start</button>
+                           </div>
+                        </div>
+
+                     </div>
+                  </section>
+
+               </div>
+
+               <aside class="lg:w-72 xl:w-80 space-y-6 shrink-0">
+                  <div class="sticky top-24 space-y-6">
+
+                     <div class="side-card">
+                        <div class="flex items-center gap-2 mb-5">
+                           <span class="material-symbols-outlined text-[20px]" style="color: var(--green);">history</span>
+                           <h4 class="font-bold text-slate-900 uppercase tracking-wider text-xs">Recent Activity</h4>
+                        </div>
+                        <div class="space-y-4">
+                           <div class="activity-item">
+                              <div class="activity-dot" style="background: var(--green);"></div>
+                              <div class="activity-content">
+                                 <div class="activity-text"><strong>Punctuation Basics</strong> completed - Score: 95%</div>
+                                 <div class="activity-time">2 hours ago</div>
+                              </div>
+                           </div>
+                           <div class="activity-item">
+                              <div class="activity-dot" style="background: var(--blue);"></div>
+                              <div class="activity-content">
+                                 <div class="activity-text"><strong>Capitalization Rules</strong> completed - Score: 90%</div>
+                                 <div class="activity-time">Yesterday</div>
+                              </div>
+                           </div>
+                           <div class="activity-item">
+                              <div class="activity-dot" style="background: var(--purple);"></div>
+                              <div class="activity-content">
+                                 <div class="activity-text"><strong>Abbreviations</strong> completed - Score: 85%</div>
+                                 <div class="activity-time">2 days ago</div>
+                              </div>
+                           </div>
+                           <div class="activity-item">
+                              <div class="activity-dot" style="background: var(--orange);"></div>
+                              <div class="activity-content">
+                                 <div class="activity-text"><strong>Numbers & Dates</strong> completed - Score: 80%</div>
+                                 <div class="activity-time">3 days ago</div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="side-card">
+                        <div class="flex items-center gap-2 mb-5">
+                           <span class="material-symbols-outlined text-[20px]" style="color: var(--orange);">track_changes</span>
+                           <h4 class="font-bold text-slate-900 uppercase tracking-wider text-xs">Daily Goal</h4>
+                        </div>
+                        <div class="text-center py-4">
+                           <div class="relative w-24 h-24 mx-auto mb-4">
+                              <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                                 <path class="fill-none" stroke="#e5e7eb" stroke-width="3" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                 <path class="fill-none" stroke="#059669" stroke-width="3" stroke-dasharray="60, 100" stroke-linecap="round" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                              </svg>
+                              <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                 <span class="text-lg font-bold text-slate-900">3/5</span>
+                                 <span class="text-[8px] text-slate-400">quizzes</span>
+                              </div>
+                           </div>
+                           <p class="text-sm text-slate-500">Complete 2 more quizzes today</p>
+                        </div>
+                        <button class="w-full mt-4 py-3 primary-gradient text-white font-bold rounded-lg text-sm">
+                           Start Daily Practice
+                        </button>
+                     </div>
+
+                     <div class="tips-card">
+                        <div class="flex items-center gap-2 mb-4">
+                           <span class="material-symbols-outlined text-[20px]" style="color: var(--green);">lightbulb</span>
+                           <h4 class="font-bold text-slate-900 uppercase tracking-wider text-xs">Quick Tips</h4>
+                        </div>
+                        <ul class="space-y-4">
+                           <li class="flex items-start gap-3">
+                              <div class="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style="background: var(--green);"></div>
+                              <p class="text-sm text-slate-500 leading-relaxed">Always review explanations for incorrect answers.</p>
+                           </li>
+                           <li class="flex items-start gap-3">
+                              <div class="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style="background: var(--green);"></div>
+                              <p class="text-sm text-slate-500 leading-relaxed">Practice regularly to maintain your streak.</p>
+                           </li>
+                           <li class="flex items-start gap-3">
+                              <div class="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style="background: var(--green);"></div>
+                              <p class="text-sm text-slate-500 leading-relaxed">Review grammar rules in the TCI style guide.</p>
+                           </li>
+                        </ul>
+                     </div>
+
+                  </div>
+               </aside>
+            </div>
+
+         </main>
+      </div>
+
+   </div>
+
+   <style>
+      .action-btn {
+         padding: 8px 16px;
+         border-radius: 8px;
+         font-size: 12px;
+         font-weight: 700;
+         cursor: pointer;
+         transition: all .15s;
+         display: inline-flex;
+         align-items: center;
+         gap: 4px;
+         border: none;
+         font-family: inherit;
+      }
+
+      .action-btn.primary {
+         background: linear-gradient(135deg, #1f8e6d 0%, #0d7a5a 100%);
+         color: white;
+      }
+
+      .action-btn.secondary {
+         background: var(--green-light);
+         color: var(--green);
+      }
+
+      .action-btn:hover {
+         transform: translateY(-1px);
+         box-shadow: 0 4px 12px rgba(31, 142, 109, .3);
+      }
+
+      .primary-gradient {
+         background: linear-gradient(135deg, #1f8e6d 0%, #0d7a5a 100%);
+      }
+   </style>
+
+   <script>
+      const sidebar = document.getElementById('sidebar');
+      const mainWrap = document.getElementById('mainWrap');
+      const toggleBtn = document.getElementById('sidebarToggle');
+
+      const updateSidebarState = (isCollapsed) => {
+         sidebar.classList.toggle('collapsed', isCollapsed);
+         mainWrap.classList.toggle('collapsed', isCollapsed);
+      };
+
+      toggleBtn.addEventListener('click', () => {
+         const isCollapsed = !sidebar.classList.contains('collapsed');
+         updateSidebarState(isCollapsed);
+         localStorage.setItem('sidebarCollapsed', isCollapsed);
+      });
+
+      window.addEventListener('DOMContentLoaded', () => {
+         updateSidebarState(localStorage.getItem('sidebarCollapsed') === 'true');
+
+         document.querySelectorAll('.nav-dropdown-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+               btn.closest('.nav-dropdown').classList.toggle('open');
+            });
+         });
+
+         // Filter buttons
+         document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+               document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+               this.classList.add('active');
+
+               const filter = this.dataset.filter;
+               const quizzes = document.querySelectorAll('#quizzesList > .quiz-category-card');
+
+               quizzes.forEach(quiz => {
+                  const status = quiz.dataset.status;
+                  if (filter === 'all') {
+                     quiz.style.display = '';
+                  } else {
+                     quiz.style.display = status === filter ? '' : 'none';
+                  }
+               });
+            });
+         });
+
+         // Search
+         const searchInput = document.getElementById('searchInput');
+         searchInput.addEventListener('input', function () {
+            const query = this.value.toLowerCase();
+            const quizzes = document.querySelectorAll('#quizzesList > .quiz-category-card');
+
+            quizzes.forEach(quiz => {
+               const title = quiz.querySelector('h4').textContent.toLowerCase();
+               const desc = quiz.querySelector('p').textContent.toLowerCase();
+               if (title.includes(query) || desc.includes(query)) {
+                  quiz.style.display = '';
+               } else {
+                  quiz.style.display = query === '' ? '' : 'none';
+               }
+            });
+         });
+      });
+   </script>
+
+   <script>
+      // Quiz Data
+      const quizzesData = {
+         1: {
+            title: "Punctuation Basics",
+            questions: [
+               { q: "Which sentence correctly uses a comma?", options: ["She likes tea coffee and juice.", "She likes tea, coffee, and juice.", "She likes tea coffee and, juice.", "She likes tea, coffee and juice."], answer: 1, explanation: "Use commas to separate three or more items in a series." },
+               { q: "When should you use a semicolon?", options: ["Between two complete sentences that are related.", "Instead of a period.", "To end a question.", "After every sentence."], answer: 0, explanation: "A semicolon joins two related complete sentences." },
+               { q: "Which is correct for a rest stop?", options: ["Dr. Smith, said.", "Dr. Smith said.", "Dr. Smith said,", "Dr. Smith said"], answer: 1, explanation: "Use a comma after 'said' when followed by other text." },
+               { q: "Choose the correct format for a list:", options: ["apple, orange, banana", "apple orange banana", "apple, orange and banana", "apple or, orange or banana"], answer: 0, explanation: "Use commas between items in a series." },
+               { q: "When should you use a colon?", options: ["To introduce a list.", "Instead of a question mark.", "At the end of sentences.", "Never in transcription."], answer: 0, explanation: "A colon introduces a list or explanation." }
+            ]
+         },
+         2: {
+            title: "Capitalization Rules",
+            questions: [
+               { q: "Which should be capitalized?", options: ["the president", "President Biden", "president biden", "the president Biden"], answer: 1, explanation: "Capitalize titles before names." },
+               { q: "Capitalize months and:", options: ["days only.", "days and holidays only.", "days, holidays, and places.", "only holidays."], answer: 2, explanation: "Capitalize days, months, and holidays." },
+               { q: "Mr. Smith works at:", options: ["the store", "the Store", "The Store", "the store."], answer: 2, explanation: "Capitalize proper nouns including business names." },
+               { q: "Capitalize:", options: ["north, south, east, west", "north, south, east, and west", "the cardinal directions", "directions"], answer: 1, explanation: "Capitalize directions when used as proper nouns." },
+               { q: "Which is correct?", options: ["The meeting is at 3 PM.", "The meeting is at 3 pm.", "The meeting is at 3 Pm.", "the meeting is at 3 PM."], answer: 0, explanation: "Capitalize AM and PM." }
+            ]
+         },
+         3: {
+            title: "Abbreviations",
+            questions: [
+               { q: "What does 'etc.' mean?", options: ["and so on", "example", "that is", "for example"], answer: 0, explanation: "etc. means 'et cetera' - and so on." },
+               { q: "When should you spell out abbreviations?", options: ["Always", "First use only", "Never in transcription", "In headings only"], answer: 1, explanation: "Spell out on first use, then abbreviate." },
+               { q: "Which is correct for doctor?", options: ["Dr", "Dr.", "Doctor", "DR"], answer: 1, explanation: "Use the abbreviated form with period." },
+               { q: "Time zone abbreviations:", options: ["lowercase", "uppercase", "capitalized", "not used"], answer: 1, explanation: "Always use uppercase for time zones." },
+               { q: "What does 'i.e.' mean?", options: ["for example", "that is", "in essence", "it is"], answer: 1, explanation: "i.e. means 'that is' - clarifies the statement." }
+            ]
+         },
+         4: {
+            title: "Numbers & Dates",
+            questions: [
+               { q: "Write numbers 1-10:", options: ["words", "digits", "both acceptable", "Roman numerals"], answer: 0, explanation: "Spell out one through ten." },
+               { q: "Write large numbers:", options: ["all digits", "words and digits", "words only", "use commas only"], answer: 1, explanation: "Use words for thousands and digits for specific numbers." },
+               { q: "Date format should be:", options: ["April 5th, 2024", "April 5, 2024", "05 April 2024", "4/5/2024"], answer: 1, explanation: "Standard format is Month Day, Year." },
+               { q: "Time should be written as:", options: ["3:00 PM", "3:00 pm", "3pm", "3:00pm"], answer: 0, explanation: "Use :00 for on the hour and capital AM/PM." },
+               { q: "Currency in documents:", options: ["$100.00", "100 dollars", "one hundred dollars", "USD 100"], answer: 0, explanation: "Use the standard currency symbol and decimal format." }
+            ]
+         },
+         5: {
+            title: "Speaker Labels",
+            questions: [
+               { q: "Speaker labels should be:", options: ["lowercase", "UPPERCASE", "Capitalized", "in parentheses"], answer: 2, explanation: "Capitalize speaker labels like 'Doctor:' and 'Judge:'" },
+               { q: "Use ____ brackets for [sic]:", options: ["curly", "square", "angled", "round"], answer: 1, explanation: "Use square brackets for [sic] and clarifications." },
+               { q: "When speaker is unknown, use:", options: ["Unknown", "Speaker", "[Unknown]", "Voice 1"], answer: 2, explanation: "Use brackets to indicate unclear speaker." },
+               { q: "Pause in speech uses:", options: ["(pause)", "[pause]", "---", "..."], answer: 1, explanation: "Use brackets to mark pauses." },
+               { q: "Non-verbal sounds use:", options: ["(coughs)", "[coughs]", "*coughs*", "ALL CAPS"], answer: 0, explanation: "Use parentheses for non-verbal sounds." }
+            ]
+         }
+      };
+
+      let currentQuiz = null;
+      let currentQuestion = 0;
+      let userAnswers = [];
+      let quizTimer = null;
+      let timeRemaining = 0;
+
+      function startQuiz(quizId) {
+         const quiz = quizzesData[quizId];
+         if (!quiz) {
+            alert('This quiz is coming soon! Try another quiz.');
+            return;
+         }
+
+         currentQuiz = quiz;
+         currentQuestion = 0;
+         userAnswers = [];
+         timeRemaining = quiz.questions.length * 60;
+
+         showQuizModal(quiz);
+      }
+
+      function showQuizModal(quiz) {
+         const modal = document.createElement('div');
+         modal.id = 'quizModal';
+         modal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4';
+         modal.innerHTML = `
+            <div class="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+               <div class="p-6">
+                  <div class="flex items-center justify-between mb-6">
+                     <h3 class="text-xl font-bold text-slate-900">${quiz.title}</h3>
+                     <button onclick="closeQuizModal()" class="text-slate-400 hover:text-slate-600">
+                        <span class="material-symbols-outlined">close</span>
+                     </button>
+                  </div>
+                  
+                  <div class="flex items-center justify-between mb-4">
+                     <div class="quiz-progress-bar flex-1 mr-4">
+                        <div class="quiz-progress-fill" style="width: 0%"></div>
+                     </div>
+                     <span class="text-sm font-bold text-slate-500" id="progressText">1/${quiz.questions.length}</span>
+                  </div>
+                  
+                  <div class="timer-badge mb-6" id="timerBadge">
+                     <span class="material-symbols-outlined">schedule</span>
+                     <span id="timerText">${Math.floor(timeRemaining / 60)}:${(timeRemaining % 60).toString().padStart(2, '0')}</span>
+                  </div>
+                  
+                  <div id="questionContainer"></div>
+                  
+                  <div class="flex items-center justify-between mt-8 pt-4 border-t border-slate-200">
+                     <button class="action-btn secondary" id="prevBtn" onclick="prevQuestion()">Previous</button>
+                     <button class="action-btn secondary" id="flagBtn" onclick="flagQuestion()">
+                        <span class="material-symbols-outlined" style="font-size:16px;">flag</span>
+                        Flag
+                     </button>
+                     <button class="action-btn primary" id="nextBtn" onclick="nextQuestion()">Next</button>
+                  </div>
+               </div>
+            </div>
+         `;
+
+         document.body.appendChild(modal);
+         renderQuestion();
+         startTimer();
+      }
+
+      function closeQuizModal() {
+         const modal = document.getElementById('quizModal');
+         if (modal) modal.remove();
+         if (quizTimer) clearInterval(quizTimer);
+      }
+
+      function startTimer() {
+         quizTimer = setInterval(() => {
+            timeRemaining--;
+            const mins = Math.floor(timeRemaining / 60);
+            const secs = timeRemaining % 60;
+            document.getElementById('timerText').textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+
+            if (timeRemaining <= 60) {
+               document.getElementById('timerBadge').classList.add('danger');
+            } else if (timeRemaining <= 120) {
+               document.getElementById('timerBadge').classList.add('warning');
+            }
+
+            if (timeRemaining <= 0) {
+               submitQuiz();
+            }
+         }, 1000);
+      }
+
+      function renderQuestion() {
+         const quiz = currentQuiz;
+         const q = quiz.questions[currentQuestion];
+         const progress = ((currentQuestion + 1) / quiz.questions.length) * 100;
+
+         document.querySelector('.quiz-progress-fill').style.width = progress + '%';
+         document.getElementById('progressText').textContent = `${currentQuestion + 1}/${quiz.questions.length}`;
+
+         document.getElementById('questionContainer').innerHTML = `
+            <div class="mb-2 text-sm text-slate-500">Question ${currentQuestion + 1}</div>
+            <h4 class="text-lg font-bold text-slate-900 mb-6">${q.q}</h4>
+            <div class="space-y-3">
+               ${q.options.map((opt, i) => `
+                  <div class="question-option ${userAnswers[currentQuestion] === i ? 'selected' : ''}" onclick="selectAnswer(${i})">
+                     <span class="option-letter">${String.fromCharCode(65 + i)}</span>
+                     <span>${opt}</span>
+                  </div>
+               `).join('')}
+            </div>
+         `;
+
+         document.getElementById('prevBtn').style.visibility = currentQuestion === 0 ? 'hidden' : 'visible';
+         document.getElementById('nextBtn').textContent = currentQuestion === quiz.questions.length - 1 ? 'Submit' : 'Next';
+      }
+
+      function selectAnswer(index) {
+         userAnswers[currentQuestion] = index;
+         renderQuestion();
+      }
+
+      function prevQuestion() {
+         if (currentQuestion > 0) {
+            currentQuestion--;
+            renderQuestion();
+         }
+      }
+
+      function nextQuestion() {
+         if (userAnswers[currentQuestion] === undefined) {
+            alert('Please select an answer.');
+            return;
+         }
+
+         if (currentQuestion < currentQuiz.questions.length - 1) {
+            currentQuestion++;
+            renderQuestion();
+         } else {
+            submitQuiz();
+         }
+      }
+
+      function flagQuestion() {
+         alert('Question flagged for review!');
+      }
+
+      function submitQuiz() {
+         clearInterval(quizTimer);
+         const quiz = currentQuiz;
+         let correct = 0;
+
+         quiz.questions.forEach((q, i) => {
+            if (userAnswers[i] === q.answer) correct++;
+         });
+
+         const score = Math.round((correct / quiz.questions.length) * 100);
+         const passed = score >= 70;
+
+         showResults(quiz, correct, quiz.questions.length, score, passed);
+      }
+
+      function showResults(quiz, correct, total, score, passed) {
+         const modal = document.getElementById('quizModal');
+         modal.innerHTML = `
+            <div class="bg-white rounded-2xl w-full max-w-lg p-8 text-center">
+               <h3 class="text-2xl font-bold text-slate-900 mb-6">Quiz Complete!</h3>
+               
+               <div class="score-circle ${passed ? 'pass' : 'fail'} mx-auto mb-6">
+                  <span class="text-4xl font-black ${passed ? 'text-green-700' : 'text-red-700'}">${score}%</span>
+                  <span class="text-sm font-semibold ${passed ? 'text-green-600' : 'text-red-600'}">${passed ? 'PASSED' : 'NEED 70%'}</span>
+               </div>
+               
+               <div class="grid grid-cols-2 gap-4 mb-6">
+                  <div class="bg-green-50 rounded-xl p-4">
+                     <span class="text-2xl font-bold text-green-600">${correct}</span>
+                     <span class="text-sm text-green-600 block">Correct</span>
+                  </div>
+                  <div class="bg-red-50 rounded-xl p-4">
+                     <span class="text-2xl font-bold text-red-600">${total - correct}</span>
+                     <span class="text-sm text-red-600 block">Incorrect</span>
+                  </div>
+               </div>
+               
+               <div class="flex gap-3">
+                  <button class="action-btn secondary flex-1" onclick="closeQuizModal()">Back to Quizzes</button>
+                  <button class="action-btn primary flex-1" onclick="retryQuiz()">Try Again</button>
+               </div>
+            </div>
+         `;
+      }
+
+      function retryQuiz() {
+         closeQuizModal();
+         startQuiz(currentQuiz.id || 1);
+      }
+   </script>
+
+</body>
+
+</html>

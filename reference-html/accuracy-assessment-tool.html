@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+   <meta charset="utf-8" />
+   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+   <title>TCI – Accuracy Assessment Tool</title>
+   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+   <script id="tailwind-config">
+      tailwind.config = {
+         darkMode: "class",
+         theme: {
+            extend: {
+               colors: {
+                  "primary": "#1f8e6d",
+                  "background-light": "#f8fafc",
+                  "background-dark": "#12201c",
+                  "accent-purple": "#8b5cf6",
+               },
+               fontFamily: {
+                  "display": ["Inter", "sans-serif"]
+               },
+               borderRadius: {
+                  "DEFAULT": "0.5rem",
+                  "lg": "1rem",
+                  "xl": "1.5rem",
+                  "full": "9999px"
+               },
+            },
+         },
+      }
+   </script>
+   <style>
+      .material-symbols-outlined {
+         font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+
+      :root {
+         --green: #1F8F6D;
+         --green-light: #E8F5F1;
+         --green-mid: #2aa880;
+         --purple: #7C6FCD;
+         --bg: #F4F7F6;
+         --surface: #FFFFFF;
+         --surface-2: #F9FAFB;
+         --border: #E8EDEC;
+         --text-primary: #111827;
+         --text-secondary: #6B7280;
+         --text-muted: #9CA3AF;
+         --rose: #F43F5E;
+         --sidebar-w: 240px;
+         --sidebar-collapsed: 64px;
+         --header-h: 68px;
+         --radius-sm: 8px;
+      }
+
+      html {
+         font-size: 15px;
+      }
+
+      body {
+         font-family: 'Inter', sans-serif;
+         background: var(--bg);
+         color: var(--text-primary);
+         min-height: 100vh;
+         display: flex;
+      }
+
+      /* ─── SIDEBAR ─────────────────────────── */
+      .sidebar {
+         width: var(--sidebar-w);
+         min-height: 100vh;
+         background: var(--surface);
+         border-right: 1px solid var(--border);
+         display: flex;
+         flex-direction: column;
+         position: fixed;
+         top: 0;
+         left: 0;
+         z-index: 100;
+         padding: 0 0 24px;
+         transition: width .28s cubic-bezier(.4, 0, .2, 1);
+         overflow: visible;
+      }
+
+      .sidebar.collapsed {
+         width: var(--sidebar-collapsed);
+      }
+
+      .sidebar.collapsed .logo-text,
+      .sidebar.collapsed .logo-sub,
+      .sidebar.collapsed .nav-label,
+      .sidebar.collapsed .user-name,
+      .sidebar.collapsed .user-role {
+         opacity: 0;
+         pointer-events: none;
+         max-width: 0;
+         overflow: hidden;
+         white-space: nowrap;
+         transition: opacity .18s, max-width .28s;
+      }
+
+      .sidebar.collapsed .nav-item .nav-text,
+      .sidebar.collapsed .nav-item .nav-badge {
+         display: none;
+      }
+
+      .sidebar.collapsed .nav-item {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         padding: 10px 0;
+         gap: 0;
+      }
+
+      .sidebar.collapsed .nav-item.active::before {
+         display: none;
+      }
+
+      .sidebar.collapsed .nav-icon-wrap {
+         margin: 0;
+      }
+
+      .sidebar.collapsed .nav-dot {
+         display: flex;
+      }
+
+      .sidebar.collapsed .sidebar-logo {
+         justify-content: center;
+         padding: 20px 0 18px;
+         gap: 0;
+      }
+
+      .sidebar.collapsed .nav-section {
+         padding: 14px 0 6px;
+      }
+
+      .sidebar.collapsed .user-card {
+         justify-content: center;
+         padding: 10px 0;
+         gap: 0;
+      }
+
+      .sidebar.collapsed .sidebar-footer {
+         padding: 16px 0 0;
+      }
+
+      .sidebar.collapsed .nav-item {
+         position: relative;
+      }
+
+      .sidebar.collapsed .nav-item::after {
+         content: attr(data-tooltip);
+         position: absolute;
+         left: calc(100% + 10px);
+         top: 50%;
+         transform: translateY(-50%);
+         background: #1a1a2e;
+         color: white;
+         font-size: 12px;
+         font-weight: 600;
+         padding: 5px 10px;
+         border-radius: 7px;
+         white-space: nowrap;
+         opacity: 0;
+         pointer-events: none;
+         transition: opacity .15s;
+         z-index: 200;
+         box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
+      }
+
+      .sidebar.collapsed .nav-item:hover::after {
+         opacity: 1;
+      }
+
+      .sidebar-toggle {
+         position: absolute;
+         top: 20px;
+         right: -13px;
+         width: 26px;
+         height: 26px;
+         border-radius: 50%;
+         background: var(--surface);
+         border: 1.5px solid var(--border);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         cursor: pointer;
+         z-index: 110;
+         box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+         transition: background .15s, transform .28s cubic-bezier(.4, 0, .2, 1);
+         color: var(--text-secondary);
+      }
+
+      .sidebar-toggle:hover {
+         background: var(--green-light);
+         color: var(--green);
+         border-color: var(--green);
+      }
+
+      .sidebar.collapsed .sidebar-toggle {
+         transform: rotate(180deg);
+      }
+
+      .sidebar-logo {
+         display: flex;
+         align-items: center;
+         gap: 10px;
+         padding: 20px 20px 18px;
+         border-bottom: 1px solid var(--border);
+         position: relative;
+         transition: padding .28s, gap .28s;
+         flex-shrink: 0;
+      }
+
+      .nav-section {
+         padding: 18px 12px 6px;
+         transition: padding .28s;
+      }
+
+      .nav-label {
+         font-size: 10px;
+         font-weight: 600;
+         letter-spacing: 1px;
+         text-transform: uppercase;
+         color: var(--text-muted);
+         padding: 0 8px;
+         margin-bottom: 6px;
+         transition: opacity .18s, max-width .28s;
+         white-space: nowrap;
+         overflow: hidden;
+      }
+
+      .nav-item {
+         display: flex;
+         align-items: center;
+         gap: 10px;
+         padding: 9px 10px;
+         border-radius: var(--radius-sm);
+         cursor: pointer;
+         font-size: 13.5px;
+         font-weight: 500;
+         color: var(--text-secondary);
+         transition: background .15s, color .15s, padding .28s, gap .28s;
+         text-decoration: none;
+         margin-bottom: 1px;
+         position: relative;
+         white-space: nowrap;
+      }
+
+      .nav-item:hover {
+         background: var(--green-light);
+         color: var(--green);
+      }
+
+      .nav-item.active {
+         background: var(--green-light);
+         color: var(--green);
+         font-weight: 600;
+      }
+
+      .nav-item.active::before {
+         content: '';
+         position: absolute;
+         left: 0;
+         top: 50%;
+         transform: translateY(-50%);
+         width: 3px;
+         height: 60%;
+         background: var(--green);
+         border-radius: 0 3px 3px 0;
+      }
+
+      .nav-text {
+         transition: opacity .18s, max-width .28s;
+         overflow: hidden;
+      }
+
+      .nav-icon {
+         width: 18px;
+         height: 18px;
+         opacity: .8;
+         flex-shrink: 0;
+      }
+
+      .nav-icon-wrap {
+         position: relative;
+         display: inline-flex;
+         flex-shrink: 0;
+      }
+
+      .nav-dot {
+         display: none;
+         position: absolute;
+         top: -5px;
+         right: -6px;
+         background: var(--rose);
+         color: white;
+         font-size: 9px;
+         font-weight: 700;
+         min-width: 15px;
+         height: 15px;
+         border-radius: 20px;
+         align-items: center;
+         justify-content: center;
+         border: 1.5px solid white;
+         padding: 0 3px;
+         line-height: 1;
+      }
+
+      .nav-badge {
+         margin-left: auto;
+         background: var(--rose);
+         color: white;
+         font-size: 10px;
+         font-weight: 700;
+         padding: 2px 6px;
+         border-radius: 20px;
+         white-space: nowrap;
+      }
+
+      .sidebar-footer {
+         margin-top: auto;
+         padding: 16px 12px 0;
+         border-top: 1px solid var(--border);
+         transition: padding .28s;
+      }
+
+      .user-card {
+         display: flex;
+         align-items: center;
+         gap: 10px;
+         padding: 10px;
+         border-radius: var(--radius-sm);
+         cursor: pointer;
+         transition: background .15s, padding .28s, gap .28s;
+      }
+
+      .user-card:hover {
+         background: var(--surface-2);
+      }
+
+      .user-avatar {
+         width: 34px;
+         height: 34px;
+         border-radius: 50%;
+         background: linear-gradient(135deg, #a78bfa, var(--purple));
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         color: white;
+         font-size: 13px;
+         font-weight: 700;
+         flex-shrink: 0;
+      }
+
+      .user-name {
+         font-size: 13px;
+         font-weight: 600;
+         transition: opacity .18s, max-width .28s;
+         overflow: hidden;
+         white-space: nowrap;
+      }
+
+      .user-role {
+         font-size: 11px;
+         color: var(--text-muted);
+         transition: opacity .18s;
+         white-space: nowrap;
+      }
+
+      /* ─── MAIN LAYOUT ─────────────────────── */
+      .main-wrap {
+         margin-left: var(--sidebar-w);
+         flex: 1;
+         display: flex;
+         flex-direction: column;
+         min-height: 100vh;
+         transition: margin-left .28s cubic-bezier(.4, 0, .2, 1);
+      }
+
+      .main-wrap.collapsed {
+         margin-left: var(--sidebar-collapsed);
+      }
+
+      /* ─── HEADER ──────────────────────────── */
+      .header {
+         height: var(--header-h);
+         background: var(--surface);
+         border-bottom: 1px solid var(--border);
+         display: flex;
+         align-items: center;
+         padding: 0 32px;
+         gap: 16px;
+         position: sticky;
+         top: 0;
+         z-index: 50;
+      }
+
+      .header-title {
+         font-size: 16px;
+         font-weight: 700;
+         letter-spacing: -.3px;
+      }
+
+      .search-wrap {
+         flex: 1;
+         max-width: 440px;
+         margin-left: auto;
+         margin-right: 16px;
+         position: relative;
+      }
+
+      .search-wrap input {
+         width: 100%;
+         padding: 9px 14px 9px 40px;
+         border: 1.5px solid var(--border);
+         border-radius: 40px;
+         font-family: inherit;
+         font-size: 13.5px;
+         background: var(--bg);
+         color: var(--text-primary);
+         outline: none;
+         transition: border-color .2s;
+      }
+
+      .search-wrap input:focus {
+         border-color: var(--green);
+         background: white;
+      }
+
+      .search-wrap input::placeholder {
+         color: var(--text-muted);
+      }
+
+      .search-icon {
+         position: absolute;
+         left: 13px;
+         top: 50%;
+         transform: translateY(-50%);
+         color: var(--text-muted);
+      }
+
+      .header-actions {
+         display: flex;
+         align-items: center;
+         gap: 10px;
+      }
+
+      .icon-btn {
+         width: 38px;
+         height: 38px;
+         border-radius: 50%;
+         background: var(--bg);
+         border: 1.5px solid var(--border);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         cursor: pointer;
+         color: var(--text-secondary);
+         position: relative;
+         transition: all .15s;
+      }
+
+      .icon-btn:hover {
+         border-color: var(--green);
+         color: var(--green);
+         background: var(--green-light);
+      }
+
+      .notif-dot {
+         position: absolute;
+         top: 7px;
+         right: 7px;
+         width: 8px;
+         height: 8px;
+         border-radius: 50%;
+         background: var(--rose);
+         border: 2px solid white;
+      }
+
+      .header-avatar {
+         width: 38px;
+         height: 38px;
+         border-radius: 50%;
+         background: linear-gradient(135deg, #a78bfa, var(--purple));
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         color: white;
+         font-size: 14px;
+         font-weight: 700;
+         cursor: pointer;
+         border: 2.5px solid var(--green);
+      }
+
+      .page-content {
+         padding: 28px 32px 40px;
+         display: flex;
+         justify-content: center;
+         align-items: start;
+      }
+
+      /* ─── NAV DROPDOWN ──────────────────── */
+      .nav-dropdown {
+         position: relative;
+      }
+
+      .nav-dropdown-toggle {
+         width: 100%;
+         background: none;
+         border: none;
+         cursor: pointer;
+         font-family: inherit;
+         text-align: left;
+      }
+
+      .nav-chevron {
+         width: 14px;
+         height: 14px;
+         margin-left: auto;
+         flex-shrink: 0;
+         transition: transform .2s ease;
+         opacity: .55;
+      }
+
+      .nav-dropdown.open .nav-chevron {
+         transform: rotate(180deg);
+      }
+
+      .nav-dropdown-menu {
+         display: none;
+         flex-direction: column;
+         padding-left: 12px;
+         padding-top: 2px;
+         padding-bottom: 2px;
+      }
+
+      .nav-dropdown.open .nav-dropdown-menu {
+         display: flex;
+      }
+
+      .nav-sub-item {
+         display: flex;
+         align-items: center;
+         gap: 8px;
+         padding: 7px 10px;
+         border-radius: var(--radius-sm);
+         cursor: pointer;
+         font-size: 12.5px;
+         font-weight: 500;
+         color: var(--text-secondary);
+         transition: background .15s, color .15s;
+         text-decoration: none;
+         margin-bottom: 1px;
+         white-space: nowrap;
+         overflow: hidden;
+      }
+
+      .nav-sub-item:hover {
+         background: var(--green-light);
+         color: var(--green);
+      }
+
+      .nav-sub-item.active {
+         color: var(--green);
+         font-weight: 600;
+      }
+
+      .nav-sub-dot {
+         width: 6px;
+         height: 6px;
+         border-radius: 50%;
+         background: var(--text-muted);
+         flex-shrink: 0;
+         transition: background .15s;
+      }
+
+      .nav-sub-item:hover .nav-sub-dot,
+      .nav-sub-item.active .nav-sub-dot {
+         background: var(--green);
+      }
+
+      .sidebar.collapsed .nav-dropdown-menu {
+         display: none !important;
+      }
+
+      .sidebar.collapsed .nav-chevron {
+         display: none;
+      }
+
+      /* ─── ACCURACY TOOL SPECIFIC ─────────── */
+      .primary-gradient {
+         background: linear-gradient(135deg, #1f8e6d 0%, #0d7a5a 100%);
+      }
+
+      .stat-card {
+         background: #ffffff;
+         padding: 24px;
+         border-radius: 12px;
+         box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+         border-left: 4px solid transparent;
+      }
+
+      .test-row {
+         background: #ffffff;
+         padding: 20px;
+         border-radius: 12px;
+         display: flex;
+         flex-direction: column;
+         gap: 16px;
+         box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+         transition: box-shadow .2s;
+      }
+
+      .test-row:hover {
+         box-shadow: 0 4px 16px rgba(0, 0, 0, .1);
+      }
+
+      .pod-card {
+         background: #ffffff;
+         border-radius: 12px;
+         overflow: hidden;
+         box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+         transition: box-shadow .2s;
+      }
+
+      .pod-card:hover {
+         box-shadow: 0 6px 20px rgba(0, 0, 0, .1);
+      }
+
+      .side-card {
+         background: #ffffff;
+         padding: 24px;
+         border-radius: 12px;
+         box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+      }
+
+      .upgrade-card {
+         position: relative;
+         overflow: hidden;
+         border-radius: 28px;
+         padding: 32px 24px 22px;
+
+         background: linear-gradient(145deg, #289773 0%, #208b69 100%);
+         color: white;
+         box-shadow: 0 16px 34px rgba(31, 142, 109, .22);
+      }
+
+      .upgrade-card::before {
+         content: "";
+         position: absolute;
+         inset: 0;
+         background:
+            radial-gradient(circle at 18% 14%, rgba(255, 255, 255, .08), transparent 30%),
+            radial-gradient(circle at 80% 55%, rgba(255, 255, 255, .04), transparent 25%);
+         pointer-events: none;
+      }
+
+      .upgrade-card-copy {
+         position: relative;
+         z-index: 1;
+         max-width: 135px;
+         padding-top: 0;
+      }
+
+      .upgrade-card-title {
+         padding-top: 35px;
+         margin: 0;
+         font-size: 1.4rem;
+         line-height: 1.12;
+         font-weight: 900;
+         letter-spacing: -.04em;
+      }
+
+      .upgrade-card-text {
+         margin: 15px 0 0;
+         font-size: .98rem;
+         line-height: 1.34;
+         font-weight: 500;
+         color: rgba(255, 255, 255, .9);
+      }
+
+      .upgrade-card-button {
+         margin-top: 20px;
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+
+         min-height: 40px;
+         padding: 0 20px;
+         border-radius: 999px;
+         border: 2px solid rgba(255, 255, 255, .22);
+         background: rgba(255, 255, 255, .05);
+         color: white;
+         font-size: 1rem;
+         font-weight: 800;
+         box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1);
+         backdrop-filter: blur(4px);
+         transition: background .18s ease, border-color .18s ease, transform .18s ease;
+      }
+
+      .upgrade-card-button:hover {
+         background: rgba(255, 255, 255, .1);
+         border-color: rgba(255, 255, 255, .3);
+      }
+
+      .upgrade-card-button:active {
+         transform: scale(.98);
+      }
+
+      .upgrade-card-preview {
+         position: absolute;
+         right: 14px;
+         bottom: 50px;
+         width: 110px;
+         height: auto;
+         object-fit: contain;
+         display: block;
+         z-index: 1;
+      }
+
+      .tips-card {
+         background: var(--surface-2);
+         padding: 0px 24px 24px 24px;
+         border-radius: 12px;
+      }
+   </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+
+   <!-- ─── SIDEBAR ─────────────────────────── -->
+   <aside class="sidebar" id="sidebar">
+
+      <button class="sidebar-toggle" id="sidebarToggle" title="Toggle sidebar">
+         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <polyline points="15 18 9 12 15 6" />
+         </svg>
+      </button>
+
+      <div class="sidebar-logo">
+         <img src="https://www.transcriptioncertificationinstitute.org/images/tci-logo.png" alt="TCI Logo" style="width:100%;max-width:160px;height:auto;">
+      </div>
+
+      <div class="nav-section">
+         <div class="nav-label">Main</div>
+
+         <a class="nav-item" href="code.html" data-tooltip="Dashboard">
+            <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+               <rect x="3" y="3" width="7" height="7" rx="1" />
+               <rect x="14" y="3" width="7" height="7" rx="1" />
+               <rect x="3" y="14" width="7" height="7" rx="1" />
+               <rect x="14" y="14" width="7" height="7" rx="1" />
+            </svg>
+            <span class="nav-text">Dashboard</span>
+         </a>
+
+         <div class="nav-dropdown" id="coursesDropdown">
+            <button class="nav-item nav-dropdown-toggle" data-tooltip="My Courses">
+               <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+               </svg>
+               <span class="nav-text">My Courses</span>
+               <svg class="nav-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="6 9 12 15 18 9" />
+               </svg>
+            </button>
+            <div class="nav-dropdown-menu">
+               <a class="nav-sub-item" href="general-transcription-course.html">
+                  <span class="nav-sub-dot"></span>
+                  <span class="nav-text">General Transcription Course</span>
+               </a>
+               <a class="nav-sub-item" href="legal-transcription-course.html">
+                  <span class="nav-sub-dot"></span>
+                  <span class="nav-text">Legal Transcription Course</span>
+               </a>
+            </div>
+         </div>
+
+         <div class="nav-dropdown" id="resourcesDropdown">
+            <button class="nav-item nav-dropdown-toggle" data-tooltip="Resources">
+               <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+               </svg>
+               <span class="nav-text">Resources</span>
+               <svg class="nav-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="6 9 12 15 18 9" />
+               </svg>
+            </button>
+            <div class="nav-dropdown-menu">
+               <a class="nav-sub-item" href="#">
+                  <span class="nav-sub-dot"></span>
+                  <span class="nav-text">Assignment Tracking</span>
+               </a>
+               <a class="nav-sub-item" href="#">
+                  <span class="nav-sub-dot"></span>
+                  <span class="nav-text">Grammar Quizzes</span>
+               </a>
+               <a class="nav-sub-item" href="#">
+                  <span class="nav-sub-dot"></span>
+                  <span class="nav-text">Legal Transcription</span>
+               </a>
+               <a class="nav-sub-item" href="#">
+                  <span class="nav-sub-dot"></span>
+                  <span class="nav-text">Tips and Tricks</span>
+               </a>
+               <a class="nav-sub-item" href="#">
+                  <span class="nav-sub-dot"></span>
+                  <span class="nav-text">Practice Transcription</span>
+               </a>
+               <a class="nav-sub-item" href="#">
+                  <span class="nav-sub-dot"></span>
+                  <span class="nav-text">Verbatim Vs Non-verbatim</span>
+               </a>
+            </div>
+         </div>
+
+         <a class="nav-item" href="#" data-tooltip="Progress">
+            <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+               <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+            <span class="nav-text">Progress</span>
+         </a>
+
+         <a class="nav-item" href="#" data-tooltip="Schedule">
+            <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+               <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+               <line x1="16" y1="2" x2="16" y2="6" />
+               <line x1="8" y1="2" x2="8" y2="6" />
+               <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+            <span class="nav-text">Schedule</span>
+         </a>
+      </div>
+
+      <div class="nav-section">
+         <div class="nav-label">Resources</div>
+
+         <a class="nav-item active" href="accuracy-assessment-tool.html" data-tooltip="Accuracy Tool">
+            <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+               <path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+               <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span class="nav-text">Accuracy Tool</span>
+         </a>
+
+         <a class="nav-item" href="#" data-tooltip="Job Board">
+            <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+               <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            <span class="nav-text">Job Board</span>
+         </a>
+
+         <a class="nav-item" href="#" data-tooltip="Discussion Board">
+            <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+               <path d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+            </svg>
+            <span class="nav-text">Discussion Board</span>
+         </a>
+
+         <a class="nav-item" href="#" data-tooltip="Settings">
+            <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+               <path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+            </svg>
+            <span class="nav-text">Settings</span>
+         </a>
+      </div>
+
+      <div class="sidebar-footer">
+         <div class="user-card">
+            <div class="user-avatar">JD</div>
+            <div>
+               <div class="user-name">Jane Doe</div>
+               <div class="user-role">Student · Free Plan</div>
+            </div>
+         </div>
+      </div>
+   </aside>
+
+   <!-- ─── MAIN CONTENT ────────────────────── -->
+   <div class="main-wrap" id="mainWrap">
+
+      <header class="header">
+         <div class="header-title">Accuracy Assessment Tool</div>
+         <div class="search-wrap">
+            <svg class="search-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+               <circle cx="11" cy="11" r="8" />
+               <path d="m21 21-4.35-4.35" />
+            </svg>
+            <input type="text" placeholder="Search courses, tools, resources…">
+         </div>
+         <div class="header-actions">
+            <div class="icon-btn" title="Notifications">
+               <div class="notif-dot"></div>
+               <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+               </svg>
+            </div>
+            <div class="icon-btn" title="Messages">
+               <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+               </svg>
+            </div>
+            <div class="icon-btn" title="Cart">
+               <span class="material-symbols-outlined" style="font-size:18px;">shopping_cart</span>
+            </div>
+            <div class="header-avatar">JD</div>
+         </div>
+      </header>
+
+      <div class="page-content">
+         <main class="w-full max-w-[1440px] mx-auto space-y-10">
+
+            <!-- ─── Page Header ─── -->
+            <section>
+               <nav class="flex items-center gap-2 text-xs font-semibold text-slate-400 mb-3 uppercase tracking-widest">
+                  <a href="code.html" class="hover:text-primary transition-colors">Dashboard</a>
+                  <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                     <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                  <span style="color: var(--green);">Accuracy Tool</span>
+               </nav>
+               <h2 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight mb-1">Accuracy Assessment Tool</h2>
+
+               <!-- ─── Highlight Banner ─── -->
+               <div class="mt-4 flex items-start gap-3 rounded-xl px-5 py-4" style="background: var(--green-light); border: 1.5px solid #a7d7c8;">
+                  <span class="material-symbols-outlined text-[22px] shrink-0 mt-0.5" style="color: var(--green);">info</span>
+                  <p class="text-sm leading-relaxed" style="color: #1a5c47;">
+                     Your transcript will be assessed on accuracy, spelling, punctuation, and formatting features like the use of speaker labels.&nbsp;
+                     <a href="#" class="font-extrabold uppercase tracking-wide underline underline-offset-2" style="color: var(--green); text-decoration-color: var(--green);">See the Sample Sheet as an Example.</a>
+                  </p>
+               </div>
+            </section>
+
+            <!-- ─── Quick Stats ─── -->
+            <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+               <div class="stat-card" style="border-left-color: var(--green);">
+                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-2">Total Tests</p>
+                  <div class="flex items-end justify-between">
+                     <span class="text-2xl font-black text-slate-900">12</span>
+                     <span class="material-symbols-outlined text-3xl" style="color: var(--green); opacity:.15;">task_alt</span>
+                  </div>
+               </div>
+               <div class="stat-card" style="border-left-color: #34d399;">
+                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-2">Avg Accuracy</p>
+                  <div class="flex items-end justify-between">
+                     <span class="text-2xl font-black text-slate-900">92%</span>
+                     <span class="material-symbols-outlined text-3xl text-emerald-400" style="opacity:.2;">analytics</span>
+                  </div>
+               </div>
+               <div class="stat-card" style="border-left-color: #6ee7b7;">
+                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-2">Last Score</p>
+                  <div class="flex items-end justify-between">
+                     <span class="text-2xl font-black text-slate-900">94%</span>
+                     <span class="material-symbols-outlined text-3xl text-emerald-300" style="opacity:.25;">grade</span>
+                  </div>
+               </div>
+               <div class="stat-card" style="border-left-color: var(--purple);">
+                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-2">Certificates</p>
+                  <div class="flex items-end justify-between">
+                     <span class="text-2xl font-black text-slate-900">2</span>
+                     <span class="material-symbols-outlined text-3xl" style="color: var(--purple); opacity:.2;">workspace_premium</span>
+                  </div>
+               </div>
+            </section>
+
+            <!-- ─── Main + Side Layout ─── -->
+            <div class="flex flex-col lg:flex-row gap-8">
+
+               <!-- ─── Main Area (70%) ─── -->
+               <div class="flex-1 min-w-0 space-y-10">
+
+                  <!-- Practice Tests -->
+                  <section>
+                     <div class="flex items-center justify-between mb-5">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white tracking-tight">Practice Tests</h3>
+                        <button class="text-sm font-bold hover:underline" style="color: var(--green);">View All</button>
+                     </div>
+                     <div class="space-y-4">
+
+                        <!-- Test Row 1 -->
+                        <div class="test-row md:flex-row md:items-center md:justify-between">
+                           <div class="flex items-center gap-5">
+                              <div class="w-12 h-12 rounded-xl flex items-center justify-center font-bold text-sm shrink-0" style="background: var(--green-light); color: var(--green);">T1</div>
+                              <div>
+                                 <div class="flex items-center gap-3 mb-1 flex-wrap">
+                                    <h4 class="font-bold text-slate-900 dark:text-white">General Transcription Practice Test 1</h4>
+                                    <span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 text-[10px] font-black rounded-full uppercase tracking-tighter">Free</span>
+                                 </div>
+                                 <div class="flex items-center gap-4 text-xs text-slate-400 font-medium flex-wrap">
+                                    <span class="flex items-center gap-1">
+                                       <span class="material-symbols-outlined text-[14px]">schedule</span> 2:30 min
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                       <span class="material-symbols-outlined text-[14px]">history</span> Taken 3 times
+                                    </span>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="flex items-center gap-3 flex-wrap">
+                              <a class="text-xs font-bold hover:underline" style="color: var(--green);" href="#">View Style Guide</a>
+                              <button class="px-4 py-2 border border-emerald-100 text-emerald-700 font-bold rounded-lg text-sm hover:bg-emerald-50 transition-colors">Upload Transcript</button>
+                              <button class="px-5 py-2 primary-gradient text-white font-bold rounded-lg text-sm shadow-sm active:scale-95 transition-all">Start Test</button>
+                           </div>
+                        </div>
+
+                        <!-- Test Row 2 -->
+                        <div class="test-row md:flex-row md:items-center md:justify-between">
+                           <div class="flex items-center gap-5">
+                              <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 font-bold text-sm shrink-0">T2</div>
+                              <div>
+                                 <div class="flex items-center gap-3 mb-1 flex-wrap">
+                                    <h4 class="font-bold text-slate-900 dark:text-white">General Transcription Practice Test 2</h4>
+                                    <span class="px-2 py-0.5 bg-amber-100 text-amber-700 text-[10px] font-black rounded-full uppercase tracking-tighter">In Progress</span>
+                                 </div>
+                                 <div class="flex items-center gap-4 text-xs text-slate-400 font-medium flex-wrap">
+                                    <span class="flex items-center gap-1">
+                                       <span class="material-symbols-outlined text-[14px]">schedule</span> 5:15 min
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                       <span class="material-symbols-outlined text-[14px]">bolt</span> Intermediate
+                                    </span>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="flex items-center gap-3 flex-wrap">
+                              <a class="text-xs font-bold hover:underline" style="color: var(--green);" href="#">View Style Guide</a>
+                              <button class="px-4 py-2 border border-emerald-100 text-emerald-700 font-bold rounded-lg text-sm hover:bg-emerald-50 transition-colors">Upload Transcript</button>
+                              <button class="px-5 py-2 primary-gradient text-white font-bold rounded-lg text-sm shadow-sm active:scale-95 transition-all">Resume</button>
+                           </div>
+                        </div>
+
+                     </div>
+                  </section>
+
+                  <!-- Podcast Practice -->
+                  <section>
+                     <div class="flex items-center justify-between mb-5">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white tracking-tight">Practice with Podcast Episodes</h3>
+                        <button class="text-sm font-bold hover:underline" style="color: var(--green);">Explore More</button>
+                     </div>
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                        <!-- Pod Card 1 -->
+                        <div class="pod-card">
+                           <div class="h-44 bg-slate-200 relative">
+                              <img alt="Podcast thumbnail" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCT38CV1FdOpfA-FJdpW3UG4nSyMhE9yQbuYDS9f8rLAjEswDwDBSjIH3s3yFyjkr28oBMWT7mDtluFjikvAqf4SIYBMl_aW41E8nPdVzoyP_OUauNJRWL-XaZoXWWlC47gf0kBpm2A9epHRkO0B8ijibTjBAcQyKSJENa_T8RITLTev7pyevGHbcvLC7eaw4o1urL1wNmM8h3Pd0DExeTxDvwJGNl2ZpaNPBvBdSj-myeNjdU6JoZQ-lAVv2DWBYS6gzB9bIcg5XOA" />
+                              <div class="absolute inset-0 bg-black/20 flex items-center justify-center group cursor-pointer">
+                                 <div class="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform" style="color: var(--green);">
+                                    <span class="material-symbols-outlined">play_arrow</span>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="p-5">
+                              <div class="flex items-center justify-between mb-2">
+                                 <span class="text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider" style="color: var(--green); background: var(--green-light);">Business</span>
+                                 <span class="text-xs font-medium text-slate-400">12:45 min</span>
+                              </div>
+                              <h4 class="font-bold text-slate-900 mb-2 line-clamp-1">The Future of AI in Modern Transcription</h4>
+                              <p class="text-sm text-slate-500 line-clamp-2 leading-relaxed mb-5">An interview with lead engineers about how neural networks are changing the accuracy standards of human-led transcription.</p>
+                              <div class="flex gap-3">
+                                 <button class="flex-1 py-2 primary-gradient text-white font-bold rounded-lg text-sm shadow-sm active:scale-95 transition-all">Start Transcribing</button>
+                                 <button class="flex-1 py-2 bg-slate-100 text-slate-700 font-bold rounded-lg text-sm hover:bg-slate-200 transition-colors">Rate Transcript</button>
+                              </div>
+                           </div>
+                        </div>
+
+                        <!-- Pod Card 2 -->
+                        <div class="pod-card">
+                           <div class="h-44 bg-slate-200 relative">
+                              <img alt="Podcast thumbnail" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDbF_7VSUM7ORfCfi4ePG2ggR3J0nBpkMdMfBIh3lC5IMgRhQI0rgQ_jHt5Fu1OXkXvth7Jd3Vjl1-UNKNtzrgI_hwUQEOfsv8nFGBqPLX5HLfsHfTrI_9pQzarpOs4n2udgs5xJt8jkv7VmDHW_JEZ0qKiGijtHhimv2RRRAuv2sUKJqtJiyshEj40Jlgb8JOgp3vExqDJZeMakPk2US-AAlXnv4PMnDI37ml46b0GFrIa9dqplkSOU579EQbL5-l2Cyh3a5WeU7F" />
+                              <div class="absolute inset-0 bg-black/20 flex items-center justify-center group cursor-pointer">
+                                 <div class="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform" style="color: var(--green);">
+                                    <span class="material-symbols-outlined">play_arrow</span>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="p-5">
+                              <div class="flex items-center justify-between mb-2">
+                                 <span class="text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider" style="color: var(--green); background: var(--green-light);">Legal</span>
+                                 <span class="text-xs font-medium text-slate-400">08:20 min</span>
+                              </div>
+                              <h4 class="font-bold text-slate-900 mb-2 line-clamp-1">Courtroom Etiquette &amp; Speaker Patterns</h4>
+                              <p class="text-sm text-slate-500 line-clamp-2 leading-relaxed mb-5">Mastering the art of identifying multi-speaker overlaps and complex legal jargon in high-stakes environments.</p>
+                              <div class="flex gap-3">
+                                 <button class="flex-1 py-2 primary-gradient text-white font-bold rounded-lg text-sm shadow-sm active:scale-95 transition-all">Start Transcribing</button>
+                                 <button class="flex-1 py-2 bg-slate-100 text-slate-700 font-bold rounded-lg text-sm hover:bg-slate-200 transition-colors">Rate Transcript</button>
+                              </div>
+                           </div>
+                        </div>
+
+                     </div>
+                  </section>
+
+               </div>
+
+               <!-- ─── Side Panel (30%) ─── -->
+               <aside class="lg:w-72 xl:w-80 space-y-6 shrink-0">
+                  <div class="sticky top-24 space-y-6">
+
+                     <!-- Quick Tips Card -->
+                     <div class="tips-card">
+                        <div class="flex items-center gap-2 mb-4">
+                           <span class="material-symbols-outlined text-[20px]" style="color: var(--green);">lightbulb</span>
+                           <h4 class="font-bold text-slate-900 uppercase tracking-wider text-xs">Quick Tips</h4>
+                        </div>
+                        <ul class="space-y-6">
+                           <li class="flex items-start gap-3">
+                              <div class="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style="background: var(--green);"></div>
+                              <p class="text-sm text-slate-500 leading-relaxed">Use correct <span class="font-bold text-slate-700">speaker labels</span> consistently throughout the transcript.</p>
+                           </li>
+                           <li class="flex items-start gap-3">
+                              <div class="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style="background: var(--green);"></div>
+                              <p class="text-sm text-slate-500 leading-relaxed">Check <span class="font-bold text-slate-700">punctuation</span> carefully—especially in rapid exchanges.</p>
+                           </li>
+                           <li class="flex items-start gap-3">
+                              <div class="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style="background: var(--green);"></div>
+                              <p class="text-sm text-slate-500 leading-relaxed">Don't guess on inaudibles; use the standard <span class="font-mono text-xs bg-slate-200 px-1 rounded">[inaudible 00:00]</span> tag.</p>
+                           </li>
+                        </ul>
+                        <div class="mt-5 pt-5 border-t border-slate-200">
+                           <a class="text-xs font-bold flex items-center justify-center gap-1 hover:gap-2 transition-all" style="color: var(--green);" href="#">
+                              Download Style Guide PDF
+                              <span class="material-symbols-outlined text-sm">download</span>
+                           </a>
+                        </div>
+                     </div>
+
+                     <!-- Upgrade Card -->
+                     <div class="upgrade-card">
+                        <span class="material-symbols-outlined absolute top-5 right-5 select-none" style="font-size:40px; color: rgba(255,255,255,.12);">school</span>
+                        <h4 class="upgrade-card-title">Want to transcribe like a pro?</h4>
+                        <div class="upgrade-card-copy">
+
+                           <p class="upgrade-card-text">Unlock advanced legal and medical courses with certified transcription paths.</p>
+                           <button class="upgrade-card-button">Enroll Now</button>
+                        </div>
+                        <img src="https://app.transcriptioncertificationinstitute.org/_next/image/?url=https%3A%2F%2Ftcistorage.blob.core.windows.net%2Flocal%2Fimages%2Fweb%2Faccuracy-assessment-tool.webp&w=256&q=75&dpl=dpl_5SNn37CLST2Bet4rLXbfPMo89H7K" alt="Accuracy Assessment Tool preview" class="upgrade-card-preview" />
+                        <div class="absolute right-8 bottom-12 w-32 h-32 rounded-full border border-white/10" style="opacity: .18;"></div>
+                     </div>
+
+                  </div>
+               </aside>
+            </div>
+
+         </main>
+      </div>
+
+      <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8 px-8 mt-auto">
+         <div class="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3 opacity-50">
+               <span class="material-symbols-outlined">school</span>
+               <p class="text-sm font-medium">© 2024 Transcription Certification Institute. All rights reserved.</p>
+            </div>
+            <div class="flex gap-8">
+               <a class="text-sm text-slate-500 hover:text-primary" href="#">Help Center</a>
+               <a class="text-sm text-slate-500 hover:text-primary" href="#">Terms of Service</a>
+               <a class="text-sm text-slate-500 hover:text-primary" href="#">Privacy Policy</a>
+            </div>
+         </div>
+      </footer>
+
+   </div>
+
+   <script>
+      const sidebar = document.getElementById('sidebar');
+      const mainWrap = document.getElementById('mainWrap');
+      const toggleBtn = document.getElementById('sidebarToggle');
+
+      const updateSidebarState = (isCollapsed) => {
+         sidebar.classList.toggle('collapsed', isCollapsed);
+         mainWrap.classList.toggle('collapsed', isCollapsed);
+      };
+
+      toggleBtn.addEventListener('click', () => {
+         const isCollapsed = !sidebar.classList.contains('collapsed');
+         updateSidebarState(isCollapsed);
+         localStorage.setItem('sidebarCollapsed', isCollapsed);
+      });
+
+      window.addEventListener('DOMContentLoaded', () => {
+         updateSidebarState(localStorage.getItem('sidebarCollapsed') === 'true');
+
+         // My Courses dropdown toggle
+         document.querySelectorAll('.nav-dropdown-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+               btn.closest('.nav-dropdown').classList.toggle('open');
+            });
+         });
+      });
+   </script>
+</body>
+
+</html>

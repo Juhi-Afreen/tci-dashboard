@@ -1,0 +1,105 @@
+<main class="max-w-[1440px] mx-auto w-full px-4 lg:px-20 py-8 space-y-8">
+            <section class="relative overflow-hidden rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm p-8">
+               <div class="flex flex-col lg:flex-row gap-8 items-center justify-between">
+                  <div class="flex-1 space-y-4">
+                     <div class="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider rounded-full">
+                        <span class="material-symbols-outlined text-sm">verified</span>
+                        Enrolled
+                     </div>
+                     <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white">General Transcription Course</h2>
+                     <p class="text-slate-600 dark:text-slate-400 text-lg max-w-xl leading-relaxed">
+                        Master the art of professional transcription. Progress at your own pace and complete within 5–6 weeks.
+                     </p>
+                     <div class="flex flex-wrap gap-4 pt-4">
+                        <button class="px-6 py-3 bg-primary hover:bg-primary/90 text-white font-bold rounded-lg flex items-center gap-2 transition-all shadow-lg shadow-primary/20">
+                           <span class="material-symbols-outlined">play_circle</span>
+                           Continue Learning
+                        </button>
+                        <button class="px-6 py-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold rounded-lg transition-all">
+                           View All Lessons
+                        </button>
+                     </div>
+                  </div>
+                  <div class="w-full lg:w-[400px] space-y-6 bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl border border-slate-100 dark:border-slate-800">
+                     <div class="flex justify-between items-end">
+                        <div>
+                           <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Your Progress</p>
+                           <p class="text-2xl font-bold text-slate-900 dark:text-white">60% Completed</p>
+                        </div>
+                        <span class="text-primary font-bold">12 / 20 Lessons</span>
+                     </div>
+                     <div class="w-full h-3 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                        <div class="h-full bg-primary rounded-full transition-all duration-1000" style="width: 60%"></div>
+                     </div>
+                     <div class="aspect-video w-full rounded-lg bg-slate-200 dark:bg-slate-800 overflow-hidden relative group">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <img class="w-full h-full object-cover" data-alt="Transcriptionist working at a desk with headphones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2aOArYIkTUxfUUJktpvG1_KGGi-TsRr7fqrK4NE3-QFOH-IMw_d_QQkL5JjGD14mrYl_9UUco_10SRz6eSzSF0Qmm8jGlBBIy7KdBKzKMf00rZ4cNKx-FESQ5r6Gd4lsfAo4TRbLxN_2VMrRfTBtvpoiCWsUuLRPQ_KIFPrnIkkbAMHL0o7jRy5HlMUwG9B9t6NbDKPCu0HA-TkHJ1CHyh9mwv8u3LwwaPdswQgC4dzLVHWTKFSQ0TzKQdEYLtGeQbIWZvqP0jY9h" />
+                        <div class="absolute bottom-4 left-4 right-4">
+                           <p class="text-white text-xs font-medium opacity-80 uppercase">Module 3</p>
+                           <p class="text-white font-bold truncate">Advanced Formatting Techniques</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </section>
+            <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+               <div class="lg:col-span-2 bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between gap-6 group hover:border-primary/50 transition-all">
+                  <div class="flex items-center gap-6">
+                     <div class="h-16 w-16 rounded-xl bg-accent-purple/10 text-accent-purple flex items-center justify-center">
+                        <span class="material-symbols-outlined text-4xl">history_edu</span>
+                     </div>
+                     <div>
+                        <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mb-1">Last Activity: 2 hours ago</p>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-1">Resume: Timestamping Techniques</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm">Module 3 - Lesson 4 • 12 mins remaining</p>
+                     </div>
+                  </div>
+                  <button class="hidden sm:flex px-5 py-2.5 bg-primary text-white text-sm font-bold rounded-lg items-center gap-2 hover:bg-primary/90 transition-all">
+                     Resume Lesson
+                     <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                  </button>
+               </div>
+               <div class="bg-gradient-to-br from-primary to-primary/80 p-6 rounded-xl shadow-lg shadow-primary/20 flex flex-col justify-between text-white">
+                  <div class="flex justify-between items-start">
+                     <span class="material-symbols-outlined text-4xl opacity-50">workspace_premium</span>
+                     <div class="text-right">
+                        <p class="text-xs font-bold opacity-80 uppercase">Eligibility</p>
+                        <p class="text-lg font-bold">Locked</p>
+                     </div>
+                  </div>
+                  <div>
+                     <h3 class="text-xl font-bold mb-2">Final Certification</h3>
+                     <p class="text-white/80 text-sm mb-4 leading-snug">Complete all 20 lessons to unlock your final exam and industry-recognized certificate.</p>
+                     <button class="w-full py-2 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-bold transition-all backdrop-blur-sm border border-white/20">
+                        View Requirements
+                     </button>
+                  </div>
+               </div>
+            </section>
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+               <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 flex gap-6 hover:shadow-md transition-shadow">
+                  <div class="h-12 w-12 shrink-0 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center">
+                     <span class="material-symbols-outlined text-2xl">quiz</span>
+                  </div>
+                  <div class="flex-1 space-y-2">
+                     <h4 class="font-bold text-lg text-slate-900 dark:text-white">Final Exam</h4>
+                     <p class="text-slate-600 dark:text-slate-400 text-sm">Comprehensive assessment of all modules. Pass with 90% or higher to qualify for the TCI stamp.</p>
+                     <button class="text-primary text-sm font-bold flex items-center gap-1 hover:underline pt-2">
+                        Take Final Exam <span class="material-symbols-outlined text-sm">lock</span>
+                     </button>
+                  </div>
+               </div>
+               <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 flex gap-6 hover:shadow-md transition-shadow">
+                  <div class="h-12 w-12 shrink-0 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                     <span class="material-symbols-outlined text-2xl">card_membership</span>
+                  </div>
+                  <div class="flex-1 space-y-2">
+                     <h4 class="font-bold text-lg text-slate-900 dark:text-white">Get Certificate</h4>
+                     <p class="text-slate-600 dark:text-slate-400 text-sm">Download your digital certificate or order a physical copy for your professional portfolio.</p>
+                     <button class="text-primary text-sm font-bold flex items-center gap-1 hover:underline pt-2">
+                        Download PDF <span class="material-symbols-outlined text-sm">download</span>
+                     </button>
+                  </div>
+               </div>
+            </section>
+            <section class="grid grid-cols-1 lg:grid-cols-12 gap-8">

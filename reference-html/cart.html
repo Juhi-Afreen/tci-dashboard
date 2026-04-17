@@ -1,0 +1,1972 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Your Cart — TCI</title>
+   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+   <style>
+      *,
+      *::before,
+      *::after {
+         box-sizing: border-box;
+         margin: 0;
+         padding: 0;
+      }
+
+      :root {
+         --green: #4fb783;
+         --green-dark: #3a9a6a;
+         --green-light: #e8f7ef;
+         --amber-light: #fff8e1;
+         --white: #ffffff;
+         --dark: #1a2332;
+         --mid: #4a5568;
+         --muted: #94a3b8;
+         --border: #e2e8f0;
+         --bg: #f4f7fb;
+         --radius: 14px;
+      }
+
+      body {
+         font-family: 'Poppins', sans-serif;
+         background: var(--bg);
+         min-height: 100vh;
+         color: var(--dark);
+      }
+
+      /* ── Top Bar ── */
+      .topbar {
+         background: var(--white);
+         border-bottom: 1px solid var(--border);
+         padding: 0 2rem;
+         height: 64px;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         position: sticky;
+         top: 0;
+         z-index: 100;
+      }
+
+      .logo {
+         font-weight: 700;
+         font-size: 18px;
+         color: var(--dark);
+         display: flex;
+         align-items: center;
+         gap: 10px;
+         text-decoration: none;
+      }
+
+      .logo-dot {
+         width: 28px;
+         height: 28px;
+         background: var(--green);
+         border-radius: 8px;
+         display: grid;
+         place-items: center;
+      }
+
+      .logo-dot svg {
+         width: 14px;
+         height: 14px;
+      }
+
+      /* ── Progress ── */
+      .progress-wrap {
+         background: var(--white);
+         border-bottom: 1px solid var(--border);
+         padding: 1rem 2rem;
+         display: flex;
+         justify-content: center;
+      }
+
+      .steps {
+         display: flex;
+         align-items: center;
+      }
+
+      .step {
+         display: flex;
+         align-items: center;
+         gap: 10px;
+         padding: 8px 20px;
+         border-radius: 100px;
+         font-size: 13px;
+         font-weight: 500;
+         color: var(--muted);
+         background: transparent;
+         border: 1.5px solid var(--border);
+      }
+
+      .step.done {
+         background: var(--green-light);
+         border-color: var(--green);
+         color: var(--green);
+      }
+
+      .step.active {
+         background: var(--green);
+         border-color: var(--green);
+         color: #fff;
+         box-shadow: 0 4px 18px rgba(79, 183, 131, .3);
+      }
+
+      .step-num {
+         width: 22px;
+         height: 22px;
+         border-radius: 50%;
+         display: grid;
+         place-items: center;
+         font-size: 11px;
+         font-weight: 700;
+         flex-shrink: 0;
+      }
+
+      .step.done .step-num {
+         background: var(--green);
+         color: #fff;
+      }
+
+      .step.active .step-num {
+         background: rgba(255, 255, 255, .25);
+         color: #fff;
+      }
+
+      .step:not(.done):not(.active) .step-num {
+         background: var(--border);
+         color: var(--muted);
+      }
+
+      .step-connector {
+         width: 56px;
+         height: 2px;
+         margin: 0 4px;
+      }
+
+      .step-connector.done {
+         background: var(--green);
+      }
+
+      .step-connector:not(.done) {
+         background: var(--border);
+      }
+
+      /* ── Back link ── */
+      .back-link {
+         display: inline-flex;
+         align-items: center;
+         gap: 6px;
+         font-size: 13px;
+         color: var(--mid);
+         text-decoration: none;
+         cursor: pointer;
+         border: none;
+         background: none;
+         font-family: 'Poppins', sans-serif;
+         padding: 0;
+      }
+
+      .back-link:hover {
+         color: var(--green);
+      }
+
+      /* ── Page Layout ── */
+      .page-wrap {
+         max-width: 1080px;
+         margin: 0 auto;
+         padding: 2.5rem 1.5rem;
+      }
+
+      .page-title {
+         font-weight: 700;
+         font-size: 24px;
+         color: var(--dark);
+         margin-bottom: .25rem;
+      }
+
+      .page-subtitle {
+         font-size: 14px;
+         color: var(--muted);
+         margin-bottom: 2rem;
+      }
+
+      .cart-grid {
+         display: grid;
+         grid-template-columns: 1fr 380px;
+         gap: 1.75rem;
+         align-items: start;
+      }
+
+      @media (max-width: 860px) {
+         .cart-grid {
+            grid-template-columns: 1fr;
+         }
+      }
+
+      /* ── Card ── */
+      .card {
+         background: var(--white);
+         border-radius: var(--radius);
+         border: 1px solid var(--border);
+         padding: 1.75rem;
+         box-shadow: 0 2px 20px rgba(0, 0, 0, .05);
+         margin-bottom: 1.5rem;
+      }
+
+      .card:last-child {
+         margin-bottom: 0;
+      }
+
+      .card-heading {
+         font-weight: 600;
+         font-size: 17px;
+         color: var(--dark);
+         margin-bottom: 1.25rem;
+         display: flex;
+         align-items: center;
+         gap: 8px;
+      }
+
+      /* ── Selected Course ── */
+      .selected-wrap {
+         background: linear-gradient(135deg, #f0faf5 0%, #e8f7ef 100%);
+         border: 2px solid var(--green);
+         border-radius: 12px;
+         padding: 1.25rem;
+         display: flex;
+         gap: 1.25rem;
+         align-items: flex-start;
+         position: relative;
+         overflow: hidden;
+         transition: all .25s;
+      }
+
+      .selected-wrap.deselected {
+         background: #fafbfc;
+         border-color: var(--border);
+         border-style: dashed;
+         opacity: .6;
+      }
+
+      .selected-wrap::before {
+         content: '';
+         position: absolute;
+         top: -24px;
+         right: -24px;
+         width: 96px;
+         height: 96px;
+         background: rgba(79, 183, 131, .08);
+         border-radius: 50%;
+      }
+
+      .selected-badge {
+         position: absolute;
+         top: 12px;
+         right: 14px;
+         background: var(--green);
+         color: #fff;
+         font-size: 10px;
+         font-weight: 700;
+         padding: 4px 10px;
+         border-radius: 100px;
+         letter-spacing: .4px;
+         text-transform: uppercase;
+      }
+
+      .selected-img {
+         width: 80px;
+         height: 108px;
+         border-radius: 8px;
+         object-fit: contain;
+         object-position: center;
+         flex-shrink: 0;
+         background: #f8f9fb;
+         padding: 4px;
+         border: 1px solid rgba(79, 183, 131, .2);
+      }
+
+      .selected-info {
+         flex: 1;
+         min-width: 0;
+      }
+
+      .selected-name {
+         font-weight: 700;
+         font-size: 16px;
+         color: var(--dark);
+         margin-bottom: 5px;
+         line-height: 1.3;
+      }
+
+      .selected-desc {
+         font-size: 13px;
+         color: var(--mid);
+         line-height: 1.6;
+         margin-bottom: 10px;
+      }
+
+      .pricing-row-inline {
+         display: flex;
+         align-items: center;
+         gap: 10px;
+         flex-wrap: wrap;
+      }
+
+      .orig-price {
+         font-size: 14px;
+         color: var(--muted);
+         text-decoration: line-through;
+      }
+
+      .disc-price {
+         font-size: 24px;
+         font-weight: 700;
+         color: var(--green);
+      }
+
+      .save-badge {
+         background: var(--amber-light);
+         color: #b45309;
+         font-size: 11px;
+         font-weight: 700;
+         padding: 3px 9px;
+         border-radius: 100px;
+         letter-spacing: .2px;
+      }
+
+      .course-controls {
+         display: flex;
+         align-items: center;
+         gap: 8px;
+         margin-top: 1rem;
+         flex-wrap: wrap;
+      }
+
+      .change-course-btn {
+         display: inline-flex;
+         align-items: center;
+         gap: 5px;
+         padding: 7px 14px;
+         border: 1.5px solid var(--border);
+         border-radius: 8px;
+         font-size: 12px;
+         font-weight: 600;
+         font-family: 'Poppins', sans-serif;
+         background: var(--white);
+         color: var(--mid);
+         cursor: pointer;
+         transition: all .2s;
+      }
+
+      .change-course-btn:hover {
+         border-color: var(--green);
+         color: var(--green);
+         background: var(--green-light);
+      }
+
+      .deselect-btn {
+         display: inline-flex;
+         align-items: center;
+         gap: 5px;
+         padding: 7px 14px;
+         border: 1.5px solid #fca5a5;
+         border-radius: 8px;
+         font-size: 12px;
+         font-weight: 600;
+         font-family: 'Poppins', sans-serif;
+         background: var(--white);
+         color: #dc2626;
+         cursor: pointer;
+         transition: all .2s;
+      }
+
+      .deselect-btn:hover {
+         background: #fef2f2;
+         border-color: #dc2626;
+      }
+
+      /* Course picker */
+      .course-picker {
+         display: none;
+         margin-top: 1rem;
+         background: var(--white);
+         border: 1.5px solid var(--border);
+         border-radius: 12px;
+         overflow: hidden;
+         animation: fadeUp .2s ease both;
+      }
+
+      .course-picker.visible {
+         display: block;
+      }
+
+      .picker-header {
+         padding: 12px 16px;
+         background: var(--bg);
+         border-bottom: 1px solid var(--border);
+         font-size: 12px;
+         font-weight: 700;
+         color: var(--mid);
+         text-transform: uppercase;
+         letter-spacing: .6px;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+      }
+
+      .picker-close {
+         background: none;
+         border: none;
+         cursor: pointer;
+         color: var(--muted);
+         font-size: 20px;
+         line-height: 1;
+         padding: 0;
+         transition: color .2s;
+         font-family: 'Poppins', sans-serif;
+      }
+
+      .picker-close:hover {
+         color: var(--dark);
+      }
+
+      .picker-option {
+         display: flex;
+         align-items: center;
+         gap: 12px;
+         padding: 12px 16px;
+         cursor: pointer;
+         border-bottom: 1px solid var(--border);
+         transition: background .15s;
+      }
+
+      .picker-option:last-child {
+         border: none;
+      }
+
+      .picker-option:hover {
+         background: var(--green-light);
+      }
+
+      .picker-option.active {
+         background: #f0faf5;
+      }
+
+      .picker-option.active .picker-opt-name {
+         color: var(--green);
+      }
+
+      .picker-thumb {
+         width: 36px;
+         height: 48px;
+         object-fit: contain;
+         border-radius: 5px;
+         background: #f8f9fb;
+         padding: 2px;
+         border: 1px solid var(--border);
+         flex-shrink: 0;
+      }
+
+      .picker-opt-name {
+         font-weight: 600;
+         font-size: 13px;
+         color: var(--dark);
+      }
+
+      .picker-opt-price {
+         font-size: 13px;
+         font-weight: 700;
+         color: var(--green);
+         margin-top: 1px;
+      }
+
+      .picker-opt-badge {
+         margin-left: auto;
+         font-size: 10px;
+         font-weight: 700;
+         padding: 3px 8px;
+         border-radius: 100px;
+         background: var(--green);
+         color: #fff;
+         flex-shrink: 0;
+      }
+
+      .empty-cart-note {
+         display: none;
+         text-align: center;
+         padding: 1.5rem 1rem;
+         background: #fff8f8;
+         border: 1.5px dashed #fca5a5;
+         border-radius: 10px;
+         margin-top: 1rem;
+         font-size: 13px;
+         color: #dc2626;
+         font-weight: 500;
+      }
+
+      .empty-cart-note.visible {
+         display: block;
+      }
+
+      /* ── Section label ── */
+      .section-label {
+         font-size: 11px;
+         font-weight: 700;
+         letter-spacing: .9px;
+         text-transform: uppercase;
+         color: var(--muted);
+         margin: 1.5rem 0 .875rem;
+         padding-bottom: 8px;
+         border-bottom: 1px solid var(--border);
+         display: flex;
+         align-items: center;
+         gap: 8px;
+      }
+
+      .section-label .label-badge {
+         font-size: 10px;
+         font-weight: 600;
+         padding: 2px 8px;
+         border-radius: 100px;
+         background: var(--amber-light);
+         color: #b45309;
+         letter-spacing: .3px;
+      }
+
+      /* ── Bundle Cards ── */
+      .bundle-grid {
+         display: grid;
+         grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+         gap: 1rem;
+      }
+
+      .bundle-card {
+         border: 1.5px solid var(--border);
+         border-radius: 12px;
+         overflow: hidden;
+         cursor: pointer;
+         transition: border-color .2s, transform .2s, box-shadow .2s;
+         background: var(--white);
+         position: relative;
+      }
+
+      .bundle-card:hover {
+         border-color: var(--green);
+         transform: translateY(-3px);
+         box-shadow: 0 8px 24px rgba(0, 0, 0, .1);
+      }
+
+      .bundle-card.selected {
+         border-color: var(--green);
+         box-shadow: 0 0 0 3px rgba(79, 183, 131, .15);
+      }
+
+      .bundle-card.selected::after {
+         content: '✓';
+         position: absolute;
+         top: 10px;
+         right: 10px;
+         width: 22px;
+         height: 22px;
+         background: var(--green);
+         color: #fff;
+         border-radius: 50%;
+         display: grid;
+         place-items: center;
+         font-size: 11px;
+         font-weight: 700;
+         z-index: 2;
+      }
+
+      .bundle-card-img-wrap {
+         position: relative;
+         height: 160px;
+         background: #f8f9fb;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         overflow: hidden;
+         border-bottom: 1px solid var(--border);
+      }
+
+      .bundle-card-img {
+         width: auto;
+         height: 148px;
+         max-width: 90%;
+         object-fit: contain;
+         display: block;
+      }
+
+      .bundle-card-badge {
+         position: absolute;
+         bottom: 8px;
+         left: 8px;
+         font-size: 10px;
+         font-weight: 700;
+         padding: 3px 9px;
+         border-radius: 100px;
+         letter-spacing: .3px;
+         text-transform: uppercase;
+      }
+
+      .badge-popular {
+         background: #ede9fe;
+         color: #5b21b6;
+      }
+
+      .badge-value {
+         background: var(--green-light);
+         color: #166534;
+      }
+
+      .badge-bundle {
+         background: var(--amber-light);
+         color: #92400e;
+      }
+
+      .bundle-body {
+         padding: .875rem;
+      }
+
+      .bundle-name {
+         font-weight: 600;
+         font-size: 14px;
+         color: var(--dark);
+         margin-bottom: 3px;
+         line-height: 1.3;
+      }
+
+      .bundle-benefit {
+         font-size: 12px;
+         color: var(--muted);
+         margin-bottom: 10px;
+         line-height: 1.5;
+      }
+
+      .bundle-pricing {
+         display: flex;
+         align-items: baseline;
+         gap: 8px;
+         flex-wrap: wrap;
+      }
+
+      .bundle-orig {
+         font-size: 12px;
+         color: var(--muted);
+         text-decoration: line-through;
+      }
+
+      .bundle-disc {
+         font-size: 17px;
+         font-weight: 700;
+         color: var(--green);
+      }
+
+      .bundle-save {
+         font-size: 11px;
+         font-weight: 600;
+         color: #166534;
+      }
+
+      .add-btn {
+         width: 100%;
+         margin-top: 10px;
+         padding: 8px;
+         border: 1.5px solid var(--border);
+         border-radius: 8px;
+         font-size: 12px;
+         font-weight: 600;
+         background: transparent;
+         cursor: pointer;
+         transition: all .2s;
+         font-family: 'Poppins', sans-serif;
+      }
+
+      .add-btn:hover {
+         border-color: var(--green);
+         color: var(--green);
+         background: var(--green-light);
+      }
+
+      .bundle-card.selected .add-btn {
+         background: var(--green);
+         border-color: var(--green);
+         color: #fff;
+      }
+
+      /* ── Right Panel ── */
+      .sticky-panel {
+         position: sticky;
+         top: 80px;
+      }
+
+      .order-card {
+         background: var(--white);
+         border-radius: var(--radius);
+         border: 1px solid var(--border);
+         padding: 1.5rem;
+         box-shadow: 0 4px 24px rgba(0, 0, 0, .07);
+      }
+
+      .order-heading {
+         font-weight: 600;
+         font-size: 17px;
+         color: var(--dark);
+         margin-bottom: 1.25rem;
+      }
+
+      .order-item {
+         display: flex;
+         gap: 10px;
+         padding: 10px 0;
+         border-bottom: 1px solid var(--border);
+         align-items: center;
+      }
+
+      .order-thumb {
+         width: 44px;
+         height: 58px;
+         border-radius: 6px;
+         object-fit: contain;
+         object-position: center;
+         flex-shrink: 0;
+         border: 1px solid var(--border);
+         background: #f8f9fb;
+         padding: 2px;
+      }
+
+      .order-item-name {
+         font-weight: 600;
+         font-size: 13px;
+         color: var(--dark);
+         line-height: 1.3;
+      }
+
+      .order-item-orig {
+         font-size: 11px;
+         color: var(--muted);
+         text-decoration: line-through;
+         margin-top: 1px;
+      }
+
+      .order-item-price {
+         font-weight: 700;
+         font-size: 14px;
+         color: var(--dark);
+         margin-left: auto;
+         white-space: nowrap;
+         padding-left: 8px;
+      }
+
+      .summary-rows {
+         margin-top: 1rem;
+      }
+
+      .s-row {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         padding: 8px 0;
+         font-size: 14px;
+         border-bottom: 1px solid var(--border);
+      }
+
+      .s-row:last-child {
+         border: none;
+      }
+
+      .s-row.subtotal {
+         color: var(--mid);
+      }
+
+      .s-row.discount {
+         color: #166534;
+         font-weight: 600;
+      }
+
+      .s-row.total {
+         font-weight: 700;
+         font-size: 18px;
+         color: var(--dark);
+         padding-top: 14px;
+      }
+
+      .savings-banner {
+         background: linear-gradient(90deg, var(--green-light), #d1fae5);
+         border: 1px solid var(--green);
+         border-radius: 10px;
+         padding: 12px 16px;
+         text-align: center;
+         margin: 1rem 0;
+      }
+
+      .savings-banner .s-amt {
+         font-size: 22px;
+         font-weight: 700;
+         color: var(--green);
+      }
+
+      .savings-banner .s-lbl {
+         font-size: 12px;
+         color: #166534;
+         margin-top: 2px;
+      }
+
+      /* Coupon */
+      .coupon-section {
+         margin: 1rem 0;
+         border-top: 1px solid var(--border);
+         padding-top: 1rem;
+      }
+
+      .coupon-label {
+         font-size: 12px;
+         font-weight: 600;
+         color: var(--mid);
+         margin-bottom: 8px;
+         display: flex;
+         align-items: center;
+         gap: 6px;
+         text-transform: uppercase;
+         letter-spacing: .5px;
+      }
+
+      .coupon-row {
+         display: flex;
+         gap: 8px;
+      }
+
+      .coupon-input {
+         flex: 1;
+         padding: 12px 16px;
+         border: 2px dashed var(--border);
+         border-radius: 10px;
+         font-size: 14px;
+         font-weight: 600;
+         font-family: 'Poppins', sans-serif;
+         color: var(--dark);
+         outline: none;
+         text-transform: uppercase;
+         letter-spacing: 1.5px;
+         background: #fafbfc;
+         transition: border-color .2s, box-shadow .2s, background .2s;
+      }
+
+      .coupon-input:focus {
+         border-color: var(--green);
+         border-style: solid;
+         background: var(--white);
+         box-shadow: 0 0 0 3px rgba(79, 183, 131, .12);
+      }
+
+      .coupon-input::placeholder {
+         text-transform: none;
+         letter-spacing: 0;
+         color: #c0cad8;
+         font-weight: 400;
+         font-size: 13px;
+      }
+
+      .coupon-input.error {
+         border-color: #fca5a5;
+         border-style: solid;
+         background: #fff8f8;
+      }
+
+      .coupon-input.success {
+         border-color: var(--green);
+         border-style: solid;
+         background: var(--green-light);
+         color: #166534;
+      }
+
+      .coupon-apply-btn {
+         padding: 12px 20px;
+         background: var(--green);
+         color: #fff;
+         border: none;
+         border-radius: 10px;
+         font-size: 13px;
+         font-weight: 700;
+         font-family: 'Poppins', sans-serif;
+         cursor: pointer;
+         transition: all .2s;
+         white-space: nowrap;
+         letter-spacing: .3px;
+      }
+
+      .coupon-apply-btn:hover {
+         background: var(--green-dark);
+         transform: translateY(-1px);
+         box-shadow: 0 4px 12px rgba(79, 183, 131, .3);
+      }
+
+      .coupon-apply-btn:disabled {
+         background: var(--muted);
+         cursor: default;
+         transform: none;
+         box-shadow: none;
+      }
+
+      .coupon-feedback {
+         margin-top: 8px;
+         font-size: 12px;
+         font-weight: 500;
+         align-items: center;
+         gap: 5px;
+         display: none;
+      }
+
+      .coupon-feedback.show {
+         display: flex;
+      }
+
+      .coupon-feedback.ok {
+         color: #166534;
+      }
+
+      .coupon-feedback.err {
+         color: #dc2626;
+      }
+
+      .coupon-applied-tag {
+         display: none;
+         align-items: center;
+         gap: 10px;
+         background: var(--green-light);
+         border: 1.5px solid var(--green);
+         border-radius: 10px;
+         padding: 10px 14px;
+         margin-top: .875rem;
+      }
+
+      .coupon-applied-tag.show {
+         display: flex;
+      }
+
+      .coupon-applied-tag span {
+         font-size: 13px;
+         font-weight: 600;
+         color: #166534;
+         flex: 1;
+      }
+
+      .coupon-remove-btn {
+         background: none;
+         border: 1.5px solid #a7f3d0;
+         border-radius: 6px;
+         cursor: pointer;
+         color: #166534;
+         font-size: 13px;
+         line-height: 1;
+         padding: 3px 8px;
+         transition: all .2s;
+         font-family: 'Poppins', sans-serif;
+         font-weight: 600;
+      }
+
+      .coupon-remove-btn:hover {
+         background: #dc2626;
+         border-color: #dc2626;
+         color: #fff;
+      }
+
+      /* Payment */
+      .payment-tabs {
+         display: flex;
+         border: 1.5px solid var(--border);
+         border-radius: 10px;
+         overflow: hidden;
+         margin-bottom: 1.25rem;
+      }
+
+      .ptab {
+         flex: 1;
+         padding: 10px;
+         text-align: center;
+         font-size: 13px;
+         font-weight: 500;
+         cursor: pointer;
+         background: var(--white);
+         color: var(--mid);
+         border: none;
+         font-family: 'Poppins', sans-serif;
+         transition: all .2s;
+      }
+
+      .ptab.active {
+         background: var(--dark);
+         color: #fff;
+      }
+
+      .ptab:not(:last-child) {
+         border-right: 1.5px solid var(--border);
+      }
+
+      .input-group {
+         margin-bottom: .875rem;
+      }
+
+      .input-label {
+         font-size: 12px;
+         font-weight: 600;
+         color: var(--mid);
+         margin-bottom: 5px;
+         display: block;
+      }
+
+      .input-field {
+         width: 100%;
+         padding: 11px 14px;
+         border: 1.5px solid var(--border);
+         border-radius: 9px;
+         font-size: 14px;
+         font-family: 'Poppins', sans-serif;
+         color: var(--dark);
+         outline: none;
+         transition: border-color .2s, box-shadow .2s;
+      }
+
+      .input-field:focus {
+         border-color: var(--green);
+         box-shadow: 0 0 0 3px rgba(79, 183, 131, .12);
+      }
+
+      .input-field::placeholder {
+         color: var(--muted);
+      }
+
+      .card-row {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         gap: .75rem;
+      }
+
+      .pay-btn {
+         width: 100%;
+         padding: 15px;
+         background: var(--green);
+         color: #fff;
+         border: none;
+         border-radius: 11px;
+         font-size: 15px;
+         font-weight: 700;
+         font-family: 'Poppins', sans-serif;
+         cursor: pointer;
+         transition: all .2s;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         gap: 8px;
+         margin-top: 1rem;
+         letter-spacing: .2px;
+      }
+
+      .pay-btn:hover {
+         background: var(--green-dark);
+         transform: translateY(-1px);
+         box-shadow: 0 8px 24px rgba(79, 183, 131, .3);
+      }
+
+      .pay-btn:disabled {
+         opacity: .5;
+         cursor: default;
+         transform: none;
+         box-shadow: none;
+      }
+
+      .pay-btn.paypal {
+         background: #003087;
+      }
+
+      .pay-btn.paypal:hover {
+         background: #001f5c;
+         box-shadow: 0 8px 24px rgba(0, 48, 135, .3);
+      }
+
+      .ssl-note {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         gap: 6px;
+         margin-top: .875rem;
+         font-size: 11px;
+         color: var(--muted);
+      }
+
+      .trust-bar {
+         display: flex;
+         gap: 1rem;
+         flex-wrap: wrap;
+         margin-top: 1.25rem;
+         padding-top: 1.25rem;
+         border-top: 1px solid var(--border);
+      }
+
+      .trust-item {
+         display: flex;
+         align-items: center;
+         gap: 6px;
+         font-size: 12px;
+         color: #64748b;
+      }
+
+      .trust-icon {
+         width: 26px;
+         height: 26px;
+         background: var(--green-light);
+         border-radius: 6px;
+         display: grid;
+         place-items: center;
+         flex-shrink: 0;
+      }
+
+      .paypal-box {
+         background: #f8f9ff;
+         border: 1.5px solid var(--border);
+         border-radius: 10px;
+         padding: 2rem;
+         text-align: center;
+         margin-bottom: .875rem;
+      }
+
+      .paypal-box .pp-logo {
+         font-size: 36px;
+         margin-bottom: .5rem;
+      }
+
+      .paypal-box .pp-title {
+         font-weight: 600;
+         color: #003087;
+         margin-bottom: .25rem;
+      }
+
+      .paypal-box .pp-sub {
+         font-size: 13px;
+         color: var(--mid);
+      }
+
+      /* Success screen */
+      .success-screen {
+         display: none;
+         text-align: center;
+         padding: 4rem 2rem;
+         animation: fadeUp .5s ease both;
+      }
+
+      .success-screen.visible {
+         display: block;
+      }
+
+      .success-icon {
+         width: 80px;
+         height: 80px;
+         border-radius: 50%;
+         background: var(--green);
+         display: grid;
+         place-items: center;
+         margin: 0 auto 1.5rem;
+         font-size: 32px;
+         box-shadow: 0 8px 28px rgba(79, 183, 131, .35);
+      }
+
+      .success-title {
+         font-weight: 700;
+         font-size: 30px;
+         color: var(--dark);
+         margin-bottom: .5rem;
+      }
+
+      .success-sub {
+         color: var(--mid);
+         font-size: 15px;
+         line-height: 1.6;
+         max-width: 440px;
+         margin: 0 auto 2rem;
+      }
+
+      .unlocked-box {
+         max-width: 420px;
+         margin: 0 auto 2rem;
+         background: var(--green-light);
+         border: 1px solid var(--green);
+         border-radius: 12px;
+         padding: 1.25rem 1.5rem;
+         text-align: left;
+      }
+
+      .unlocked-title {
+         font-weight: 700;
+         font-size: 14px;
+         color: var(--dark);
+         margin-bottom: .75rem;
+      }
+
+      .unlocked-item {
+         display: flex;
+         align-items: center;
+         gap: 10px;
+         padding: 7px 0;
+         border-bottom: 1px solid rgba(79, 183, 131, .2);
+      }
+
+      .unlocked-item:last-child {
+         border: none;
+      }
+
+      .unlocked-thumb {
+         width: 36px;
+         height: 48px;
+         border-radius: 5px;
+         object-fit: contain;
+         background: #f8f9fb;
+         padding: 2px;
+         border: 1px solid var(--border);
+      }
+
+      .unlocked-name {
+         font-size: 13px;
+         font-weight: 500;
+         color: var(--dark);
+      }
+
+      .start-btn {
+         display: inline-flex;
+         align-items: center;
+         gap: 8px;
+         padding: 14px 32px;
+         background: var(--green);
+         color: #fff;
+         border: none;
+         border-radius: 11px;
+         font-size: 15px;
+         font-weight: 700;
+         font-family: 'Poppins', sans-serif;
+         cursor: pointer;
+         transition: all .2s;
+         text-decoration: none;
+      }
+
+      .start-btn:hover {
+         background: var(--green-dark);
+         transform: translateY(-1px);
+         box-shadow: 0 8px 24px rgba(79, 183, 131, .3);
+      }
+
+      @keyframes fadeUp {
+         from {
+            opacity: 0;
+            transform: translateY(18px);
+         }
+
+         to {
+            opacity: 1;
+            transform: translateY(0);
+         }
+      }
+
+      @media (max-width: 600px) {
+         .topbar {
+            padding: 0 1rem;
+         }
+
+         .page-wrap {
+            padding: 1.5rem 1rem;
+         }
+
+         .card {
+            padding: 1.25rem;
+         }
+
+         .order-card {
+            padding: 1.25rem;
+         }
+
+         .selected-wrap {
+            flex-direction: column;
+         }
+
+         .step {
+            padding: 8px 12px;
+            font-size: 12px;
+         }
+
+         .step-connector {
+            width: 24px;
+         }
+      }
+   </style>
+</head>
+
+<body>
+
+   <!-- Top Bar -->
+   <header class="topbar">
+      <a href="signup.html" class="logo">
+         <div class="logo-dot">
+            <svg viewBox="0 0 14 14" fill="none">
+               <path d="M2 4h10M2 7h7M2 10h5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+         </div>
+         Transcription Certification Institute
+      </a>
+      <div style="font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px">
+         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <rect x="2" y="4" width="10" height="8" rx="1.5" stroke="#94a3b8" stroke-width="1.3" />
+            <path d="M4.5 4V3a2.5 2.5 0 015 0v1" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round" />
+         </svg>
+         Secure Checkout
+      </div>
+   </header>
+
+   <!-- Progress Steps -->
+   <div class="progress-wrap">
+      <div class="steps">
+         <div class="step done">
+            <div class="step-num">✓</div>
+            Registration
+         </div>
+         <div class="step-connector done"></div>
+         <div class="step active">
+            <div class="step-num">2</div>
+            Cart &amp; Payment
+         </div>
+      </div>
+   </div>
+
+   <!-- Main Content -->
+   <div class="page-wrap" id="main-content">
+      <button class="back-link" onclick="window.location.href='signup.html'" style="margin-bottom:1.25rem">
+         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M9 11L5 7l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+         </svg>
+         Back to Registration
+      </button>
+
+      <div class="page-title">Review Your Order</div>
+      <p class="page-subtitle">Your selected course is ready. Add more courses to your bundle and save.</p>
+
+      <div class="cart-grid">
+
+         <!-- LEFT COLUMN -->
+         <div>
+            <!-- Selected Course Card -->
+            <div class="card">
+               <div class="card-heading">
+                  <svg width="17" height="17" viewBox="0 0 17 17" fill="none">
+                     <rect x="1" y="1" width="15" height="15" rx="3" stroke="#4fb783" stroke-width="1.5" />
+                     <path d="M4 8.5l3 3 6-6" stroke="#4fb783" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  Your Selected Course
+               </div>
+
+               <div class="selected-wrap" id="selected-wrap">
+                  <span class="selected-badge" id="sel-badge">Selected</span>
+                  <img class="selected-img" id="sel-img" src="" alt="Course" onerror="this.style.background='#e2e8f0'">
+                  <div class="selected-info">
+                     <div class="selected-name" id="sel-name"></div>
+                     <div class="selected-desc" id="sel-desc"></div>
+                     <div class="pricing-row-inline">
+                        <span class="orig-price" id="sel-orig"></span>
+                        <span class="disc-price" id="sel-price"></span>
+                        <span class="save-badge" id="sel-save"></span>
+                     </div>
+                  </div>
+               </div>
+
+               <div class="course-controls">
+                  <button class="change-course-btn" onclick="togglePicker()">
+                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                     </svg>
+                     Change Course
+                  </button>
+                  <button class="deselect-btn" id="deselect-btn" onclick="toggleDeselect()">
+                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+                     </svg>
+                     <span id="deselect-label">Remove</span>
+                  </button>
+               </div>
+
+               <!-- Course Picker -->
+               <div class="course-picker" id="course-picker">
+                  <div class="picker-header">
+                     Change Course
+                     <button class="picker-close" onclick="togglePicker()">&#xD7;</button>
+                  </div>
+                  <div id="picker-options"></div>
+               </div>
+
+               <!-- Empty Cart Warning -->
+               <div class="empty-cart-note" id="empty-cart-note">
+                  ⚠️ Your cart is empty. Please select a course to continue.
+               </div>
+            </div>
+
+            <!-- Frequently Bought Together -->
+            <div class="card">
+               <div class="section-label">
+                  Frequently Bought Together
+                  <span class="label-badge">Save More</span>
+               </div>
+               <div class="bundle-grid" id="bundle-grid"></div>
+            </div>
+         </div>
+
+         <!-- RIGHT COLUMN -->
+         <div class="sticky-panel">
+            <div class="order-card">
+               <div class="order-heading">Order Summary</div>
+
+               <!-- Order Items -->
+               <div id="order-items-list"></div>
+
+               <!-- Summary Rows -->
+               <div class="summary-rows">
+                  <div class="s-row subtotal">
+                     <span>Subtotal</span>
+                     <span id="sum-subtotal">$0</span>
+                  </div>
+                  <div class="s-row discount" id="sum-discount-row" style="display:none">
+                     <span>Bundle Savings</span>
+                     <span id="sum-discount"></span>
+                  </div>
+                  <div class="s-row discount" id="sum-coupon-row" style="display:none">
+                     <span id="sum-coupon-label">Coupon</span>
+                     <span id="sum-coupon-val"></span>
+                  </div>
+                  <div class="s-row total">
+                     <span>Total</span>
+                     <span id="sum-total">$0</span>
+                  </div>
+               </div>
+
+               <!-- Savings Banner -->
+               <div class="savings-banner" id="savings-banner" style="display:none">
+                  <div class="s-amt" id="banner-savings"></div>
+                  <div class="s-lbl">Total savings on this order 🎉</div>
+               </div>
+
+               <!-- Coupon -->
+               <div class="coupon-section">
+                  <div class="coupon-label">
+                     <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                        <rect x="1" y="4" width="11" height="6" rx="1.5" stroke="#4a5568" stroke-width="1.2" />
+                        <path d="M4 4V3a2.5 2.5 0 015 0v1" stroke="#4a5568" stroke-width="1.2" stroke-linecap="round" />
+                     </svg>
+                     Promo Code
+                  </div>
+                  <div class="coupon-row">
+                     <input class="coupon-input" id="coupon-input" placeholder="Enter promo code" maxlength="20">
+                     <button class="coupon-apply-btn" id="coupon-apply-btn" onclick="applyCoupon()">Apply</button>
+                  </div>
+                  <div class="coupon-feedback" id="coupon-feedback"></div>
+                  <div class="coupon-applied-tag" id="coupon-applied-tag">
+                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <circle cx="7" cy="7" r="5.5" stroke="#166534" stroke-width="1.3" />
+                        <polyline points="4,7 6.5,9.5 10,5" stroke="#166534" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                     </svg>
+                     <span id="coupon-applied-label"></span>
+                     <button class="coupon-remove-btn" onclick="removeCoupon()">Remove</button>
+                  </div>
+               </div>
+
+               <!-- Payment Tabs -->
+               <div class="payment-tabs">
+                  <button class="ptab active" id="tab-card" onclick="switchTab('card')">💳 Credit Card</button>
+                  <button class="ptab" id="tab-paypal" onclick="switchTab('paypal')">🅿️ PayPal</button>
+               </div>
+
+               <!-- Card Form -->
+               <div id="card-form">
+                  <div class="input-group">
+                     <label class="input-label">Cardholder Name</label>
+                     <input class="input-field" type="text" placeholder="Jane Smith">
+                  </div>
+                  <div class="input-group">
+                     <label class="input-label">Card Number</label>
+                     <input class="input-field" type="text" placeholder="1234 5678 9012 3456" maxlength="19">
+                  </div>
+                  <div class="card-row">
+                     <div class="input-group">
+                        <label class="input-label">Expiry</label>
+                        <input class="input-field" type="text" placeholder="MM / YY" maxlength="7">
+                     </div>
+                     <div class="input-group">
+                        <label class="input-label">CVV</label>
+                        <input class="input-field" type="text" placeholder="•••" maxlength="4">
+                     </div>
+                  </div>
+                  <button class="pay-btn" id="pay-complete-btn" onclick="completePurchase()">
+                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <rect x="1" y="5" width="14" height="9" rx="1.5" stroke="#fff" stroke-width="1.5" />
+                        <path d="M1 8h14" stroke="#fff" stroke-width="1.5" />
+                     </svg>
+                     Complete Purchase
+                  </button>
+               </div>
+
+               <!-- PayPal Form -->
+               <div id="paypal-form" style="display:none">
+                  <div class="paypal-box">
+                     <div class="pp-logo">🅿️</div>
+                     <div class="pp-title">Pay with PayPal</div>
+                     <div class="pp-sub">You'll be redirected to PayPal to complete your purchase securely.</div>
+                  </div>
+                  <button class="pay-btn paypal" onclick="completePurchase()">
+                     Continue to PayPal
+                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M3 8h10M9 4l4 4-4 4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                     </svg>
+                  </button>
+               </div>
+
+               <div class="ssl-note">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                     <rect x="2" y="5" width="8" height="6" rx="1" stroke="#94a3b8" stroke-width="1.2" />
+                     <path d="M4 5V3.5a2 2 0 014 0V5" stroke="#94a3b8" stroke-width="1.2" />
+                  </svg>
+                  256-bit SSL encrypted checkout
+               </div>
+
+               <div class="trust-bar">
+                  <div class="trust-item">
+                     <div class="trust-icon">
+                        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                           <path d="M6.5 1.5L8.3 5.2l4.1.6-2.95 2.87.7 4.06L6.5 10.7l-3.65 1.93.7-4.06L.5 5.8l4.1-.6z" stroke="#4fb783" stroke-width="1.2" stroke-linejoin="round" />
+                        </svg>
+                     </div>
+                     Industry Certified
+                  </div>
+                  <div class="trust-item">
+                     <div class="trust-icon">
+                        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                           <circle cx="6.5" cy="6.5" r="5" stroke="#4fb783" stroke-width="1.2" />
+                           <path d="M4 6.5l2 2 3-3" stroke="#4fb783" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                     </div>
+                     30-Day Money Back
+                  </div>
+                  <div class="trust-item">
+                     <div class="trust-icon">
+                        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                           <path d="M6.5 1.5v10M1.5 6.5h10" stroke="#4fb783" stroke-width="1.2" stroke-linecap="round" />
+                           <circle cx="6.5" cy="6.5" r="5" stroke="#4fb783" stroke-width="1.2" />
+                        </svg>
+                     </div>
+                     Instant Access
+                  </div>
+               </div>
+            </div>
+         </div>
+
+      </div>
+   </div>
+
+   <!-- SUCCESS SCREEN -->
+   <div class="page-wrap" id="success-wrap" style="display:none">
+      <div class="card success-screen visible" id="success-screen">
+         <div class="success-icon">🎉</div>
+         <div class="success-title">You're Enrolled!</div>
+         <p class="success-sub">Your purchase is confirmed. Check your inbox for login details and instant course access.</p>
+         <div class="unlocked-box">
+            <div class="unlocked-title">Courses Unlocked:</div>
+            <div id="unlocked-list"></div>
+         </div>
+         <a href="code.html" class="start-btn">
+            Start Learning Now
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+               <path d="M3 8h10M9 4l4 4-4 4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+         </a>
+      </div>
+   </div>
+
+   <script>
+      // ─── Course Data ────────────────────────────────────────────────────────────
+      const COURSES = {
+         gt: { id: 'gt', name: 'General Transcription', desc: 'Master general transcription skills to build a diverse client base across industries.', price: 499, origPrice: 499, img: 'https://www.transcriptioncertificationinstitute.org/blog/uploads/generaltranscriptioncourse.jpg', bundle: false },
+         lt: { id: 'lt', name: 'Legal Transcription', desc: 'Transcribe legal proceedings, depositions and court documents at premium rates.', price: 649, origPrice: 649, img: 'https://www.transcriptioncertificationinstitute.org/blog/uploads/legaltranscriptionbook.jpg', bundle: false },
+         ap: { id: 'ap', name: 'AAERT Exam Prep', desc: 'Comprehensive preparation for the AAERT certification exam to validate your expertise.', price: 399, origPrice: 399, img: 'https://www.transcriptioncertificationinstitute.org/blog/uploads/aaertbook.jpg', bundle: false },
+         ga: { id: 'ga', name: 'General + AAERT Bundle', desc: 'Combine general transcription with AAERT certification preparation.', price: 750, origPrice: 898, img: 'https://www.transcriptioncertificationinstitute.org/blog/uploads/generaltranscriptioncourse.jpg', bundle: true },
+         la: { id: 'la', name: 'Legal + AAERT Bundle', desc: 'Master legal transcription and get AAERT certified — the ultimate combination.', price: 999, origPrice: 1048, img: 'https://www.transcriptioncertificationinstitute.org/blog/uploads/legaltranscriptionbook.jpg', bundle: true },
+         lg: { id: 'lg', name: 'Legal + General Bundle', desc: 'Cover both legal and general transcription to maximize your client opportunities.', price: 999, origPrice: 1148, img: 'https://www.transcriptioncertificationinstitute.org/blog/uploads/legaltranscriptionbook.jpg', bundle: true },
+         all: { id: 'all', name: 'All-in-One (3 Courses)', desc: 'Every course included — the complete path to a certified transcription career.', price: 1499, origPrice: 1547, img: 'https://www.transcriptioncertificationinstitute.org/blog/uploads/generaltranscriptioncourse.jpg', bundle: true }
+      };
+
+      const ADDONS = {
+         gt: [
+            { id: 'lt', badge: 'badge-popular', badgeText: 'Most Popular', name: 'Legal Transcription', benefit: 'Add legal clients and charge premium rates', origPrice: 649, price: 619, img: 'https://www.transcriptioncertificationinstitute.org/blog/uploads/legaltranscriptionbook.jpg' },
+            { id: 'ap', badge: 'badge-value', badgeText: 'Best Value', name: 'AAERT Exam Prep', benefit: 'Get certified and stand out to employers', origPrice: 399, price: 369, img: 'https://www.transcriptioncertificationinstitute.org/blog/uploads/aaertbook.jpg' },
+            { id: 'all', badge: 'badge-bundle', badgeText: 'Bundle', name: 'Upgrade to All-in-One', benefit: 'All 3 courses at the lowest possible price', origPrice: 1547, price: 1499, img: 'https://www.transcriptioncertificationinstitute.org/blog/uploads/generaltranscriptioncourse.jpg' }
+         ],
+         lt: [
+            { id: 'gt', badge: 'badge-popular', badgeText: 'Most Popular', name: 'General Transcription', benefit: 'Diversify your client base beyond legal work', origPrice: 499, price: 499, img: 'https://www.transcriptioncertificationinstitute.org/blog/uploads/generaltranscriptioncourse.jpg' },
+            { id: 'ap', badge: 'badge-value', badgeText: 'Best Value', name: 'AAERT Exam Prep', benefit: 'Get certified and stand out to every employer', origPrice: 399, price: 399, img: 'https://www.transcriptioncertificationinstitute.org/blog/uploads/aaertbook.jpg' }
+         ],
+         ap: [
+            { id: 'gt', badge: 'badge-popular', badgeText: 'Most Popular', name: 'General Transcription', benefit: 'Build your career foundation alongside AAERT', origPrice: 499, price: 469, img: 'https://www.transcriptioncertificationinstitute.org/blog/uploads/generaltranscriptioncourse.jpg' },
+            { id: 'lt', badge: 'badge-value', badgeText: 'Best Value', name: 'Legal Transcription', benefit: 'Maximize earning with legal specialization', origPrice: 649, price: 619, img: 'https://www.transcriptioncertificationinstitute.org/blog/uploads/legaltranscriptionbook.jpg' },
+            { id: 'all', badge: 'badge-bundle', badgeText: 'Bundle', name: 'Upgrade to All-in-One', benefit: 'Complete all three at the bundle price', origPrice: 1547, price: 1499, img: 'https://www.transcriptioncertificationinstitute.org/blog/uploads/generaltranscriptioncourse.jpg' }
+         ],
+         ga: [
+            { id: 'lt', badge: 'badge-popular', badgeText: 'Upgrade', name: 'Legal Transcription', benefit: 'Add legal work to your General + AAERT bundle', origPrice: 649, price: 619, img: 'https://www.transcriptioncertificationinstitute.org/blog/uploads/legaltranscriptionbook.jpg' }
+         ],
+         la: [
+            { id: 'gt', badge: 'badge-popular', badgeText: 'Upgrade', name: 'General Transcription', benefit: 'Complete the full suite with General', origPrice: 499, price: 469, img: 'https://www.transcriptioncertificationinstitute.org/blog/uploads/generaltranscriptioncourse.jpg' }
+         ],
+         lg: [
+            { id: 'ap', badge: 'badge-popular', badgeText: 'Upgrade', name: 'AAERT Exam Prep', benefit: 'Get certified on top of your bundle', origPrice: 399, price: 369, img: 'https://www.transcriptioncertificationinstitute.org/blog/uploads/aaertbook.jpg' }
+         ],
+         all: []
+      };
+
+      const COUPONS = {
+         'SAVE10': { type: 'percent', value: 10, label: 'SAVE10 — 10% off' },
+         'SAVE20': { type: 'percent', value: 20, label: 'SAVE20 — 20% off' },
+         'SAVE50': { type: 'percent', value: 50, label: 'SAVE50 — 50% off' },
+         'TCI50': { type: 'fixed', value: 50, label: 'TCI50 — $50 off' },
+         'TCI100': { type: 'fixed', value: 100, label: 'TCI100 — $100 off' },
+         'WELCOME': { type: 'percent', value: 15, label: 'WELCOME — 15% off' }
+      };
+
+      // ─── State ──────────────────────────────────────────────────────────────────
+      let selectedCourse = 'gt';
+      let courseDeselected = false;
+      let pickerOpen = false;
+      let addedBundles = {};
+      let appliedCoupon = null;
+
+      // ─── Init ───────────────────────────────────────────────────────────────────
+      document.addEventListener('DOMContentLoaded', () => {
+         try {
+            const stored = sessionStorage.getItem('tci_user');
+            if (stored) {
+               const d = JSON.parse(stored);
+               if (d.selectedCourse && COURSES[d.selectedCourse]) selectedCourse = d.selectedCourse;
+            }
+         } catch (e) { }
+         renderSelectedCourse();
+         renderPickerOptions();
+         renderBundleGrid();
+         renderOrderSummary();
+      });
+
+      // ─── Render Selected Course ─────────────────────────────────────────────────
+      function renderSelectedCourse() {
+         const wrap = document.getElementById('selected-wrap');
+         const emptyNote = document.getElementById('empty-cart-note');
+         const deselectBtn = document.getElementById('deselect-btn');
+         const deselectLabel = document.getElementById('deselect-label');
+
+         if (courseDeselected) {
+            wrap.classList.add('deselected');
+            document.getElementById('sel-img').style.opacity = '.35';
+            document.getElementById('sel-badge').style.display = 'none';
+            document.getElementById('sel-name').textContent = 'No course selected';
+            document.getElementById('sel-desc').textContent = 'Use "Change Course" below to pick a course.';
+            document.getElementById('sel-price').textContent = '—';
+            document.getElementById('sel-orig').style.display = 'none';
+            document.getElementById('sel-save').style.display = 'none';
+            emptyNote.classList.add('visible');
+            deselectLabel.textContent = 'Removed';
+            deselectBtn.disabled = true;
+            deselectBtn.style.opacity = '.5';
+            deselectBtn.style.cursor = 'default';
+         } else {
+            const c = COURSES[selectedCourse];
+            wrap.classList.remove('deselected');
+            document.getElementById('sel-img').src = c.img;
+            document.getElementById('sel-img').style.opacity = '1';
+            document.getElementById('sel-badge').style.display = '';
+            document.getElementById('sel-name').textContent = c.name;
+            document.getElementById('sel-desc').textContent = c.desc;
+            document.getElementById('sel-price').textContent = '$' + c.price.toLocaleString();
+            emptyNote.classList.remove('visible');
+            deselectLabel.textContent = 'Remove';
+            deselectBtn.disabled = false;
+            deselectBtn.style.opacity = '1';
+            deselectBtn.style.cursor = 'pointer';
+
+            const savings = c.origPrice - c.price;
+            const origEl = document.getElementById('sel-orig');
+            const saveEl = document.getElementById('sel-save');
+            if (savings > 0) {
+               origEl.textContent = '$' + c.origPrice.toLocaleString();
+               origEl.style.display = 'inline';
+               saveEl.textContent = 'Save $' + savings.toLocaleString();
+               saveEl.style.display = 'inline';
+            } else {
+               origEl.style.display = 'none';
+               saveEl.style.display = 'none';
+            }
+         }
+      }
+
+      // ─── Picker ─────────────────────────────────────────────────────────────────
+      function renderPickerOptions() {
+         const ids = ['gt', 'lt', 'ap'];
+         const html = ids.map(id => {
+            const c = COURSES[id];
+            const isActive = !courseDeselected && selectedCourse === id;
+            return `
+    <div class="picker-option${isActive ? ' active' : ''}" onclick="pickCourse('${id}')">
+      <img class="picker-thumb" src="${c.img}" alt="${c.name}">
+      <div>
+        <div class="picker-opt-name">${c.name}</div>
+        <div class="picker-opt-price">$${c.price.toLocaleString()}</div>
+      </div>
+      ${isActive ? '<span class="picker-opt-badge">Current</span>' : ''}
+    </div>`;
+         }).join('');
+         document.getElementById('picker-options').innerHTML = html;
+      }
+
+      function togglePicker() {
+         pickerOpen = !pickerOpen;
+         document.getElementById('course-picker').classList.toggle('visible', pickerOpen);
+         renderPickerOptions();
+      }
+
+      function pickCourse(id) {
+         selectedCourse = id;
+         courseDeselected = false;
+         addedBundles = {};
+         pickerOpen = false;
+         document.getElementById('course-picker').classList.remove('visible');
+         renderSelectedCourse();
+         renderPickerOptions();
+         renderBundleGrid();
+         renderOrderSummary();
+      }
+
+      function toggleDeselect() {
+         if (courseDeselected) return;
+         courseDeselected = true;
+         addedBundles = {};
+         renderSelectedCourse();
+         renderPickerOptions();
+         renderBundleGrid();
+         renderOrderSummary();
+      }
+
+      // ─── Bundle Grid ─────────────────────────────────────────────────────────────
+      function renderBundleGrid() {
+         const addons = ADDONS[selectedCourse] || [];
+         const grid = document.getElementById('bundle-grid');
+         if (!addons.length) {
+            grid.innerHTML = '<p style="font-size:13px;color:var(--muted);padding:.5rem 0">You already have our most complete bundle! 🎉</p>';
+            return;
+         }
+         grid.innerHTML = addons.map(a => {
+            const isSel = !!addedBundles[a.id];
+            const saving = a.origPrice - a.price;
+            return `
+    <div class="bundle-card${isSel ? ' selected' : ''}" id="bc-${a.id}" onclick="toggleAddon('${a.id}')">
+      <div class="bundle-card-img-wrap">
+        <img class="bundle-card-img" src="${a.img}" alt="${a.name}" onerror="this.style.background='#e2e8f0'">
+        <span class="bundle-card-badge ${a.badge}">${a.badgeText}</span>
+      </div>
+      <div class="bundle-body">
+        <div class="bundle-name">${a.name}</div>
+        <div class="bundle-benefit">${a.benefit}</div>
+        <div class="bundle-pricing">
+          <span class="bundle-orig">$${a.origPrice.toLocaleString()}</span>
+          <span class="bundle-disc">$${a.price.toLocaleString()}</span>
+          ${saving > 0 ? `<span class="bundle-save">Save $${saving.toLocaleString()}</span>` : ''}
+        </div>
+        <button class="add-btn">${isSel ? '✓ Added' : '+ Add to Cart'}</button>
+      </div>
+    </div>`;
+         }).join('');
+      }
+
+      function toggleAddon(id) {
+         const addons = ADDONS[selectedCourse] || [];
+         const addon = addons.find(a => a.id === id);
+         if (!addon) return;
+         if (addedBundles[id]) {
+            delete addedBundles[id];
+         } else {
+            addedBundles[id] = addon;
+         }
+         renderBundleGrid();
+         renderOrderSummary();
+      }
+
+      // ─── Order Summary ───────────────────────────────────────────────────────────
+      function renderOrderSummary() {
+         const payBtn = document.getElementById('pay-complete-btn');
+
+         if (courseDeselected) {
+            document.getElementById('order-items-list').innerHTML =
+               '<p style="font-size:13px;color:var(--muted);padding:.75rem 0;text-align:center">No course selected</p>';
+            document.getElementById('sum-subtotal').textContent = '$0';
+            document.getElementById('sum-total').textContent = '$0';
+            document.getElementById('sum-discount-row').style.display = 'none';
+            document.getElementById('sum-coupon-row').style.display = 'none';
+            document.getElementById('savings-banner').style.display = 'none';
+            if (payBtn) { payBtn.disabled = true; }
+            return;
+         }
+
+         if (payBtn) { payBtn.disabled = false; }
+
+         const main = COURSES[selectedCourse];
+         const addons = Object.values(addedBundles);
+
+         const mainSave = main.origPrice - main.price;
+         let itemsHtml = `
+    <div class="order-item">
+      <img class="order-thumb" src="${main.img}" alt="${main.name}" onerror="this.style.background='#e2e8f0'">
+      <div style="flex:1;min-width:0">
+        <div class="order-item-name">${main.name}</div>
+        ${mainSave > 0 ? `<div class="order-item-orig">$${main.origPrice.toLocaleString()}</div>` : ''}
+      </div>
+      <div class="order-item-price">$${main.price.toLocaleString()}</div>
+    </div>`;
+
+         addons.forEach(a => {
+            itemsHtml += `
+    <div class="order-item">
+      <img class="order-thumb" src="${a.img}" alt="${a.name}" onerror="this.style.background='#e2e8f0'">
+      <div style="flex:1;min-width:0">
+        <div class="order-item-name">${a.name}</div>
+        <div class="order-item-orig">$${a.origPrice.toLocaleString()}</div>
+      </div>
+      <div class="order-item-price">$${a.price.toLocaleString()}</div>
+    </div>`;
+         });
+         document.getElementById('order-items-list').innerHTML = itemsHtml;
+
+         const subtotal = main.price + addons.reduce((s, a) => s + a.price, 0);
+         const origTotal = main.origPrice + addons.reduce((s, a) => s + a.origPrice, 0);
+         const bundleSavings = origTotal - subtotal;
+
+         let couponDiscount = 0;
+         if (appliedCoupon) {
+            couponDiscount = appliedCoupon.type === 'percent'
+               ? Math.round(subtotal * appliedCoupon.value / 100)
+               : Math.min(appliedCoupon.value, subtotal);
+         }
+
+         const finalTotal = subtotal - couponDiscount;
+         const totalSavings = bundleSavings + couponDiscount;
+
+         document.getElementById('sum-subtotal').textContent = '$' + subtotal.toLocaleString();
+         document.getElementById('sum-total').textContent = '$' + finalTotal.toLocaleString();
+
+         const discRow = document.getElementById('sum-discount-row');
+         if (bundleSavings > 0) {
+            discRow.style.display = 'flex';
+            document.getElementById('sum-discount').textContent = '-$' + bundleSavings.toLocaleString();
+         } else {
+            discRow.style.display = 'none';
+         }
+
+         const couponRow = document.getElementById('sum-coupon-row');
+         if (couponDiscount > 0) {
+            couponRow.style.display = 'flex';
+            document.getElementById('sum-coupon-label').textContent = 'Coupon (' + appliedCoupon.code + ')';
+            document.getElementById('sum-coupon-val').textContent = '-$' + couponDiscount.toLocaleString();
+         } else {
+            couponRow.style.display = 'none';
+         }
+
+         const bannerEl = document.getElementById('savings-banner');
+         if (totalSavings > 0) {
+            bannerEl.style.display = 'block';
+            document.getElementById('banner-savings').textContent = '$' + totalSavings.toLocaleString();
+         } else {
+            bannerEl.style.display = 'none';
+         }
+
+         // Build unlocked list for success screen
+         const allItems = [main, ...addons];
+         document.getElementById('unlocked-list').innerHTML = allItems.map(c => `
+    <div class="unlocked-item">
+      <img class="unlocked-thumb" src="${c.img}" alt="${c.name}" onerror="this.style.background='#e2e8f0'">
+      <div class="unlocked-name">${c.name}</div>
+    </div>`).join('');
+      }
+
+      // ─── Coupon ──────────────────────────────────────────────────────────────────
+      function applyCoupon() {
+         const input = document.getElementById('coupon-input');
+         const applyBtn = document.getElementById('coupon-apply-btn');
+         const appliedTag = document.getElementById('coupon-applied-tag');
+         const code = input.value.trim().toUpperCase();
+
+         input.classList.remove('error', 'success');
+         showFeedback('', false);
+
+         if (!code) { showFeedback('Please enter a coupon code.', false); return; }
+
+         if (COUPONS[code]) {
+            const c = COUPONS[code];
+            appliedCoupon = { code, ...c };
+            input.classList.add('success');
+            input.disabled = true;
+            applyBtn.disabled = true;
+            applyBtn.textContent = 'Applied ✓';
+            document.getElementById('coupon-applied-label').textContent = c.label;
+            appliedTag.classList.add('show');
+            renderOrderSummary();
+         } else {
+            input.classList.add('error');
+            showFeedback('Invalid coupon code. Please try again.', false);
+         }
+      }
+
+      function removeCoupon() {
+         appliedCoupon = null;
+         const input = document.getElementById('coupon-input');
+         const applyBtn = document.getElementById('coupon-apply-btn');
+         input.value = '';
+         input.disabled = false;
+         input.classList.remove('error', 'success');
+         applyBtn.disabled = false;
+         applyBtn.textContent = 'Apply';
+         document.getElementById('coupon-applied-tag').classList.remove('show');
+         showFeedback('', false);
+         renderOrderSummary();
+      }
+
+      function showFeedback(msg, isOk) {
+         const el = document.getElementById('coupon-feedback');
+         if (!msg) { el.style.display = 'none'; return; }
+         el.className = 'coupon-feedback show ' + (isOk ? 'ok' : 'err');
+         el.style.display = 'flex';
+         el.innerHTML = isOk
+            ? `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="4.5" stroke="#166534" stroke-width="1.2"/><polyline points="3.5,6 5.5,8 8.5,4" stroke="#166534" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg> ${msg}`
+            : `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="4.5" stroke="#dc2626" stroke-width="1.2"/><path d="M4 4l4 4M8 4l-4 4" stroke="#dc2626" stroke-width="1.3" stroke-linecap="round"/></svg> ${msg}`;
+      }
+
+      // ─── Payment Tabs ────────────────────────────────────────────────────────────
+      function switchTab(t) {
+         document.getElementById('tab-card').classList.toggle('active', t === 'card');
+         document.getElementById('tab-paypal').classList.toggle('active', t === 'paypal');
+         document.getElementById('card-form').style.display = t === 'card' ? 'block' : 'none';
+         document.getElementById('paypal-form').style.display = t === 'paypal' ? 'block' : 'none';
+      }
+
+      // ─── Complete Purchase ────────────────────────────────────────────────────────
+      function completePurchase() {
+         if (courseDeselected) {
+            const note = document.getElementById('empty-cart-note');
+            note.classList.add('visible');
+            note.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+         }
+         document.getElementById('main-content').style.display = 'none';
+         document.getElementById('success-wrap').style.display = 'block';
+         window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+   </script>
+</body>
+
+</html>

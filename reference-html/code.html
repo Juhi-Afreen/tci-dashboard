@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>TCI Institute Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1f8e6d",
+                        "background-light": "#f8fafc",
+                        "background-dark": "#12201c",
+                        "accent-purple": "#8b5cf6",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        :root {
+            --green: #1F8F6D;
+            --green-light: #E8F5F1;
+            --green-mid: #2aa880;
+            --purple: #7C6FCD;
+            --bg: #F4F7F6;
+            --surface: #FFFFFF;
+            --surface-2: #F9FAFB;
+            --border: #E8EDEC;
+            --text-primary: #111827;
+            --text-secondary: #6B7280;
+            --text-muted: #9CA3AF;
+            --rose: #F43F5E;
+            --sidebar-w: 240px;
+            --sidebar-collapsed: 64px;
+            --header-h: 68px;
+            --radius-sm: 8px;
+        }
+
+        html {
+            font-size: 15px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* ─── SIDEBAR ─────────────────────────── */
+        .sidebar {
+            width: var(--sidebar-w);
+            min-height: 100vh;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            padding: 0 0 24px;
+            transition: width .28s cubic-bezier(.4, 0, .2, 1);
+            overflow: visible;
+        }
+
+        .sidebar.collapsed {
+            width: var(--sidebar-collapsed);
+        }
+
+        /* ── Hide text labels smoothly ── */
+        .sidebar.collapsed .logo-text,
+        .sidebar.collapsed .logo-sub,
+        .sidebar.collapsed .nav-label,
+        .sidebar.collapsed .user-name,
+        .sidebar.collapsed .user-role {
+            opacity: 0;
+            pointer-events: none;
+            max-width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: opacity .18s, max-width .28s;
+        }
+
+        /* ── KEY FIX: remove badge & nav-text entirely from flex flow ── */
+        .sidebar.collapsed .nav-item .nav-text,
+        .sidebar.collapsed .nav-item .nav-badge {
+            display: none;
+        }
+
+        /* ── Center every nav item perfectly ── */
+        .sidebar.collapsed .nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 0;
+            gap: 0;
+        }
+
+        .sidebar.collapsed .nav-item.active::before {
+            display: none;
+        }
+
+        /* ── Center the icon-wrap for badge-based icons ── */
+        .sidebar.collapsed .nav-icon-wrap {
+            margin: 0;
+        }
+
+        /* ── Show small dot badge on icon when collapsed ── */
+        .sidebar.collapsed .nav-dot {
+            display: flex;
+        }
+
+        /* ── Center logo & footer ── */
+        .sidebar.collapsed .sidebar-logo {
+            justify-content: center;
+            padding: 20px 0 18px;
+            gap: 0;
+        }
+
+        .sidebar.collapsed .nav-section {
+            padding: 14px 0 6px;
+        }
+
+        .sidebar.collapsed .user-card {
+            justify-content: center;
+            padding: 10px 0;
+            gap: 0;
+        }
+
+        .sidebar.collapsed .sidebar-footer {
+            padding: 16px 0 0;
+        }
+
+        /* ── Tooltips when collapsed ── */
+        .sidebar.collapsed .nav-item {
+            position: relative;
+        }
+
+        .sidebar.collapsed .nav-item::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: calc(100% + 10px);
+            top: 50%;
+            transform: translateY(-50%);
+            background: #1a1a2e;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 7px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .15s;
+            z-index: 200;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
+        }
+
+        .sidebar.collapsed .nav-item:hover::after {
+            opacity: 1;
+        }
+
+        /* ── Toggle button ── */
+        .sidebar-toggle {
+            position: absolute;
+            top: 20px;
+            right: -13px;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 110;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+            transition: background .15s, transform .28s cubic-bezier(.4, 0, .2, 1);
+            color: var(--text-secondary);
+        }
+
+        .sidebar-toggle:hover {
+            background: var(--green-light);
+            color: var(--green);
+            border-color: var(--green);
+        }
+
+        .sidebar.collapsed .sidebar-toggle {
+            transform: rotate(180deg);
+        }
+
+        /* ── Logo ── */
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 20px 20px 18px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            transition: padding .28s, gap .28s, justify-content .28s;
+            flex-shrink: 0;
+        }
+
+        .logo-text {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -.3px;
+            line-height: 1.2;
+            transition: opacity .18s, max-width .28s;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .logo-sub {
+            font-size: 10px;
+            color: var(--text-muted);
+            font-weight: 400;
+            transition: opacity .18s;
+            white-space: nowrap;
+        }
+
+        /* ── Nav sections ── */
+        .nav-section {
+            padding: 18px 12px 6px;
+            transition: padding .28s;
+        }
+
+        .nav-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding: 0 8px;
+            margin-bottom: 6px;
+            transition: opacity .18s, max-width .28s;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 10px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: background .15s, color .15s, padding .28s, gap .28s;
+            text-decoration: none;
+            margin-bottom: 1px;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .nav-item:hover {
+            background: var(--green-light);
+            color: var(--green);
+        }
+
+        .nav-item.active {
+            background: var(--green-light);
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 60%;
+            background: var(--green);
+            border-radius: 0 3px 3px 0;
+        }
+
+        .nav-text {
+            transition: opacity .18s, max-width .28s;
+            overflow: hidden;
+        }
+
+        .nav-icon {
+            width: 18px;
+            height: 18px;
+            opacity: .8;
+            flex-shrink: 0;
+        }
+
+        /* Wrapper for icons that have a dot badge */
+        .nav-icon-wrap {
+            position: relative;
+            display: inline-flex;
+            flex-shrink: 0;
+        }
+
+        /* Small dot indicator visible when collapsed */
+        .nav-dot {
+            display: none;
+            position: absolute;
+            top: -5px;
+            right: -6px;
+            background: var(--rose);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            min-width: 15px;
+            height: 15px;
+            border-radius: 20px;
+            align-items: center;
+            justify-content: center;
+            border: 1.5px solid white;
+            padding: 0 3px;
+            line-height: 1;
+        }
+
+        /* Full badge visible when expanded */
+        .nav-badge {
+            margin-left: auto;
+            background: var(--rose);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        /* ── Sidebar footer ── */
+        .sidebar-footer {
+            margin-top: auto;
+            padding: 16px 12px 0;
+            border-top: 1px solid var(--border);
+            transition: padding .28s;
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: background .15s, padding .28s, gap .28s;
+        }
+
+        .user-card:hover {
+            background: var(--surface-2);
+        }
+
+        .user-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a78bfa, var(--purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 13px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .user-name {
+            font-size: 13px;
+            font-weight: 600;
+            transition: opacity .18s, max-width .28s;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .user-role {
+            font-size: 11px;
+            color: var(--text-muted);
+            transition: opacity .18s;
+            white-space: nowrap;
+        }
+
+        /* ─── MAIN LAYOUT ─────────────────────── */
+        .main-wrap {
+            margin-left: var(--sidebar-w);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: margin-left .28s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        .main-wrap.collapsed {
+            margin-left: var(--sidebar-collapsed);
+        }
+
+        /* ─── HEADER ──────────────────────────── */
+        .header {
+            height: var(--header-h);
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 32px;
+            gap: 16px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: -.3px;
+        }
+
+        .search-wrap {
+            flex: 1;
+            max-width: 440px;
+            margin-left: auto;
+            margin-right: 16px;
+            position: relative;
+        }
+
+        .search-wrap input {
+            width: 100%;
+            padding: 9px 14px 9px 40px;
+            border: 1.5px solid var(--border);
+            border-radius: 40px;
+            font-family: inherit;
+            font-size: 13.5px;
+            background: var(--bg);
+            color: var(--text-primary);
+            outline: none;
+            transition: border-color .2s;
+        }
+
+        .search-wrap input:focus {
+            border-color: var(--green);
+            background: white;
+        }
+
+        .search-wrap input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 1.5px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+            position: relative;
+            transition: all .15s;
+        }
+
+        .icon-btn:hover {
+            border-color: var(--green);
+            color: var(--green);
+            background: var(--green-light);
+        }
+
+        .notif-dot {
+            position: absolute;
+            top: 7px;
+            right: 7px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--rose);
+            border: 2px solid white;
+        }
+
+        .header-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a78bfa, var(--purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            border: 2.5px solid var(--green);
+        }
+
+        .max-w-\[1400px\] {
+            max-width: 1600px;
+        }
+
+        /* ─── RESUME LESSON LINK ──────────────── */
+        .resume-lesson-link {
+            text-decoration: none;
+            color: var(--green);
+            font-weight: 600;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: gap .2s ease, opacity .2s ease;
+        }
+
+        .resume-lesson-text {
+            border-bottom: 1px solid transparent;
+            transition: border-color .2s ease;
+        }
+
+        .resume-lesson-arrow {
+            font-size: 20px !important;
+            transition: transform .2s ease;
+        }
+
+        .resume-lesson-link:hover .resume-lesson-text {
+            border-color: var(--green);
+        }
+
+        .resume-lesson-link:hover .resume-lesson-arrow {
+            transform: translateX(4px);
+        }
+
+        .resume-lesson-link:hover {
+            opacity: .85;
+        }
+
+        /* ─── COURSE LIBRARY CAROUSEL ──────── */
+        .course-carousel-viewport {
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding-bottom: 4px;
+            /* hide native scrollbar while keeping scroll behavior */
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE/Edge legacy */
+        }
+
+        .course-carousel-viewport::-webkit-scrollbar {
+            height: 0;
+            /* Chrome/Safari */
+        }
+
+        .course-carousel-viewport::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .course-carousel-viewport::-webkit-scrollbar-thumb {
+            background: transparent;
+        }
+
+        .course-carousel-track {
+            display: flex;
+            gap: 20px;
+        }
+
+        .course-card-item {
+            min-width: 280px;
+            max-width: 360px;
+            flex: 0 0 auto;
+        }
+
+        .course-carousel-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            background: #ffffff;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: background .15s, color .15s, border-color .15s, transform .1s;
+        }
+
+        .course-carousel-btn:hover {
+            background: var(--green-light);
+            color: var(--green);
+            border-color: var(--green);
+            transform: translateY(-1px);
+        }
+
+        .page-content {
+            padding: 28px 32px 40px;
+            display: flex;
+            justify-content: center;
+            align-items: start;
+        }
+
+        /* ─── NAV DROPDOWN ──────────────────── */
+        .nav-dropdown {
+            position: relative;
+        }
+
+        .nav-dropdown-toggle {
+            width: 100%;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            text-align: left;
+        }
+
+        .nav-chevron {
+            width: 14px;
+            height: 14px;
+            margin-left: auto;
+            flex-shrink: 0;
+            transition: transform .2s ease;
+            opacity: .55;
+        }
+
+        .nav-dropdown.open .nav-chevron {
+            transform: rotate(180deg);
+        }
+
+        .nav-dropdown-menu {
+            display: none;
+            flex-direction: column;
+            padding-left: 12px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+        }
+
+        .nav-dropdown.open .nav-dropdown-menu {
+            display: flex;
+        }
+
+        .nav-sub-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 10px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 12.5px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: background .15s, color .15s;
+            text-decoration: none;
+            margin-bottom: 1px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .nav-sub-item:hover {
+            background: var(--green-light);
+            color: var(--green);
+        }
+
+        .nav-sub-item.active {
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .nav-sub-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            flex-shrink: 0;
+            transition: background .15s;
+        }
+
+        .nav-sub-item:hover .nav-sub-dot,
+        .nav-sub-item.active .nav-sub-dot {
+            background: var(--green);
+        }
+
+        /* Hide sub-items & chevron when sidebar is collapsed */
+        .sidebar.collapsed .nav-dropdown-menu {
+            display: none !important;
+        }
+
+        .sidebar.collapsed .nav-chevron {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+
+    <!-- ─── SIDEBAR ─────────────────────────── -->
+    <aside class="sidebar" id="sidebar">
+
+        <button class="sidebar-toggle" id="sidebarToggle" title="Toggle sidebar">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <polyline points="15 18 9 12 15 6" />
+            </svg>
+        </button>
+
+        <div class="sidebar-logo">
+            <img src="https://www.transcriptioncertificationinstitute.org/images/tci-logo.png" alt="TCI Logo" style="width:100%;max-width:160px;height:auto;">
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-label">Main</div>
+
+            <a class="nav-item active" href="#" data-tooltip="Dashboard">
+                <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7" rx="1" />
+                    <rect x="14" y="3" width="7" height="7" rx="1" />
+                    <rect x="3" y="14" width="7" height="7" rx="1" />
+                    <rect x="14" y="14" width="7" height="7" rx="1" />
+                </svg>
+                <span class="nav-text">Dashboard</span>
+            </a>
+
+            <div class="nav-dropdown" id="coursesDropdown">
+                <button class="nav-item nav-dropdown-toggle" data-tooltip="My Courses">
+                    <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                    <span class="nav-text">My Courses</span>
+                    <svg class="nav-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                </button>
+                <div class="nav-dropdown-menu">
+                    <a class="nav-sub-item" href="general-transcription-course.html">
+                        <span class="nav-sub-dot"></span>
+                        <span class="nav-text">General Transcription Course</span>
+                    </a>
+                    <a class="nav-sub-item" href="legal-transcription-course.html">
+                        <span class="nav-sub-dot"></span>
+                        <span class="nav-text">Legal Transcription Course</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="nav-dropdown" id="resourcesDropdown">
+                <button class="nav-item nav-dropdown-toggle" data-tooltip="Resources">
+                    <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    <span class="nav-text">Resources</span>
+                    <svg class="nav-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                </button>
+                <div class="nav-dropdown-menu">
+                    <a class="nav-sub-item" href="#">
+                        <span class="nav-sub-dot"></span>
+                        <span class="nav-text">Assignment Tracking</span>
+                    </a>
+                    <a class="nav-sub-item" href="#">
+                        <span class="nav-sub-dot"></span>
+                        <span class="nav-text">Grammar Quizzes</span>
+                    </a>
+                    <a class="nav-sub-item" href="#">
+                        <span class="nav-sub-dot"></span>
+                        <span class="nav-text">Legal Transcription</span>
+                    </a>
+                    <a class="nav-sub-item" href="#">
+                        <span class="nav-sub-dot"></span>
+                        <span class="nav-text">Tips and Tricks</span>
+                    </a>
+                    <a class="nav-sub-item" href="#">
+                        <span class="nav-sub-dot"></span>
+                        <span class="nav-text">Practice Transcription</span>
+                    </a>
+                    <a class="nav-sub-item" href="#">
+                        <span class="nav-sub-dot"></span>
+                        <span class="nav-text">Verbatim Vs Non-verbatim</span>
+                    </a>
+                </div>
+            </div>
+
+            <a class="nav-item" href="#" data-tooltip="Progress">
+                <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                <span class="nav-text">Progress</span>
+            </a>
+
+            <a class="nav-item" href="#" data-tooltip="Schedule">
+                <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                <span class="nav-text">Schedule</span>
+            </a>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-label">Resources</div>
+
+            <a class="nav-item" href="accuracy-assessment-tool.html" data-tooltip="Accuracy Tool">
+                <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                    <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span class="nav-text">Accuracy Tool</span>
+            </a>
+
+            <a class="nav-item" href="#" data-tooltip="Job Board">
+                <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span class="nav-text">Job Board</span>
+            </a>
+
+            <a class="nav-item" href="#" data-tooltip="Discussion Board">
+                <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+                </svg>
+                <span class="nav-text">Discussion Board</span>
+            </a>
+
+            <a class="nav-item" href="#" data-tooltip="Settings">
+                <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                </svg>
+                <span class="nav-text">Settings</span>
+            </a>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="user-card">
+                <div class="user-avatar">JD</div>
+                <div>
+                    <div class="user-name">Jane Doe</div>
+                    <div class="user-role">Student · Free Plan</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ─── MAIN CONTENT ────────────────────── -->
+    <div class="main-wrap" id="mainWrap">
+
+        <header class="header">
+            <div class="header-title">Learning Dashboard</div>
+            <div class="search-wrap">
+                <svg class="search-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.35-4.35" />
+                </svg>
+                <input type="text" placeholder="Search courses, tools, resources…">
+            </div>
+            <div class="header-actions">
+                <div class="icon-btn" title="Notifications">
+                    <div class="notif-dot"></div>
+                    <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    </svg>
+                </div>
+                <div class="icon-btn" title="Messages">
+                    <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    </svg>
+                </div>
+                <div class="icon-btn" title="Cart">
+                    <span class="material-symbols-outlined" style="font-size:18px;">shopping_cart</span>
+                </div>
+                <div class="header-avatar">JD</div>
+            </div>
+        </header>
+
+        <div class="page-content">
+            <main class="flex-1 overflow-y-auto">
+                <div class="p-10 space-y-8 max-w-[1400px] mx-auto">
+                    <div class="grid grid-cols-12 gap-8">
+
+                        <!-- ── LEFT COLUMN ── -->
+                        <div class="col-span-12 lg:col-span-8 flex flex-col gap-8">
+
+                            <!-- GREETING: plain text, no card background -->
+                            <div class="pt-2">
+                                <h2 class="text-3xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                    Good Afternoon, Juhi <span>👋</span>
+                                </h2>
+                                <p class="text-slate-500 mt-2 text-sm leading-relaxed max-w-lg">
+                                    You're making great progress! Complete your profile to unlock personalized course recommendations.
+                                </p>
+                            </div>
+
+                            <!-- STATS ROW: 4 cards spanning full left column -->
+                            <div class="grid grid-cols-4 gap-4">
+
+                                <!-- Lessons Completed -->
+                                <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col gap-3">
+                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Lessons Completed</p>
+                                    <div class="flex items-center gap-3">
+                                        <div class="size-10 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">
+                                            <span class="material-symbols-outlined text-[20px]">menu_book</span>
+                                        </div>
+                                        <span class="text-xl font-bold text-blue-500 leading-none">24</span>
+                                    </div>
+                                </div>
+
+                                <!-- Learning Streak -->
+                                <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col gap-3">
+                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Learning Streak</p>
+                                    <div class="flex items-center gap-3">
+                                        <div class="size-10 rounded-full bg-orange-500/10 text-orange-500 flex items-center justify-center shrink-0">
+                                            <span class="material-symbols-outlined text-[20px]">local_fire_department</span>
+                                        </div>
+                                        <div class="flex items-baseline gap-1 text-orange-500">
+                                            <span class="text-xl font-bold leading-none">12</span>
+                                            <span class="text-[15px] font-bold">Days</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Total Study Hours -->
+                                <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col gap-3">
+                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Study Hours</p>
+                                    <div class="flex items-center gap-3">
+                                        <div class="size-10 rounded-full bg-purple-500/10 text-purple-500 flex items-center justify-center shrink-0">
+                                            <span class="material-symbols-outlined text-[20px]">schedule</span>
+                                        </div>
+                                        <span class="text-xl font-bold text-purple-500 leading-none">48.5h</span>
+                                    </div>
+                                </div>
+
+                                <!-- Accuracy Score -->
+                                <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col gap-3">
+                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Accuracy Score</p>
+                                    <div class="flex items-center gap-3">
+                                        <div class="size-10 rounded-full bg-[#36C5D9]/20 text-[#36C5D9] flex items-center justify-center shrink-0">
+                                            <span class="material-symbols-outlined text-[20px]">track_changes</span>
+                                        </div>
+                                        <span class="text-xl font-bold text-[#36C5D9] leading-none">94%</span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- CONTINUE LEARNING -->
+                            <section>
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-xl font-bold text-slate-900 dark:text-white">Continue Learning</h3>
+                                    <a class="text-primary text-sm font-bold hover:underline" href="#">View All</a>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                                    <!-- Card 1 -->
+                                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm flex flex-col">
+                                        <div class="h-40 bg-cover bg-center relative" style="background-image:url('https://www.transcriptioncertificationinstitute.org/assets_ui/images/general-transcription-bg.webp');">
+                                            <span class="absolute top-3 left-3 bg-primary text-white text-[10px] font-bold px-3 py-1 rounded-full">Active</span>
+                                        </div>
+                                        <div class="p-4 flex flex-col flex-1">
+                                            <h4 class="font-bold text-base text-slate-900 dark:text-white">General Transcription Course</h4>
+                                            <div class="mt-3 space-y-1.5">
+                                                <div class="flex justify-between items-center">
+                                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Progress</span>
+                                                    <span class="text-[10px] font-bold text-primary">65%</span>
+                                                </div>
+                                                <div class="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                                                    <div class="h-full bg-primary rounded-full" style="width:65%;"></div>
+                                                </div>
+                                            </div>
+                                            <a href="#" class="resume-lesson-link mt-4 inline-flex items-center gap-2">
+                                                <div class="bg-primary/10 text-primary p-1.5 rounded-lg flex items-center justify-center">
+                                                    <span class="material-symbols-outlined" style="font-size:18px;">play_circle</span>
+                                                </div>
+                                                <span class="resume-lesson-text">Resume Lesson</span>
+                                                <span class="material-symbols-outlined resume-lesson-arrow">arrow_forward</span>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <!-- Card 2 -->
+                                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm flex flex-col">
+                                        <div class="h-40 bg-cover bg-center relative" style="background-image:url('https://www.transcriptioncertificationinstitute.org/assets_ui/images/legal-transcription-bg.webp');">
+                                            <span class="absolute top-3 left-3 bg-primary text-white text-[10px] font-bold px-3 py-1 rounded-full">Active</span>
+                                        </div>
+                                        <div class="p-4 flex flex-col flex-1">
+                                            <h4 class="font-bold text-base text-slate-900 dark:text-white">Legal Transcription Course</h4>
+                                            <div class="mt-3 space-y-1.5">
+                                                <div class="flex justify-between items-center">
+                                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Progress</span>
+                                                    <span class="text-[10px] font-bold text-primary">12%</span>
+                                                </div>
+                                                <div class="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                                                    <div class="h-full bg-primary rounded-full" style="width:12%;"></div>
+                                                </div>
+                                            </div>
+                                            <a href="#" class="resume-lesson-link mt-4 inline-flex items-center gap-2">
+                                                <div class="bg-primary/10 text-primary p-1.5 rounded-lg flex items-center justify-center">
+                                                    <span class="material-symbols-outlined" style="font-size:18px;">play_circle</span>
+                                                </div>
+                                                <span class="resume-lesson-text">Resume Lesson</span>
+                                                <span class="material-symbols-outlined resume-lesson-arrow">arrow_forward</span>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </section>
+
+                        </div>
+
+                        <!-- ── RIGHT COLUMN ── -->
+                        <div class="col-span-12 lg:col-span-4 space-y-6">
+
+                            <!-- PROFILE STATUS CARD (moved here from greeting) -->
+                            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-5 shadow-sm flex items-center justify-between gap-4">
+                                <div class="flex items-center gap-4">
+                                    <!-- Circular progress ring -->
+                                    <div class="relative shrink-0" style="width:64px;height:64px;">
+                                        <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                                            <path class="fill-none stroke-slate-100 dark:stroke-slate-800" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" stroke-width="3" />
+                                            <path class="fill-none stroke-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" stroke-dasharray="11, 100" stroke-linecap="round" stroke-width="3" />
+                                        </svg>
+                                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                            <span class="text-sm font-bold text-slate-900 dark:text-white leading-none">11%</span>
+                                            <span class="text-[7px] uppercase font-bold text-slate-400 mt-0.5">Complete</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Profile Status</p>
+                                        <p class="text-xs text-slate-500 leading-snug">Complete your profile to get personalized recommendations.</p>
+                                    </div>
+                                </div>
+                                <button class="shrink-0 bg-primary text-white font-bold py-2 px-4 rounded-xl text-xs hover:opacity-90 transition-all whitespace-nowrap">
+                                    Edit Profile
+                                </button>
+                            </div>
+
+                            <!-- TODAY'S AUTO-GOALS -->
+                            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-5 shadow-sm">
+                                <div class="flex items-center justify-between mb-5">
+                                    <h3 class="font-bold text-slate-900 dark:text-white">Today's Goals</h3>
+                                    <span class="bg-green-100 text-green-600 text-[10px] font-bold px-2 py-0.5 rounded">2/3 Done</span>
+                                </div>
+                                <div class="space-y-3.5">
+                                    <div class="flex items-center gap-3">
+                                        <div class="size-5 rounded-full bg-primary flex items-center justify-center text-white shrink-0">
+                                            <span class="material-symbols-outlined text-xs">check</span>
+                                        </div>
+                                        <span class="text-sm text-slate-400 line-through">Complete 2 lessons</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="size-5 rounded-full bg-primary flex items-center justify-center text-white shrink-0">
+                                            <span class="material-symbols-outlined text-xs">check</span>
+                                        </div>
+                                        <span class="text-sm text-slate-400 line-through">Practice transcription</span>
+                                    </div>
+                                    <div class="flex items-center gap-3 p-2.5 -mx-2.5 rounded-xl bg-[#ffcb44]/10 border-l-[3px] border-[#ffcb44] shadow-sm">
+                                        <div class="size-5 rounded-full border-2 border-[#ffcb44] flex items-center justify-center shrink-0 bg-white dark:bg-transparent">
+                                            <div class="size-1.5 rounded-full bg-[#ffcb44]"></div>
+                                        </div>
+                                        <div class="flex flex-col gap-0.5">
+                                            <span class="text-sm font-bold text-slate-800 dark:text-slate-200">Review accuracy report</span>
+                                            <span class="text-[9px] text-[#dbab2c] font-bold uppercase tracking-wider">Up Next</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- LEARNING PLAN -->
+                            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-5 shadow-sm">
+                                <div class="flex items-center justify-between mb-5">
+                                    <div class="flex items-center gap-2">
+                                        <h3 class="font-bold text-slate-900 dark:text-white">Learning Plan</h3>
+                                        <span class="text-[10px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded-md border border-slate-100 dark:border-slate-700">March</span>
+                                    </div>
+                                    <button class="text-slate-400 hover:text-primary transition-colors"><span class="material-symbols-outlined text-sm">calendar_today</span></button>
+                                </div>
+                                <div class="grid grid-cols-7 gap-1.5 mb-5 relative">
+                                    <!-- Mon: Past Day with Checkmark -->
+                                    <div class="text-center group cursor-pointer relative">
+                                        <p class="text-[8px] font-bold text-slate-400 uppercase mb-1">M</p>
+                                        <div class="size-8 rounded-lg bg-green-50 text-primary dark:bg-primary/10 dark:text-primary text-[10px] font-bold flex items-center justify-center mx-auto border border-green-100 dark:border-primary/20 transition-colors">
+                                            <span class="material-symbols-outlined text-[14px]">check</span>
+                                        </div>
+                                    </div>
+                                    <!-- Tue: Past Day with Checkmark -->
+                                    <div class="text-center group cursor-pointer relative">
+                                        <p class="text-[8px] font-bold text-slate-400 uppercase mb-1">T</p>
+                                        <div class="size-8 rounded-lg bg-green-50 text-primary dark:bg-primary/10 dark:text-primary text-[10px] font-bold flex items-center justify-center mx-auto border border-green-100 dark:border-primary/20 transition-colors">
+                                            <span class="material-symbols-outlined text-[14px]">check</span>
+                                        </div>
+                                    </div>
+                                    <!-- Wed: Past Day with Checkmark -->
+                                    <div class="text-center group cursor-pointer relative">
+                                        <p class="text-[8px] font-bold text-slate-400 uppercase mb-1">W</p>
+                                        <div class="size-8 rounded-lg bg-green-50 text-primary dark:bg-primary/10 dark:text-primary text-[10px] font-bold flex items-center justify-center mx-auto border border-green-100 dark:border-primary/20 transition-colors">
+                                            <span class="material-symbols-outlined text-[14px]">check</span>
+                                        </div>
+                                    </div>
+                                    <!-- Thu: Past Day with Checkmark -->
+                                    <div class="text-center group cursor-pointer relative">
+                                        <p class="text-[8px] font-bold text-slate-400 uppercase mb-1">T</p>
+                                        <div class="size-8 rounded-lg bg-green-50 text-primary dark:bg-primary/10 dark:text-primary text-[10px] font-bold flex items-center justify-center mx-auto border border-green-100 dark:border-primary/20 transition-colors">
+                                            <span class="material-symbols-outlined text-[14px]">check</span>
+                                        </div>
+                                    </div>
+                                    <!-- Fri: TODAY -->
+                                    <div class="text-center group cursor-pointer relative">
+                                        <p class="text-[8px] font-bold text-[#dbab2c] uppercase mb-1">F</p>
+                                        <div class="size-8 rounded-lg bg-[#ffcb44] text-white text-[10px] font-bold flex items-center justify-center mx-auto shadow-[0_2px_8px_-2px_rgba(255,203,68,0.5)]">16</div>
+                                        <!-- Active dot -->
+                                        <div class="absolute -bottom-2.5 left-1/2 -translate-x-1/2 size-1 rounded-full bg-[#ffcb44]"></div>
+                                    </div>
+                                    <!-- Sat: Future day with upcoming event -->
+                                    <div class="text-center group cursor-pointer relative">
+                                        <p class="text-[8px] font-bold text-slate-400 uppercase mb-1">S</p>
+                                        <div class="size-8 rounded-lg bg-transparent text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 dark:text-slate-400 hover:text-slate-900 text-[10px] font-bold flex items-center justify-center mx-auto border border-slate-200 dark:border-slate-700 transition-colors">17</div>
+                                        <!-- Event dot -->
+                                        <div class="absolute -bottom-2.5 left-1/2 -translate-x-1/2 size-1 rounded-full bg-primary bg-opacity-80"></div>
+                                    </div>
+                                    <!-- Sun: Future day with assignment -->
+                                    <div class="text-center group cursor-pointer relative">
+                                        <p class="text-[8px] font-bold text-slate-400 uppercase mb-1">S</p>
+                                        <div class="size-8 rounded-lg bg-transparent text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 dark:text-slate-400 hover:text-slate-900 text-[10px] font-bold flex items-center justify-center mx-auto border border-slate-200 dark:border-slate-700 transition-colors">18</div>
+                                        <!-- Event dot -->
+                                        <div class="absolute -bottom-2.5 left-1/2 -translate-x-1/2 size-1 rounded-full bg-purple-400 bg-opacity-80"></div>
+                                    </div>
+                                </div>
+                                <div class="space-y-2 mt-7">
+                                    <!-- Actionable Card 1 -->
+                                    <a href="#" class="block p-3.5 bg-slate-50 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700/80 rounded-xl border-l-[3px] border-primary transition-all group shadow-sm">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <p class="text-[12px] font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">Interactive Live Q&amp;A</p>
+                                                <p class="text-[10px] font-semibold text-slate-500 mt-1 flex items-center gap-1.5" style="letter-spacing: 0.1px;">
+                                                    <span class="material-symbols-outlined text-[13px] text-primary/70">event</span> Tomorrow at 2:00 PM
+                                                </p>
+                                            </div>
+                                            <div class="size-6 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-400 group-hover:text-primary group-hover:border-primary/40 transition-colors">
+                                                <span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- COURSE LIBRARY: full-width carousel row -->
+                        <div class="col-span-12 mt-6" data-carousel="course-library">
+                            <section>
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-xl font-bold text-slate-900 dark:text-white">Course Library</h3>
+                                    <div class="flex items-center gap-2">
+                                        <button type="button" class="course-carousel-btn" data-dir="prev" aria-label="Previous courses">
+                                            <span class="material-symbols-outlined text-sm">chevron_left</span>
+                                        </button>
+                                        <button type="button" class="course-carousel-btn" data-dir="next" aria-label="Next courses">
+                                            <span class="material-symbols-outlined text-sm">chevron_right</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="course-carousel-viewport">
+                                    <div class="course-carousel-track">
+
+                                        <!-- Library Card 1 -->
+                                        <div class="course-card-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm flex flex-col">
+                                            <div class="h-36 bg-cover bg-center" style="background-image:url('https://www.transcriptioncertificationinstitute.org/assets_ui/images/general-transcription-bg.webp');"></div>
+                                            <div class="p-4 flex flex-col flex-1">
+                                                <h5 class="font-bold text-sm text-slate-900 dark:text-white mb-1">General Transcription Course</h5>
+                                                <p class="text-[11px] text-slate-500 leading-relaxed flex-1">Master the art of general transcription with our comprehensive program.</p>
+                                                <div class="mt-3">
+                                                    <span class="inline-block text-[10px] font-bold text-primary bg-green-50 border border-green-100 px-2.5 py-0.5 rounded uppercase tracking-wide">Included</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Library Card 2 -->
+                                        <div class="course-card-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm flex flex-col">
+                                            <div class="h-36 bg-cover bg-center" style="background-image:url('https://www.transcriptioncertificationinstitute.org/assets_ui/images/legal-transcription-bg.webp');"></div>
+                                            <div class="p-4 flex flex-col flex-1">
+                                                <h5 class="font-bold text-sm text-slate-900 dark:text-white mb-1">Legal Transcription Course</h5>
+                                                <p class="text-[11px] text-slate-500 leading-relaxed flex-1">Specialized training for legal transcriptionists and court reporters.</p>
+                                                <div class="mt-3">
+                                                    <span class="inline-block text-[10px] font-bold text-primary bg-green-50 border border-green-100 px-2.5 py-0.5 rounded uppercase tracking-wide">Included</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Library Card 3 -->
+                                        <div class="course-card-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm flex flex-col">
+                                            <div class="h-36 bg-cover bg-center" style="background-image:url('https://www.transcriptioncertificationinstitute.org/assets_ui/images/aaert-course-bg.webp');"></div>
+                                            <div class="p-4 flex flex-col flex-1">
+                                                <h5 class="font-bold text-sm text-slate-500 dark:text-slate-400 mb-1">AAERT CET Prep Course</h5>
+                                                <p class="text-[11px] text-slate-400 leading-relaxed flex-1">Exam preparation for the American Association of Electronic Reporters and Transcribers.</p>
+                                                <div class="mt-3">
+                                                    <span class="inline-block text-[10px] font-bold text-slate-500 bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded uppercase tracking-wide">Add-On</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Library Card 4 (dummy) -->
+                                        <div class="course-card-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm flex flex-col">
+                                            <div class="h-36 bg-cover bg-center" style="background-image:url('https://www.transcriptioncertificationinstitute.org/assets_ui/images/general-transcription-bg.webp');"></div>
+                                            <div class="p-4 flex flex-col flex-1">
+                                                <h5 class="font-bold text-sm text-slate-900 dark:text-white mb-1">Realtime Captioning Basics</h5>
+                                                <p class="text-[11px] text-slate-500 leading-relaxed flex-1">Introductory modules on realtime captioning workflows and tools.</p>
+                                                <div class="mt-3">
+                                                    <span class="inline-block text-[10px] font-bold text-primary bg-green-50 border border-green-100 px-2.5 py-0.5 rounded uppercase tracking-wide">Included</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Library Card 5 (dummy) -->
+                                        <div class="course-card-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm flex flex-col">
+                                            <div class="h-36 bg-cover bg-center" style="background-image:url('https://www.transcriptioncertificationinstitute.org/assets_ui/images/legal-transcription-bg.webp');"></div>
+                                            <div class="p-4 flex flex-col flex-1">
+                                                <h5 class="font-bold text-sm text-slate-900 dark:text-white mb-1">Medical Transcription Essentials</h5>
+                                                <p class="text-[11px] text-slate-500 leading-relaxed flex-1">Practice medical terminology, dictation styles, and formatting.</p>
+                                                <div class="mt-3">
+                                                    <span class="inline-block text-[10px] font-bold text-primary bg-green-50 border border-green-100 px-2.5 py-0.5 rounded uppercase tracking-wide">Included</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Library Card 6 (dummy) -->
+                                        <div class="course-card-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm flex flex-col">
+                                            <div class="h-36 bg-cover bg-center" style="background-image:url('https://www.transcriptioncertificationinstitute.org/assets_ui/images/aaert-course-bg.webp');"></div>
+                                            <div class="p-4 flex flex-col flex-1">
+                                                <h5 class="font-bold text-sm text-slate-900 dark:text-white mb-1">Advanced Punctuation Workshop</h5>
+                                                <p class="text-[11px] text-slate-500 leading-relaxed flex-1">Deep dive into style guides, punctuation rules, and edge cases.</p>
+                                                <div class="mt-3">
+                                                    <span class="inline-block text-[10px] font-bold text-slate-500 bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded uppercase tracking-wide">Add-On</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const mainWrap = document.getElementById('mainWrap');
+        const toggleBtn = document.getElementById('sidebarToggle');
+
+        const updateSidebarState = (isCollapsed) => {
+            sidebar.classList.toggle('collapsed', isCollapsed);
+            mainWrap.classList.toggle('collapsed', isCollapsed);
+        };
+
+        toggleBtn.addEventListener('click', () => {
+            const isCollapsed = !sidebar.classList.contains('collapsed');
+            updateSidebarState(isCollapsed);
+            localStorage.setItem('sidebarCollapsed', isCollapsed);
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            updateSidebarState(localStorage.getItem('sidebarCollapsed') === 'true');
+
+            // My Courses dropdown toggle
+            document.querySelectorAll('.nav-dropdown-toggle').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    btn.closest('.nav-dropdown').classList.toggle('open');
+                });
+            });
+
+            // Simple horizontal carousel for Course Library
+            const carouselRoot = document.querySelector('[data-carousel="course-library"]');
+            if (carouselRoot) {
+                const viewport = carouselRoot.querySelector('.course-carousel-viewport');
+                const cards = viewport ? viewport.querySelectorAll('.course-card-item') : [];
+                const prevBtn = carouselRoot.querySelector('[data-dir="prev"]');
+                const nextBtn = carouselRoot.querySelector('[data-dir="next"]');
+
+                const getScrollAmount = () => {
+                    if (!viewport || !cards.length) return 0;
+                    const cardWidth = cards[0].getBoundingClientRect().width;
+                    const gap = 20; // matches CSS gap in .course-carousel-track
+                    return cardWidth + gap;
+                };
+
+                const scrollByDirection = (dir) => {
+                    if (!viewport) return;
+                    const amount = getScrollAmount();
+                    if (!amount) return;
+                    viewport.scrollBy({
+                        left: dir === 'next' ? amount : -amount,
+                        behavior: 'smooth'
+                    });
+                };
+
+                if (prevBtn) {
+                    prevBtn.addEventListener('click', () => scrollByDirection('prev'));
+                }
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', () => scrollByDirection('next'));
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
