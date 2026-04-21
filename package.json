@@ -1,6 +1,7 @@
 {
   "name": "tci-dashboard",
   "version": "0.1.0",
+  "homepage": "https://juhi-afreen.github.io/TCI---Dashboard/",
   "private": true,
   "dependencies": {
     "@tailwindcss/container-queries": "^0.1.1",
@@ -24,7 +25,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -46,6 +48,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",
+    "gh-pages": "^6.3.0",
     "postcss": "^8.4.24",
     "tailwindcss": "^3.3.0"
   }
