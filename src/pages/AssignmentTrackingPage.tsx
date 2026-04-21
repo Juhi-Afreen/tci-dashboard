@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import DashboardLayout from '../layouts/DashboardLayout';
 import PageBreadcrumb from '../components/PageBreadcrumb';
 import BorderStatCard from '../components/BorderStatCard';
-import FilterButtons from '../components/FilterButtons';
 import SideCard from '../components/SideCard';
 
 type AssignmentStatus = 'in-progress' | 'overdue' | 'pending' | 'submitted' | 'graded';
@@ -206,7 +205,9 @@ const AssignmentTrackingPage: React.FC = () => {
                             <span className="material-symbols-outlined text-[22px] shrink-0 mt-0.5" style={{ color: 'var(--green)' }}>info</span>
                             <p className="text-sm leading-relaxed" style={{ color: '#1a5c47' }}>
                                 Track your transcription assignments, monitor deadlines, and review your grades all in one place.&nbsp;
-                                <a href="#" className="font-extrabold uppercase tracking-wide underline underline-offset-2" style={{ color: 'var(--green)', textDecorationColor: 'var(--green)' }}>View Grading Guidelines.</a>
+                                <button type="button" className="font-extrabold uppercase tracking-wide underline underline-offset-2" style={{ color: 'var(--green)', textDecorationColor: 'var(--green)', background: 'transparent', border: 'none', padding: 0, cursor: 'pointer' }} onClick={() => { /* TODO: navigate to grading guidelines */ }}>
+                                    View Grading Guidelines.
+                                </button>
                             </p>
                         </div>
                     </section>
@@ -226,7 +227,35 @@ const AssignmentTrackingPage: React.FC = () => {
                         <div className="flex-1 min-w-0 space-y-8">
 
                             <section>
-                                <FilterButtons filters={filterOptions} active={activeFilter} onChange={setActiveFilter} />
+                                <div
+                                    style={{
+                                        display: 'flex', gap: '4px', background: '#F4F7F6',
+                                        borderRadius: '10px', padding: '4px',
+                                        marginBottom: '24px', width: 'fit-content',
+                                    }}
+                                >
+                                    {filterOptions.map(opt => (
+                                        <button
+                                            key={opt.value}
+                                            onClick={() => setActiveFilter(opt.value)}
+                                            style={{
+                                                padding: '8px 18px',
+                                                borderRadius: '8px',
+                                                border: 'none',
+                                                cursor: 'pointer',
+                                                fontFamily: 'inherit',
+                                                fontSize: '13px',
+                                                fontWeight: 600,
+                                                transition: 'all .15s',
+                                                background: activeFilter === opt.value ? '#fff' : 'transparent',
+                                                color: activeFilter === opt.value ? 'var(--green)' : 'var(--text-secondary)',
+                                                boxShadow: activeFilter === opt.value ? '0 1px 6px rgba(0,0,0,.08)' : 'none',
+                                            }}
+                                        >
+                                            {opt.label}
+                                        </button>
+                                    ))}
+                                </div>
                             </section>
 
                             <section>
@@ -303,15 +332,15 @@ const AssignmentTrackingPage: React.FC = () => {
                                         ))}
                                     </div>
                                     <div className="mt-4 pt-4 border-t border-slate-100">
-                                        <a href="#" className="text-xs font-bold flex items-center justify-center gap-1 transition-all" style={{ color: 'var(--green)' }}>
+                                        <button type="button" className="text-xs font-bold flex items-center justify-center gap-1 transition-all" style={{ color: 'var(--green)', background: 'transparent', border: 'none', padding: 0, cursor: 'pointer' }} onClick={() => { /* TODO: show all deadlines */ }}>
                                             View All Deadlines
                                             <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                                        </a>
+                                        </button>
                                     </div>
                                 </SideCard>
 
                                 {/* Recent Activity */}
-                                <SideCard title="Recent Activity" titleIcon="history" titleIconColor="var(--green)">
+                                {/* <SideCard title="Recent Activity" titleIcon="history" titleIconColor="var(--green)">
                                     <div className="space-y-4">
                                         {[
                                             { dot: 'var(--green)', text: <><strong>Unit 2: Foot Pedal</strong> was submitted for review.</>, time: '2 hours ago' },
@@ -334,7 +363,7 @@ const AssignmentTrackingPage: React.FC = () => {
                                             <span className="material-symbols-outlined text-sm">arrow_forward</span>
                                         </a>
                                     </div>
-                                </SideCard>
+                                </SideCard> */}
 
                                 {/* Quick Tips */}
                                 <div className="tips-card">

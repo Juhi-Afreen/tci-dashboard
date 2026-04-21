@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import DashboardLayout from '../layouts/DashboardLayout';
 import PageBreadcrumb from '../components/PageBreadcrumb';
 import BorderStatCard from '../components/BorderStatCard';
-import FilterButtons from '../components/FilterButtons';
 import SideCard from '../components/SideCard';
 
 type QuizStatus = 'completed' | 'in-progress' | 'not-started';
@@ -86,7 +85,35 @@ const GrammarQuizzesPage: React.FC = () => {
                         {/* Left: quiz list */}
                         <div className="flex-1 min-w-0 space-y-8">
                             <section>
-                                <FilterButtons filters={filterOptions} active={activeFilter} onChange={setActiveFilter} />
+                                <div
+                                    style={{
+                                        display: 'flex', gap: '4px', background: '#F4F7F6',
+                                        borderRadius: '10px', padding: '4px',
+                                        marginBottom: '24px', width: 'fit-content',
+                                    }}
+                                >
+                                    {filterOptions.map(opt => (
+                                        <button
+                                            key={opt.value}
+                                            onClick={() => setActiveFilter(opt.value)}
+                                            style={{
+                                                padding: '8px 18px',
+                                                borderRadius: '8px',
+                                                border: 'none',
+                                                cursor: 'pointer',
+                                                fontFamily: 'inherit',
+                                                fontSize: '13px',
+                                                fontWeight: 600,
+                                                transition: 'all .15s',
+                                                background: activeFilter === opt.value ? '#fff' : 'transparent',
+                                                color: activeFilter === opt.value ? 'var(--green)' : 'var(--text-secondary)',
+                                                boxShadow: activeFilter === opt.value ? '0 1px 6px rgba(0,0,0,.08)' : 'none',
+                                            }}
+                                        >
+                                            {opt.label}
+                                        </button>
+                                    ))}
+                                </div>
                             </section>
 
                             <section>
@@ -102,38 +129,55 @@ const GrammarQuizzesPage: React.FC = () => {
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {filtered.map(quiz => (
                                             <div key={quiz.id} className="quiz-category-card">
-                                                <div className="flex items-center justify-between mb-3">
-                                                    <div className="category-icon" style={{ background: quiz.iconBg, color: quiz.iconColor }}>
+
+                                                {/* Top: Icon + Title + Description */}
+                                                <div className="flex items-start gap-3 mb-4">
+                                                    <div
+                                                        className="category-icon shrink-0"
+                                                        style={{
+                                                            background:
+                                                                quiz.status === 'completed' ? 'var(--green-light)' :
+                                                                    quiz.status === 'in-progress' ? '#EFF6FF' : '#f1f5f9',
+                                                            color:
+                                                                quiz.status === 'completed' ? 'var(--green)' :
+                                                                    quiz.status === 'in-progress' ? '#3B82F6' : '#94a3b8',
+                                                        }}
+                                                    >
                                                         <span className="material-symbols-outlined">{quiz.icon}</span>
                                                     </div>
-                                                    <span className={`status-dot ${quiz.status}`}></span>
+                                                    <div className="min-w-0">
+                                                        <div className="flex items-center gap-2 mb-0.5">
+                                                            <h4 className="font-bold text-slate-900 leading-snug">{quiz.title}</h4>
+                                                            <span className={`difficulty-badge ${difficultyClass[quiz.difficulty]}`}>
+                                                                {quiz.difficulty}
+                                                            </span>
+                                                            <span className="text-xs text-slate-400">{quiz.questions} questions</span>
+                                                        </div>
+                                                        <p className="text-sm text-slate-500 leading-relaxed">{quiz.description}</p>
+                                                    </div>
                                                 </div>
-                                                <h4 className="font-bold text-slate-900 mb-1">{quiz.title}</h4>
-                                                <p className="text-sm text-slate-500 mb-3">{quiz.description}</p>
-                                                <div className="flex items-center gap-2 mb-3">
-                                                    <span className={`difficulty-badge ${difficultyClass[quiz.difficulty]}`}>{quiz.difficulty}</span>
-                                                    <span className="text-xs text-slate-400">{quiz.questions} questions</span>
+
+                                                {/* Bottom: Difficulty + Status | Button */}
+                                                <div className="flex items-center justify-between pt-3" style={{ borderTop: '1px solid #f1f5f9' }}>
+                                                    <div className="flex flex-col gap-1">
+                                                        {quiz.status === 'completed' && (
+                                                            <span className="text-sm font-bold" style={{ color: 'var(--green)' }}>
+                                                                Best: {quiz.bestScore}%
+                                                            </span>
+                                                        )}
+                                                        {quiz.status === 'in-progress' && (
+                                                            <span className="text-sm font-semibold text-blue-500">In Progress</span>
+                                                        )}
+                                                        {quiz.status === 'not-started' && (
+                                                            <span className="text-sm text-slate-400">Not started</span>
+                                                        )}
+                                                    </div>
+
+                                                    {quiz.status === 'completed' && <button className="action-btn primary">Retake</button>}
+                                                    {quiz.status === 'in-progress' && <button className="action-btn secondary">Continue</button>}
+                                                    {quiz.status === 'not-started' && <button className="action-btn primary">Start</button>}
                                                 </div>
-                                                <div className="flex items-center justify-between">
-                                                    {quiz.status === 'completed' && (
-                                                        <span className="text-sm font-bold text-green-600">Best: {quiz.bestScore}%</span>
-                                                    )}
-                                                    {quiz.status === 'in-progress' && (
-                                                        <span className="text-sm text-blue-600">In Progress</span>
-                                                    )}
-                                                    {quiz.status === 'not-started' && (
-                                                        <span className="text-sm text-slate-400">Not started</span>
-                                                    )}
-                                                    {quiz.status === 'completed' && (
-                                                        <button className="action-btn primary">Retake</button>
-                                                    )}
-                                                    {quiz.status === 'in-progress' && (
-                                                        <button className="action-btn secondary">Continue</button>
-                                                    )}
-                                                    {quiz.status === 'not-started' && (
-                                                        <button className="action-btn primary">Start</button>
-                                                    )}
-                                                </div>
+
                                             </div>
                                         ))}
                                     </div>
@@ -145,25 +189,27 @@ const GrammarQuizzesPage: React.FC = () => {
                         <aside className="lg:w-72 xl:w-80 space-y-6 shrink-0">
                             <div className="sticky top-24 space-y-6">
 
-                                {/* Recent Activity */}
-                                <SideCard title="Recent Activity" titleIcon="history" titleIconColor="var(--green)">
-                                    <div className="space-y-4">
-                                        {[
-                                            { dot: 'var(--green)', text: <><strong>Punctuation Basics</strong> completed - Score: 95%</>, time: '2 hours ago' },
-                                            { dot: '#3B82F6', text: <><strong>Capitalization Rules</strong> completed - Score: 90%</>, time: 'Yesterday' },
-                                            { dot: 'var(--purple)', text: <><strong>Abbreviations</strong> completed - Score: 85%</>, time: '2 days ago' },
-                                            { dot: '#F59E0B', text: <><strong>Numbers & Dates</strong> completed - Score: 80%</>, time: '3 days ago' },
-                                        ].map((item, i) => (
-                                            <div key={i} className="activity-item">
-                                                <div className="activity-dot" style={{ background: item.dot }}></div>
-                                                <div className="activity-content">
-                                                    <div className="activity-text">{item.text}</div>
-                                                    <div className="activity-time">{item.time}</div>
+                                <div style={{ display: 'none' }} aria-hidden={true}>
+                                    {/* Recent Activity (hidden) */}
+                                    <SideCard title="Recent Activity" titleIcon="history" titleIconColor="var(--green)">
+                                        <div className="space-y-4">
+                                            {[
+                                                { dot: 'var(--green)', text: <><strong>Punctuation Basics</strong> completed - Score: 95%</>, time: '2 hours ago' },
+                                                { dot: '#3B82F6', text: <><strong>Capitalization Rules</strong> completed - Score: 90%</>, time: 'Yesterday' },
+                                                { dot: 'var(--purple)', text: <><strong>Abbreviations</strong> completed - Score: 85%</>, time: '2 days ago' },
+                                                { dot: '#F59E0B', text: <><strong>Numbers & Dates</strong> completed - Score: 80%</>, time: '3 days ago' },
+                                            ].map((item, i) => (
+                                                <div key={i} className="activity-item">
+                                                    <div className="activity-dot" style={{ background: item.dot }}></div>
+                                                    <div className="activity-content">
+                                                        <div className="activity-text">{item.text}</div>
+                                                        <div className="activity-time">{item.time}</div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </SideCard>
+                                            ))}
+                                        </div>
+                                    </SideCard>
+                                </div>
 
                                 {/* Daily Goal */}
                                 <SideCard title="Daily Goal" titleIcon="track_changes" titleIconColor="var(--orange, #F59E0B)">

@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import DashboardLayout from '../layouts/DashboardLayout';
 import PageBreadcrumb from '../components/PageBreadcrumb';
 import BorderStatCard from '../components/BorderStatCard';
+import resourceCover1 from '../assets/ebook-1.jpg';
+import resourceCover2 from '../assets/ebook-2.jpg';
+import resourceCover3 from '../assets/ebook-3.jpg';
+import resourceCover4 from '../assets/ebook-4.jpg';
 
 // ── Ebook data ─────────────────────────────────────────────────────────────────
 
@@ -18,6 +22,7 @@ interface Ebook {
     coverColor: string;
     coverAccent: string;
     coverIcon: string;
+    coverImage?: string;
     tags: string[];
 }
 
@@ -35,6 +40,7 @@ const ebooks: Ebook[] = [
         coverColor: '#1a5c47',
         coverAccent: '#2aa880',
         coverIcon: 'menu_book',
+        coverImage: resourceCover1,
         tags: ['Resources', 'Tools', 'Reference'],
     },
     {
@@ -50,6 +56,7 @@ const ebooks: Ebook[] = [
         coverColor: '#1e3a6e',
         coverAccent: '#3b7dd8',
         coverIcon: 'work',
+        coverImage: resourceCover2,
         tags: ['Jobs', 'Career', 'Salary'],
     },
     {
@@ -65,6 +72,7 @@ const ebooks: Ebook[] = [
         coverColor: '#3b2d8a',
         coverAccent: '#7c6ee0',
         coverIcon: 'school',
+        coverImage: resourceCover3,
         tags: ['Courses', 'Certification', 'TCI'],
     },
     {
@@ -80,6 +88,7 @@ const ebooks: Ebook[] = [
         coverColor: '#7a3010',
         coverAccent: '#e8723a',
         coverIcon: 'cases',
+        coverImage: resourceCover4,
         tags: ['Jobs', 'Job Board', 'Hiring'],
     },
 ];
@@ -92,7 +101,11 @@ const BookCover: React.FC<{ ebook: Ebook }> = ({ ebook }) => (
             width: '100%',
             aspectRatio: '3/4',
             borderRadius: '10px 10px 10px 10px',
-            background: `linear-gradient(160deg, ${ebook.coverColor} 0%, ${ebook.coverAccent} 100%)`,
+            backgroundImage: ebook.coverImage
+                ? `linear-gradient(160deg, ${ebook.coverColor}CC 0%, ${ebook.coverAccent}B3 100%), url(${ebook.coverImage})`
+                : `linear-gradient(160deg, ${ebook.coverColor} 0%, ${ebook.coverAccent} 100%)`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -103,45 +116,20 @@ const BookCover: React.FC<{ ebook: Ebook }> = ({ ebook }) => (
             boxShadow: '4px 4px 16px rgba(0,0,0,.25), -2px 0 0 rgba(0,0,0,.15)',
         }}
     >
-        {/* Decorative circles */}
-        <div style={{ position: 'absolute', top: '-30px', right: '-30px', width: '100px', height: '100px', borderRadius: '50%', background: 'rgba(255,255,255,.08)' }} />
-        <div style={{ position: 'absolute', bottom: '-20px', left: '-20px', width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(255,255,255,.05)' }} />
-
-        {/* TCI logo text */}
-        <div style={{ position: 'absolute', top: '14px', left: '14px', fontSize: '9px', fontWeight: 800, color: 'rgba(255,255,255,.6)', letterSpacing: '1.5px' }}>
-            TCI
-        </div>
-
-        {/* FREE badge */}
         <div style={{
-            position: 'absolute', top: '12px', right: '12px',
-            background: '#FFD700', color: '#7a3010',
-            fontSize: '9px', fontWeight: 800,
-            padding: '3px 8px', borderRadius: '20px',
-            letterSpacing: '0.5px',
-        }}>
-            FREE
-        </div>
-
-        {/* Icon */}
-        <div style={{
-            width: '56px', height: '56px', borderRadius: '16px',
+            width: '56px',
+            height: '56px',
+            borderRadius: '16px',
             background: 'rgba(255,255,255,.18)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            marginBottom: '14px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
             backdropFilter: 'blur(4px)',
+            border: '1px solid rgba(255,255,255,.28)',
         }}>
             <span className="material-symbols-outlined" style={{ fontSize: '30px', color: '#fff' }}>
                 {ebook.coverIcon}
             </span>
-        </div>
-
-        {/* Title lines */}
-        <div style={{ textAlign: 'center', zIndex: 1 }}>
-            <div style={{ fontSize: '11px', fontWeight: 800, color: '#fff', lineHeight: 1.4, marginBottom: '6px' }}>
-                {ebook.title}
-            </div>
-            <div style={{ width: '30px', height: '2px', background: 'rgba(255,255,255,.5)', margin: '0 auto' }} />
         </div>
     </div>
 );
@@ -199,10 +187,10 @@ const FreeEbookPage: React.FC = () => {
 
                     {/* ── Stats ── */}
                     <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <BorderStatCard label="Free Ebooks"     value={String(ebooks.length)} icon="auto_stories"  borderColor="var(--green)"  iconColor="var(--green)"  />
-                        <BorderStatCard label="Career Guides"   value="2"                      icon="work"          borderColor="var(--blue)"   iconColor="var(--blue)"   />
-                        <BorderStatCard label="Course Guides"   value="1"                      icon="school"        borderColor="var(--purple)" iconColor="var(--purple)" />
-                        <BorderStatCard label="Cost"            value="$0"                     icon="redeem"        borderColor="var(--orange)" iconColor="var(--orange)" />
+                        <BorderStatCard label="Free Ebooks" value={String(ebooks.length)} icon="auto_stories" borderColor="var(--green)" iconColor="var(--green)" />
+                        <BorderStatCard label="Career Guides" value="2" icon="work" borderColor="var(--blue)" iconColor="var(--blue)" />
+                        <BorderStatCard label="Course Guides" value="1" icon="school" borderColor="var(--purple)" iconColor="var(--purple)" />
+                        <BorderStatCard label="Cost" value="$0" icon="redeem" borderColor="var(--orange)" iconColor="var(--orange)" />
                     </section>
 
                     {/* ── Ebook grid ── */}
@@ -234,7 +222,7 @@ const FreeEbookPage: React.FC = () => {
                                         {/* Content panel */}
                                         <div style={{ flex: 1, padding: '20px 20px 16px 20px', display: 'flex', flexDirection: 'column' }}>
 
-                                            {/* Category + FREE pill */}
+                                            {/* Category */}
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
                                                 <span style={{
                                                     fontSize: '11px', fontWeight: 700,
@@ -243,14 +231,6 @@ const FreeEbookPage: React.FC = () => {
                                                     border: `1px solid ${ebook.categoryColor}30`,
                                                 }}>
                                                     {ebook.category}
-                                                </span>
-                                                <span style={{
-                                                    fontSize: '11px', fontWeight: 800,
-                                                    padding: '3px 10px', borderRadius: '20px',
-                                                    background: '#FFF8DC', color: '#92600a',
-                                                    border: '1px solid #f5c842',
-                                                }}>
-                                                    FREE
                                                 </span>
                                             </div>
 
