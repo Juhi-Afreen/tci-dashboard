@@ -8,9 +8,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      pages: write
-      id-token: write
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -30,14 +28,7 @@ jobs:
       - name: Create .nojekyll
         run: touch ./build/.nojekyll
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './build'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Deploy with gh-pages
+        run: npm run deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
