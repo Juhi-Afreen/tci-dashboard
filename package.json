@@ -1,7 +1,7 @@
 {
   "name": "tci-dashboard",
   "version": "0.1.0",
-  "homepage": "https://juhi-afreen.github.io/TCI---Dashboard/",
+  "homepage": "https://juhi-afreen.github.io/tci-dashboard/",
   "private": true,
   "dependencies": {
     "@tailwindcss/container-queries": "^0.1.1",
