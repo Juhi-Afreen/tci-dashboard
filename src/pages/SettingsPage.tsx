@@ -338,12 +338,10 @@ const ProfileTab: React.FC = () => {
                         marginBottom: 16,
                     }}
                 >
-                    <span
-                        className="material-symbols-outlined"
+                    <Icon
+                        icon="upload_file"
                         style={{ fontSize: 36, color: 'var(--text-muted)', display: 'block', marginBottom: 8 }}
-                    >
-                        upload_file
-                    </span>
+                    />
                     <p style={{ margin: '0 0 4px', fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>
                         Drag & drop your CV here
                     </p>
@@ -1004,15 +1002,13 @@ const SettingsPage: React.FC = () => {
                                             transition: 'background .15s',
                                         }}
                                     >
-                                        <span
-                                            className="material-symbols-outlined"
+                                        <Icon
+                                            icon={tab.icon}
                                             style={{
                                                 fontSize: 20,
                                                 color: active ? 'var(--green)' : 'var(--text-secondary)',
                                             }}
-                                        >
-                                            {tab.icon}
-                                        </span>
+                                        />
                                         <span
                                             style={{
                                                 fontSize: 13,

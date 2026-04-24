@@ -104,7 +104,7 @@ const Header: React.FC<HeaderProps> = ({ isSidebarCollapsed, toggleSidebar }) =>
         <header className="header">
             <div className="header-title">Learning Dashboard</div>
             <div className="search-wrap">
-                <span className="material-symbols-outlined search-icon">search</span>
+                <Icon icon="search" className="search-icon" />
                 <input type="text" placeholder="Search courses, tools, resources…" />
             </div>
             <div className="header-actions">
@@ -127,7 +127,7 @@ const Header: React.FC<HeaderProps> = ({ isSidebarCollapsed, toggleSidebar }) =>
                                 lineHeight: 1, padding: '0 3px',
                             }}>{unreadCount}</span>
                         )}
-                        <span className="material-symbols-outlined">notifications</span>
+                        <Icon icon="notifications" />
                     </button>
 
                     {notifOpen && (
@@ -153,7 +153,7 @@ const Header: React.FC<HeaderProps> = ({ isSidebarCollapsed, toggleSidebar }) =>
                                         onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg)')}
                                         onMouseLeave={e => (e.currentTarget.style.background = n.unread ? '#F8FFFE' : '#fff')}>
                                         <div style={{ width: 36, height: 36, borderRadius: 10, flexShrink: 0, background: n.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                            <span className="material-symbols-outlined" style={{ fontSize: 18, color: n.color }}>{n.icon}</span>
+                                             <Icon icon={n.icon} style={{ fontSize: 18, color: n.color }} />
                                         </div>
                                         <div style={{ flex: 1, minWidth: 0 }}>
                                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
@@ -184,7 +184,7 @@ const Header: React.FC<HeaderProps> = ({ isSidebarCollapsed, toggleSidebar }) =>
                             animation: chatOpen ? 'none' : 'chatGlow 2s ease-in-out infinite',
                         }}
                     >
-                        <span className="material-symbols-outlined">smart_toy</span>
+                        <Icon icon="smart_toy" />
                     </button>
 
                     {/* Backdrop */}
@@ -212,7 +212,7 @@ const Header: React.FC<HeaderProps> = ({ isSidebarCollapsed, toggleSidebar }) =>
                                 padding: '14px 16px', background: 'var(--green)',
                             }}>
                                 <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                                    <span className="material-symbols-outlined" style={{ fontSize: 20, color: '#fff' }}>smart_toy</span>
+                                     <Icon icon="smart_toy" style={{ fontSize: 20, color: '#fff' }} />
                                 </div>
                                 <div style={{ flex: 1 }}>
                                     <div style={{ fontSize: 14, fontWeight: 700, color: '#fff' }}>TCI Assistant</div>
@@ -222,7 +222,7 @@ const Header: React.FC<HeaderProps> = ({ isSidebarCollapsed, toggleSidebar }) =>
                                     </div>
                                 </div>
                                 <button onClick={() => setChatOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.8)', display: 'flex', alignItems: 'center', padding: 0 }}>
-                                    <span className="material-symbols-outlined" style={{ fontSize: 20 }}>close</span>
+                                     <Icon icon="close" style={{ fontSize: 20, color: 'rgba(255,255,255,0.8)' }} />
                                 </button>
                             </div>
 
@@ -232,7 +232,7 @@ const Header: React.FC<HeaderProps> = ({ isSidebarCollapsed, toggleSidebar }) =>
                                     <div key={i} style={{ display: 'flex', justifyContent: m.role === 'user' ? 'flex-end' : 'flex-start', gap: 8, alignItems: 'flex-end' }}>
                                         {m.role === 'bot' && (
                                             <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--green-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                                                <span className="material-symbols-outlined" style={{ fontSize: 15, color: 'var(--green)' }}>smart_toy</span>
+                                                 <Icon icon="smart_toy" style={{ fontSize: 15, color: 'var(--green)' }} />
                                             </div>
                                         )}
                                         <div style={{
@@ -249,7 +249,7 @@ const Header: React.FC<HeaderProps> = ({ isSidebarCollapsed, toggleSidebar }) =>
                                 {typing && (
                                     <div style={{ display: 'flex', alignItems: 'flex-end', gap: 8 }}>
                                         <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--green-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                                            <span className="material-symbols-outlined" style={{ fontSize: 15, color: 'var(--green)' }}>smart_toy</span>
+                                            <Icon icon="smart_toy" style={{ fontSize: 15, color: 'var(--green)' }} />
                                         </div>
                                         <div style={{ padding: '10px 14px', borderRadius: '14px 14px 14px 4px', background: 'var(--bg)', display: 'flex', gap: 4, alignItems: 'center' }}>
                                             {[0,1,2].map(d => (
@@ -297,14 +297,14 @@ const Header: React.FC<HeaderProps> = ({ isSidebarCollapsed, toggleSidebar }) =>
                                         transition: 'background .15s', flexShrink: 0,
                                     }}
                                 >
-                                    <span className="material-symbols-outlined" style={{ fontSize: 18 }}>send</span>
+                                    <Icon icon="send" style={{ fontSize: 18 }} />
                                 </button>
                             </div>
                         </div>
                 </div>
 
                 <button className="icon-btn" title="Cart">
-                    <span className="material-symbols-outlined">shopping_cart</span>
+                    <Icon icon="shopping_cart" />
                 </button>
 
                 {/* ── Avatar menu ─────────────────────────────────────── */}
@@ -356,7 +356,7 @@ const Header: React.FC<HeaderProps> = ({ isSidebarCollapsed, toggleSidebar }) =>
                                     onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg)')}
                                     onMouseLeave={e => (e.currentTarget.style.background = 'none')}
                                 >
-                                    <span className="material-symbols-outlined" style={{ fontSize: 18, color: 'var(--text-secondary)' }}>{item.icon}</span>
+                                    <Icon icon={item.icon} style={{ fontSize: 18, color: 'var(--text-secondary)' }} />
                                     <span style={{ fontSize: 13, color: 'var(--text-primary)', fontWeight: 500 }}>{item.label}</span>
                                 </button>
                             ))}
@@ -371,7 +371,7 @@ const Header: React.FC<HeaderProps> = ({ isSidebarCollapsed, toggleSidebar }) =>
                                     onMouseEnter={e => (e.currentTarget.style.background = '#FFF1F4')}
                                     onMouseLeave={e => (e.currentTarget.style.background = 'none')}
                                 >
-                                    <span className="material-symbols-outlined" style={{ fontSize: 18, color: 'var(--rose)' }}>logout</span>
+                                    <Icon icon="logout" style={{ fontSize: 18, color: 'var(--rose)' }} />
                                     <span style={{ fontSize: 13, color: 'var(--rose)', fontWeight: 600 }}>Log Out</span>
                                 </button>
                             </div>

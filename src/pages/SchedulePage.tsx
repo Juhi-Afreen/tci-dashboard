@@ -108,7 +108,7 @@ const EventRow: React.FC<{ event: ScheduleEvent; showDate?: boolean }> = ({ even
                 background: cfg.bg,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: cfg.color }}>{cfg.icon}</span>
+                <Icon icon={cfg.icon} style={{ fontSize: '18px', color: cfg.color }} />
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
@@ -257,9 +257,7 @@ const SchedulePage: React.FC = () => {
                                             boxShadow: active ? '0 1px 4px rgba(0,0,0,.08)' : 'none',
                                             transition: 'all .15s',
                                         }}>
-                                            <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>
-                                                {v === 'calendar' ? 'calendar_month' : 'view_list'}
-                                            </span>
+                                            <Icon icon={v === 'calendar' ? 'calendar_month' : 'view_list'} style={{ fontSize: '16px' }} />
                                             {v === 'calendar' ? 'Calendar' : 'List'}
                                         </button>
                                     );

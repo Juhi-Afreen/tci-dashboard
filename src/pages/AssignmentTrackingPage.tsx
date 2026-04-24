@@ -274,7 +274,7 @@ const AssignmentTrackingPage: React.FC = () => {
                                             <div key={a.id} className="assignment-row">
                                                 <div className="flex items-center gap-5">
                                                     <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: a.iconBg, color: a.iconColor }}>
-                                                        <span className="material-symbols-outlined">{a.icon}</span>
+                                                        <Icon icon={a.icon} />
                                                     </div>
                                                     <div>
                                                         <div className="flex items-center gap-3 mb-1 flex-wrap">
@@ -286,7 +286,7 @@ const AssignmentTrackingPage: React.FC = () => {
                                                                 <Icon icon="school" className="text-[14px]" /> {a.course}
                                                             </span>
                                                             <span className="flex items-center gap-1">
-                                                                <span className="material-symbols-outlined text-[14px]">{a.dateIcon}</span> {a.dateLabel}
+                                                                <Icon icon={a.dateIcon} className="text-[14px]" /> {a.dateLabel}
                                                             </span>
                                                         </div>
                                                     </div>
@@ -294,7 +294,7 @@ const AssignmentTrackingPage: React.FC = () => {
                                                 <div className="flex items-center gap-3 flex-wrap md:mt-0 mt-2">
                                                     <span className={`due-badge ${a.dueBadgeType}`}>
                                                         {a.dueBadgeIcon && (
-                                                            <span className="material-symbols-outlined text-[14px]">{a.dueBadgeIcon}</span>
+                                                            <Icon icon={a.dueBadgeIcon} className="text-[14px]" />
                                                         )}
                                                         {a.dueBadgeText}
                                                     </span>
@@ -323,7 +323,7 @@ const AssignmentTrackingPage: React.FC = () => {
                                         ].map((item, i) => (
                                             <div key={i} className="deadline-item">
                                                 <div className={`deadline-icon ${item.type}`}>
-                                                    <span className="material-symbols-outlined">{item.icon}</span>
+                                                    <Icon icon={item.icon} />
                                                 </div>
                                                 <div className="deadline-info">
                                                     <div className="deadline-title">{item.title}</div>

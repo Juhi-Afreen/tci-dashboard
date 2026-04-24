@@ -87,7 +87,7 @@ const UpdatesPage: React.FC = () => {
                                     <div className="flex gap-4">
                                         {/* Icon */}
                                         <div className="shrink-0 h-12 w-12 rounded-lg flex items-center justify-center" style={{ background: typeStyles.bg, color: typeStyles.color }}>
-                                            <span className="material-symbols-outlined text-2xl">{typeStyles.icon}</span>
+                                            <Icon icon={typeStyles.icon} className="text-2xl" />
                                         </div>
 
                                         {/* Content */}

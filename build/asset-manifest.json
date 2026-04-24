@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/tci-dashboard/static/css/main.5d8854e1.css",
-    "main.js": "/tci-dashboard/static/js/main.a6f33df7.js",
+    "main.js": "/tci-dashboard/static/js/main.fcd0954e.js",
     "static/js/453.a3a493e5.chunk.js": "/tci-dashboard/static/js/453.a3a493e5.chunk.js",
     "static/media/ebook-1.jpg": "/tci-dashboard/static/media/ebook-1.f889a77b4558a04b5b11.jpg",
     "static/media/ebook-4.jpg": "/tci-dashboard/static/media/ebook-4.eebc6e9d85f657758154.jpg",
@@ -9,11 +9,11 @@
     "static/media/ebook-3.jpg": "/tci-dashboard/static/media/ebook-3.2511e4a793300777ef81.jpg",
     "index.html": "/tci-dashboard/index.html",
     "main.5d8854e1.css.map": "/tci-dashboard/static/css/main.5d8854e1.css.map",
-    "main.a6f33df7.js.map": "/tci-dashboard/static/js/main.a6f33df7.js.map",
+    "main.fcd0954e.js.map": "/tci-dashboard/static/js/main.fcd0954e.js.map",
     "453.a3a493e5.chunk.js.map": "/tci-dashboard/static/js/453.a3a493e5.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5d8854e1.css",
-    "static/js/main.a6f33df7.js"
+    "static/js/main.fcd0954e.js"
   ]
 }

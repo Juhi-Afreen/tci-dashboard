@@ -128,9 +128,7 @@ const BookCover: React.FC<{ ebook: Ebook }> = ({ ebook }) => (
             backdropFilter: 'blur(4px)',
             border: '1px solid rgba(255,255,255,.28)',
         }}>
-            <span className="material-symbols-outlined" style={{ fontSize: '30px', color: '#fff' }}>
-                {ebook.coverIcon}
-            </span>
+            <Icon icon={ebook.coverIcon} style={{ fontSize: '30px', color: '#fff' }} />
         </div>
     </div>
 );
@@ -175,9 +173,7 @@ const FreeEbookPage: React.FC = () => {
                             className="mt-4 flex items-start gap-3 rounded-xl px-5 py-4"
                             style={{ background: 'var(--green-light)', border: '1.5px solid #a7d7c8' }}
                         >
-                            <span className="material-symbols-outlined text-[22px] shrink-0 mt-0.5" style={{ color: '#1f8f6d' }}>
-                                auto_stories
-                            </span>
+                            <Icon icon="auto_stories" className="text-[22px] shrink-0 mt-0.5" style={{ color: '#1f8f6d' }} />
                             <p className="text-sm leading-relaxed" style={{ color: '#1a5c47' }}>
                                 Expand your transcription knowledge with our collection of free ebooks and guides.
                                 Browse, preview, and download any resource — completely free for all TCI students.
@@ -331,9 +327,7 @@ const FreeEbookPage: React.FC = () => {
                                                         flexShrink: 0,
                                                     }}
                                                 >
-                                                    <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>
-                                                        {copiedId === ebook.id ? 'check' : 'link'}
-                                                    </span>
+                                                    <Icon icon={copiedId === ebook.id ? 'check' : 'link'} style={{ fontSize: '16px' }} />
                                                 </button>
                                             </div>
                                         </div>

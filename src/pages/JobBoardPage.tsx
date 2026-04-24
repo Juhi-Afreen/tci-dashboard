@@ -202,7 +202,7 @@ const JobCard: React.FC<{ job: Job }> = ({ job }) => {
                             { icon: 'home_work', text: job.WorkLocationName },
                         ].filter(m => m.text).map((meta, i) => (
                             <span key={i} style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: 'var(--text-secondary)' }}>
-                                <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>{meta.icon}</span>
+                                <Icon icon={meta.icon} style={{ fontSize: '14px' }} />
                                 {meta.text}
                             </span>
                         ))}

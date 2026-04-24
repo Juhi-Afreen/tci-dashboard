@@ -266,9 +266,7 @@ const LessonRow: React.FC<LessonRowProps> = ({ lesson, isCurrentLesson, onStart 
                     flexShrink: 0,
                 }}
             >
-                <span className="material-symbols-outlined" style={{ fontSize: 18, color: type.color }}>
-                    {type.icon}
-                </span>
+                <Icon icon={type.icon} style={{ fontSize: 18, color: type.color }} />
             </div>
 
             {/* Title + meta */}
@@ -311,9 +309,7 @@ const LessonRow: React.FC<LessonRowProps> = ({ lesson, isCurrentLesson, onStart 
 
             {/* Status */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 5, flexShrink: 0 }}>
-                <span className="material-symbols-outlined" style={{ fontSize: 18, color: status.color }}>
-                    {status.icon}
-                </span>
+                <Icon icon={status.icon} style={{ fontSize: 18, color: status.color }} />
                 <span style={{ fontSize: 12, color: status.color, fontWeight: 600 }}>{status.label}</span>
             </div>
 
@@ -434,8 +430,8 @@ const ModuleCard: React.FC<ModuleCardProps> = ({
                 </div>
 
                 {/* Chevron */}
-                <span
-                    className="material-symbols-outlined"
+                <Icon
+                    icon="expand_more"
                     style={{
                         fontSize: 20,
                         color: 'var(--text-muted)',
@@ -443,9 +439,7 @@ const ModuleCard: React.FC<ModuleCardProps> = ({
                         transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
                         flexShrink: 0,
                     }}
-                >
-                    expand_more
-                </span>
+                />
             </button>
 
             {/* Lessons list */}
@@ -616,12 +610,10 @@ const CourseLessonsPage: React.FC = () => {
                                                 justifyContent: 'center',
                                             }}
                                         >
-                                            <span
-                                                className="material-symbols-outlined"
+                                            <Icon
+                                                icon={typeConfig[activeLesson.type].icon}
                                                 style={{ fontSize: 24, color: typeConfig[activeLesson.type].color }}
-                                            >
-                                                {typeConfig[activeLesson.type].icon}
-                                            </span>
+                                            />
                                         </div>
                                         <div>
                                             <p style={{ margin: 0, fontSize: 11, fontWeight: 700, color: typeConfig[activeLesson.type].color, textTransform: 'uppercase', letterSpacing: 0.5 }}>
@@ -662,9 +654,7 @@ const CourseLessonsPage: React.FC = () => {
                                                 gap: 8,
                                             }}
                                         >
-                                            <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
-                                                {activeLesson.status === 'completed' ? 'replay' : 'play_arrow'}
-                                            </span>
+                                            <Icon icon={activeLesson.status === 'completed' ? 'replay' : 'play_arrow'} style={{ fontSize: 18 }} />
                                             {activeLesson.status === 'completed' ? 'Review Lesson' : activeLesson.status === 'in-progress' ? 'Resume Lesson' : 'Start Lesson'}
                                         </button>
 

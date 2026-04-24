@@ -444,7 +444,7 @@ const LegalTranscriptionTipsPage: React.FC = () => {
                                     boxShadow: activeTab === tab.id ? '0 1px 6px rgba(0,0,0,.08)' : 'none',
                                 }}
                             >
-                                <span className="material-symbols-outlined" style={{ fontSize: '17px' }}>{tab.icon}</span>
+                                <Icon icon={tab.icon} style={{ fontSize: '17px' }} />
                                 {tab.label}
                             </button>
                         ))}
@@ -594,7 +594,7 @@ const LegalTranscriptionTipsPage: React.FC = () => {
                                         <div key={i} style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: '14px', padding: '20px 22px', boxShadow: '0 1px 4px rgba(0,0,0,.04)' }}>
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
                                                 <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: rule.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                                                    <span className="material-symbols-outlined" style={{ fontSize: '20px', color: rule.color }}>{rule.icon}</span>
+                                                    <Icon icon={rule.icon} style={{ fontSize: '20px', color: rule.color }} />
                                                 </div>
                                                 <h4 style={{ margin: 0, fontSize: '14px', fontWeight: 700, color: 'var(--text-primary)' }}>{rule.title}</h4>
                                             </div>
@@ -635,7 +635,7 @@ const LegalTranscriptionTipsPage: React.FC = () => {
                                         { icon: 'notes', color: 'var(--green)', bg: 'var(--green-light)', text: 'Verbatim — non-standard grammar preserved' },
                                     ].map((tip, i) => (
                                         <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '7px', background: tip.bg, borderRadius: '8px', padding: '6px 12px' }}>
-                                            <span className="material-symbols-outlined" style={{ fontSize: '15px', color: tip.color }}>{tip.icon}</span>
+                                            <Icon icon={tip.icon} style={{ fontSize: '15px', color: tip.color }} />
                                             <span style={{ fontSize: '12px', fontWeight: 600, color: tip.color }}>{tip.text}</span>
                                         </div>
                                     ))}

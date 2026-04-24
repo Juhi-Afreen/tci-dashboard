@@ -132,12 +132,11 @@ const TipsAndTricksPage: React.FC = () => {
                             className="mt-4 flex items-start gap-3 rounded-xl px-5 py-4"
                             style={{ background: 'var(--green-light)', border: '1.5px solid #a7d7c8' }}
                         >
-                            <span
-                                className="material-symbols-outlined text-[22px] shrink-0 mt-0.5"
+                            <Icon
+                                icon="tips_and_updates"
+                                className="text-[22px] shrink-0 mt-0.5"
                                 style={{ color: '#1f8f6d' }}
-                            >
-                                tips_and_updates
-                            </span>
+                            />
                             <p className="text-sm leading-relaxed" style={{ color: '#1a5c47' }}>
                                 Essential confidentiality guidelines every transcriptionist must follow.
                                 These rules are legally binding — breaching them may result in termination or legal action.&nbsp;
@@ -238,17 +237,15 @@ const TipsAndTricksPage: React.FC = () => {
                                             </span>
 
                                             {/* Icon */}
-                                            <span
-                                                className="material-symbols-outlined"
+                                            <Icon
+                                                icon={tip.icon}
                                                 style={{
                                                     fontSize: '20px',
                                                     color: isOpen ? meta.color : 'var(--text-secondary)',
                                                     flexShrink: 0,
                                                     transition: 'color .2s',
                                                 }}
-                                            >
-                                                {tip.icon}
-                                            </span>
+                                             />
 
                                             {/* Title */}
                                             <span

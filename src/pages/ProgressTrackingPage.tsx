@@ -244,7 +244,7 @@ const ProgressTrackingPage: React.FC = () => {
                                         boxShadow: active ? '0 1px 4px rgba(0,0,0,.08)' : 'none',
                                         transition: 'all .15s', fontFamily: 'inherit',
                                     }}>
-                                        <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>{tab.icon}</span>
+                                        <Icon icon={tab.icon} style={{ fontSize: '16px' }} />
                                         {tab.label}
                                     </button>
                                 );
@@ -277,7 +277,7 @@ const ProgressTrackingPage: React.FC = () => {
                                                 <ProgressRing pct={pct} color={course.color} />
                                                 <div style={{ flex: 1 }}>
                                                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                                                        <span className="material-symbols-outlined" style={{ fontSize: '18px', color: course.color }}>{course.icon}</span>
+                                                        <Icon icon={course.icon} style={{ fontSize: '18px', color: course.color }} />
                                                         <span style={{ fontWeight: 800, fontSize: '15px', color: 'var(--text-primary)' }}>{course.title}</span>
                                                     </div>
                                                     <p style={{ fontSize: '12.5px', color: 'var(--text-secondary)', margin: '0 0 10px' }}>
@@ -306,12 +306,10 @@ const ProgressTrackingPage: React.FC = () => {
                                                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                                                                 background: mod.status === 'completed' ? course.color : mod.status === 'in-progress' ? 'var(--orange-light)' : '#f1f5f9',
                                                             }}>
-                                                                <span className="material-symbols-outlined" style={{
+                                                                <Icon icon={mod.status === 'completed' ? 'check' : mod.status === 'in-progress' ? 'play_arrow' : 'lock'} style={{
                                                                     fontSize: '15px',
                                                                     color: mod.status === 'completed' ? '#fff' : mod.status === 'in-progress' ? 'var(--orange)' : '#94a3b8',
-                                                                }}>
-                                                                    {mod.status === 'completed' ? 'check' : mod.status === 'in-progress' ? 'play_arrow' : 'lock'}
-                                                                </span>
+                                                                }} />
                                                             </div>
                                                             <div style={{ flex: 1 }}>
                                                                 <span style={{

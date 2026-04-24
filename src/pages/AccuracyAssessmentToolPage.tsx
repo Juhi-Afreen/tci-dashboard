@@ -23,12 +23,11 @@ const AccuracyAssessmentToolPage: React.FC = () => {
                             className="mt-4 flex items-start gap-3 rounded-xl px-5 py-4"
                             style={{ background: 'var(--green-light)', border: '1.5px solid #a7d7c8' }}
                         >
-                            <span
-                                className="material-symbols-outlined text-[22px] shrink-0 mt-0.5"
+                            <Icon
+                                icon="info"
+                                className="text-[22px] shrink-0 mt-0.5"
                                 style={{ color: '#1f8f6d' }}
-                            >
-                                info
-                            </span>
+                            />
                             <p className="text-sm leading-relaxed" style={{ color: '#1a5c47' }}>
                                 Your transcript will be assessed on accuracy, spelling, punctuation, and formatting features
                                 like the use of speaker labels.&nbsp;
@@ -305,12 +304,11 @@ const AccuracyAssessmentToolPage: React.FC = () => {
                                 {/* Quick Tips card */}
                                 <div className="tips-card">
                                     <div className="flex items-center gap-2 mb-4" style={{ paddingTop: '24px' }}>
-                                        <span
-                                            className="material-symbols-outlined text-[20px]"
+                                        <Icon
+                                            className="text-[20px]"
+                                            icon="lightbulb"
                                             style={{ color: 'var(--green)' }}
-                                        >
-                                            lightbulb
-                                        </span>
+                                        />
                                         <h4 className="font-bold text-slate-900 uppercase tracking-wider text-xs">
                                             Quick Tips
                                         </h4>
@@ -366,12 +364,11 @@ const AccuracyAssessmentToolPage: React.FC = () => {
 
                                 {/* Upgrade card */}
                                 <div className="upgrade-card">
-                                    <span
-                                        className="material-symbols-outlined absolute top-5 right-5 select-none"
+                                    <Icon
+                                        icon="school"
+                                        className="absolute top-5 right-5 select-none"
                                         style={{ fontSize: '40px', color: 'rgba(255,255,255,.12)' }}
-                                    >
-                                        school
-                                    </span>
+                                    />
                                     <h4 className="upgrade-card-title">Want to transcribe like a pro?</h4>
                                     <div className="upgrade-card-copy">
                                         <p className="upgrade-card-text">

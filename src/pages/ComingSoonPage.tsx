@@ -56,12 +56,7 @@ const ComingSoonPage: React.FC<ComingSoonPageProps> = ({
                 margin: '0 auto 24px',
               }}
             >
-              <span
-                className="material-symbols-outlined"
-                style={{ fontSize: '36px', color: '#1F8F6D' }}
-              >
-                {icon}
-              </span>
+              <Icon icon={icon} style={{ fontSize: '36px', color: '#1F8F6D' }} />
             </div>
 
             <h1
@@ -102,9 +97,7 @@ const ComingSoonPage: React.FC<ComingSoonPageProps> = ({
                 color: '#1F8F6D',
               }}
             >
-              <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>
-                construction
-              </span>
+              <Icon icon="construction" style={{ fontSize: '16px' }} />
               Coming Soon
             </div>
           </div>

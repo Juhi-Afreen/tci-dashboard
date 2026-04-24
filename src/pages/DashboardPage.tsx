@@ -145,7 +145,7 @@ const StatCard: React.FC<typeof STATS[0]> = ({ key: _k, icon, label, value, unit
                         width: 36, height: 36, borderRadius: 10, background: bg,
                         display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
                     }}>
-                        <span className="material-symbols-outlined" style={{ fontSize: 18, color }}>{icon}</span>
+                         <Icon icon={icon} style={{ fontSize: 18, color }} />
                     </div>
                     <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)' }}>{label}</span>
                 </div>
@@ -537,7 +537,7 @@ const DashboardPage: React.FC = () => {
                                                     background: a.color + '18',
                                                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                                                 }}>
-                                                    <span className="material-symbols-outlined" style={{ fontSize: 17, color: a.color }}>{a.icon}</span>
+                                                     <Icon icon={a.icon} style={{ fontSize: 17, color: a.color }} />
                                                 </div>
                                                 <p style={{ margin: 0, flex: 1, fontSize: 13, color: 'var(--text-primary)' }}>{a.text}</p>
                                                 <span style={{ fontSize: 11, color: 'var(--text-muted)', flexShrink: 0 }}>{a.time}</span>

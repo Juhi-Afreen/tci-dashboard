@@ -170,7 +170,7 @@ const LegalTranscriptionCoursePage: React.FC = () => {
                                             onClick={() => toggleAccordion(index)}
                                         >
                                             <div className="flex items-center gap-3">
-                                                <span className="material-symbols-outlined" style={{ color: 'var(--green)' }}>{item.icon}</span>
+                                                <Icon icon={item.icon} style={{ color: 'var(--green)' }} />
                                                 {item.title}
                                             </div>
                                             <Icon icon="expand_more" className="transition-transform" />
@@ -200,7 +200,7 @@ const LegalTranscriptionCoursePage: React.FC = () => {
                                     <div key={i} className="flex items-center justify-between p-4 bg-white rounded-xl border border-slate-200 transition-colors">
                                         <div className="flex items-center gap-3">
                                             <div className="h-10 w-10 flex shrink-0 items-center justify-center rounded-lg" style={{ background: 'var(--green-light)', color: 'var(--green)' }}>
-                                                <span className="material-symbols-outlined">{res.icon}</span>
+                                                <Icon icon={res.icon} />
                                             </div>
                                             <span className="font-bold text-slate-900 text-sm">{res.label}</span>
                                         </div>

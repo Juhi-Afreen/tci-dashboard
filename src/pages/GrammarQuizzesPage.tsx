@@ -144,7 +144,7 @@ const GrammarQuizzesPage: React.FC = () => {
                                                                     quiz.status === 'in-progress' ? '#3B82F6' : '#94a3b8',
                                                         }}
                                                     >
-                                                        <span className="material-symbols-outlined">{quiz.icon}</span>
+                                                        <Icon icon={quiz.icon} />
                                                     </div>
                                                     <div className="min-w-0">
                                                         <div className="flex items-center gap-2 mb-0.5">

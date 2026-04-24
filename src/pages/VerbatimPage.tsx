@@ -141,9 +141,7 @@ const VerbatimPage: React.FC = () => {
                             className="mt-4 flex items-start gap-3 rounded-xl px-5 py-4"
                             style={{ background: 'var(--green-light)', border: '1.5px solid #a7d7c8' }}
                         >
-                            <span className="material-symbols-outlined text-[22px] shrink-0 mt-0.5" style={{ color: '#1f8f6d' }}>
-                                compare
-                            </span>
+                            <Icon icon="compare" className="text-[22px] shrink-0 mt-0.5" style={{ color: '#1f8f6d' }} />
                             <div>
                                 <p className="text-sm leading-relaxed" style={{ color: '#1a5c47' }}>
                                     Understanding what to type when transcribing verbatim vs. non-verbatim can be tricky, so we have compiled these audios

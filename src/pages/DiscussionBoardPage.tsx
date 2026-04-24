@@ -227,7 +227,7 @@ const QuestionCard: React.FC<{ q: Question }> = ({ q }) => (
                             { icon: 'visibility', val: q.views },
                         ].map((m, i) => (
                             <span key={i} style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: 'var(--text-secondary)' }}>
-                                <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>{m.icon}</span>
+                                <Icon icon={m.icon} style={{ fontSize: '14px' }} />
                                 {m.val}
                             </span>
                         ))}
@@ -387,7 +387,7 @@ const DiscussionBoardPage: React.FC = () => {
                                             transition: 'all .15s', fontFamily: 'inherit',
                                         }}
                                     >
-                                        <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>{cat.icon}</span>
+                                        <Icon icon={cat.icon} style={{ fontSize: '14px' }} />
                                         {cat.label}
                                     </button>
                                 );
