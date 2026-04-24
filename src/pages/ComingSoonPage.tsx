@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from '../components/Icon';
 import DashboardLayout from '../layouts/DashboardLayout';
 import PageBreadcrumb from '../components/PageBreadcrumb';
 

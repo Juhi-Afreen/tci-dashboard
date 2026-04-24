@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Icon } from '../components/Icon';
 import DashboardLayout from '../layouts/DashboardLayout';
 import PageBreadcrumb from '../components/PageBreadcrumb';
 import BorderStatCard from '../components/BorderStatCard';
@@ -32,15 +33,15 @@ interface ApiResponse {
 const FORUM_BASE = 'https://forum.transcriptioncertificationinstitute.org';
 
 const CATEGORIES = [
-    { id: 'all',                     label: 'All',                   icon: 'forum' },
-    { id: 'transcription',           label: 'Transcription',         icon: 'mic' },
-    { id: 'translation',             label: 'Translation',           icon: 'translate' },
-    { id: 'captioning',              label: 'Captioning',            icon: 'closed_caption' },
-    { id: 'editing-proofreading',    label: 'Editing & Proofreading',icon: 'spellcheck' },
-    { id: 'grammar-writing-tips',    label: 'Grammar & Writing',     icon: 'edit_note' },
-    { id: 'tools-and-resources',     label: 'Tools & Resources',     icon: 'build' },
-    { id: 'jobs',                    label: 'Jobs',                  icon: 'work' },
-    { id: 'other',                   label: 'Other',                 icon: 'more_horiz' },
+    { id: 'all', label: 'All', icon: 'forum' },
+    { id: 'transcription', label: 'Transcription', icon: 'mic' },
+    { id: 'translation', label: 'Translation', icon: 'translate' },
+    { id: 'captioning', label: 'Captioning', icon: 'closed_caption' },
+    { id: 'editing-proofreading', label: 'Editing & Proofreading', icon: 'spellcheck' },
+    { id: 'grammar-writing-tips', label: 'Grammar & Writing', icon: 'edit_note' },
+    { id: 'tools-and-resources', label: 'Tools & Resources', icon: 'build' },
+    { id: 'jobs', label: 'Jobs', icon: 'work' },
+    { id: 'other', label: 'Other', icon: 'more_horiz' },
 ];
 
 // ── HTML parser ────────────────────────────────────────────────────────────────
@@ -79,10 +80,10 @@ function parseQuestionHtml(html: string): Question[] {
             // Stats from post-links
             const lis = area.querySelectorAll('ul.post-links li');
             const date = lis[0]?.textContent?.trim() ?? '';
-            const likes    = parseInt(lis[1]?.querySelector('a')?.getAttribute('data-like-count')    ?? '0');
+            const likes = parseInt(lis[1]?.querySelector('a')?.getAttribute('data-like-count') ?? '0');
             const dislikes = parseInt(lis[2]?.querySelector('a')?.getAttribute('data-dis-like-count') ?? '0');
-            const replies  = parseInt(lis[3]?.querySelector('a')?.getAttribute('title') ?? '0');
-            const views    = parseInt(lis[4]?.querySelector('a')?.getAttribute('title') ?? '0');
+            const replies = parseInt(lis[3]?.querySelector('a')?.getAttribute('title') ?? '0');
+            const views = parseInt(lis[4]?.querySelector('a')?.getAttribute('title') ?? '0');
 
             if (title) {
                 results.push({ id, title, url, author, category, categoryDc, text, date, likes, dislikes, replies, views });
@@ -135,7 +136,7 @@ const SkeletonCard = () => (
 
 // ── Avatar ─────────────────────────────────────────────────────────────────────
 
-const AVATAR_COLORS = ['#1F8F6D','#3B82F6','#7C6FCD','#F59E0B','#0891b2','#ec4899','#10b981','#f97316'];
+const AVATAR_COLORS = ['#1F8F6D', '#3B82F6', '#7C6FCD', '#F59E0B', '#0891b2', '#ec4899', '#10b981', '#f97316'];
 function avatarColor(name: string) {
     let h = 0;
     for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) % AVATAR_COLORS.length;
@@ -220,10 +221,10 @@ const QuestionCard: React.FC<{ q: Question }> = ({ q }) => (
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
                     <div style={{ display: 'flex', gap: '14px' }}>
                         {[
-                            { icon: 'thumb_up',          val: q.likes },
-                            { icon: 'thumb_down',        val: q.dislikes },
-                            { icon: 'chat_bubble_outline',val: q.replies },
-                            { icon: 'visibility',        val: q.views },
+                            { icon: 'thumb_up', val: q.likes },
+                            { icon: 'thumb_down', val: q.dislikes },
+                            { icon: 'chat_bubble_outline', val: q.replies },
+                            { icon: 'visibility', val: q.views },
                         ].map((m, i) => (
                             <span key={i} style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: 'var(--text-secondary)' }}>
                                 <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>{m.icon}</span>
@@ -247,7 +248,7 @@ const QuestionCard: React.FC<{ q: Question }> = ({ q }) => (
                         onMouseOver={e => (e.currentTarget.style.opacity = '0.8')}
                         onMouseOut={e => (e.currentTarget.style.opacity = '1')}
                     >
-                        <span className="material-symbols-outlined" style={{ fontSize: '13px' }}>open_in_new</span>
+                        <Icon icon="open_in_new" />
                         View Thread
                     </a>
                 </div>
@@ -259,14 +260,14 @@ const QuestionCard: React.FC<{ q: Question }> = ({ q }) => (
 // ── Page ───────────────────────────────────────────────────────────────────────
 
 const DiscussionBoardPage: React.FC = () => {
-    const [questions, setQuestions]     = useState<Question[]>([]);
-    const [loading, setLoading]         = useState(true);
+    const [questions, setQuestions] = useState<Question[]>([]);
+    const [loading, setLoading] = useState(true);
     const [loadingMore, setLoadingMore] = useState(false);
-    const [error, setError]             = useState<string | null>(null);
-    const [pageNo, setPageNo]           = useState(0);
-    const [hasMore, setHasMore]         = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [pageNo, setPageNo] = useState(0);
+    const [hasMore, setHasMore] = useState(true);
     const [activeCategory, setActiveCategory] = useState('all');
-    const [search, setSearch]           = useState('');
+    const [search, setSearch] = useState('');
 
     const load = useCallback(async (pg: number, qc: string, mode: 'replace' | 'append') => {
         if (mode === 'replace') { setLoading(true); setQuestions([]); }
@@ -335,13 +336,13 @@ const DiscussionBoardPage: React.FC = () => {
                                 onMouseOver={e => (e.currentTarget.style.opacity = '0.87')}
                                 onMouseOut={e => (e.currentTarget.style.opacity = '1')}
                             >
-                                <span className="material-symbols-outlined" style={{ fontSize: '17px' }}>add</span>
+                                <Icon icon="add" />
                                 Ask a Question
                             </a>
                         </div>
                         <div className="mt-4 flex items-start gap-3 rounded-xl px-5 py-4"
                             style={{ background: 'var(--green-light)', border: '1.5px solid #a7d7c8' }}>
-                            <span className="material-symbols-outlined text-[22px] shrink-0 mt-0.5" style={{ color: 'var(--green)' }}>forum</span>
+                            <Icon icon="forum" className="text-[22px] shrink-0 mt-0.5" style={{ color: '#1f8f6d' }} />
                             <p className="text-sm leading-relaxed" style={{ color: '#1a5c47' }}>
                                 Live discussions from the{' '}
                                 <a href={`${FORUM_BASE}/community/q`} target="_blank" rel="noopener noreferrer"
@@ -356,10 +357,10 @@ const DiscussionBoardPage: React.FC = () => {
 
                     {/* ── Stats ── */}
                     <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <BorderStatCard label="Discussions"    value={loading ? '...' : String(questions.length) + (hasMore ? '+' : '')} icon="forum"          borderColor="var(--green)"  iconColor="var(--green)"  />
-                        <BorderStatCard label="Total Replies"  value={loading ? '...' : String(totalReplies)}                            icon="chat_bubble"    borderColor="var(--blue)"   iconColor="var(--blue)"   />
-                        <BorderStatCard label="Total Views"    value={loading ? '...' : String(totalViews)}                              icon="visibility"     borderColor="var(--purple)" iconColor="var(--purple)" />
-                        <BorderStatCard label="Categories"     value={String(CATEGORIES.length - 1)}                                    icon="category"       borderColor="var(--orange)" iconColor="var(--orange)" />
+                        <BorderStatCard label="Discussions" value={loading ? '...' : String(questions.length) + (hasMore ? '+' : '')} icon="forum" borderColor="var(--green)" iconColor="var(--green)" />
+                        <BorderStatCard label="Total Replies" value={loading ? '...' : String(totalReplies)} icon="chat_bubble" borderColor="var(--blue)" iconColor="var(--blue)" />
+                        <BorderStatCard label="Total Views" value={loading ? '...' : String(totalViews)} icon="visibility" borderColor="var(--purple)" iconColor="var(--purple)" />
+                        <BorderStatCard label="Categories" value={String(CATEGORIES.length - 1)} icon="category" borderColor="var(--orange)" iconColor="var(--orange)" />
                     </section>
 
                     {/* ── Category tabs ── */}
@@ -395,11 +396,11 @@ const DiscussionBoardPage: React.FC = () => {
 
                         {/* Search */}
                         <div style={{ position: 'relative', marginBottom: '16px' }}>
-                            <span className="material-symbols-outlined" style={{
+                            <Icon icon="search" style={{
                                 position: 'absolute', left: '12px', top: '50%',
                                 transform: 'translateY(-50%)', fontSize: '18px',
                                 color: 'var(--text-secondary)',
-                            }}>search</span>
+                            }} />
                             <input
                                 type="text"
                                 placeholder="Search discussions..."
@@ -420,7 +421,7 @@ const DiscussionBoardPage: React.FC = () => {
                                     transform: 'translateY(-50%)', background: 'none',
                                     border: 'none', cursor: 'pointer', color: 'var(--text-secondary)',
                                 }}>
-                                    <span className="material-symbols-outlined" style={{ fontSize: '17px' }}>close</span>
+                                    <Icon icon="close" />
                                 </button>
                             )}
                         </div>
@@ -436,7 +437,7 @@ const DiscussionBoardPage: React.FC = () => {
                                 background: '#fff', borderRadius: '14px',
                                 border: '1.5px solid var(--border)',
                             }}>
-                                <span className="material-symbols-outlined" style={{ fontSize: '42px', color: '#f87171', display: 'block', marginBottom: '12px' }}>error_outline</span>
+                                <Icon icon="error_outline" />
                                 <p style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '16px' }}>{error}</p>
                                 <button
                                     onClick={() => load(0, activeCategory, 'replace')}
@@ -455,7 +456,7 @@ const DiscussionBoardPage: React.FC = () => {
                                 background: '#fff', borderRadius: '14px',
                                 border: '1.5px solid var(--border)',
                             }}>
-                                <span className="material-symbols-outlined" style={{ fontSize: '42px', color: 'var(--text-secondary)', display: 'block', marginBottom: '12px' }}>search_off</span>
+                                <Icon icon="search_off" />
                                 <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>No discussions found.</p>
                             </div>
                         ) : (
@@ -486,12 +487,12 @@ const DiscussionBoardPage: React.FC = () => {
                                         >
                                             {loadingMore ? (
                                                 <>
-                                                    <span className="material-symbols-outlined" style={{ fontSize: '17px', animation: 'spin 1s linear infinite' }}>progress_activity</span>
+                                                    <Icon icon="progress_activity" />
                                                     Loading...
                                                 </>
                                             ) : (
                                                 <>
-                                                    <span className="material-symbols-outlined" style={{ fontSize: '17px' }}>expand_more</span>
+                                                    <Icon icon="expand_more" />
                                                     Load More Discussions
                                                 </>
                                             )}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from '../components/Icon';
 import DashboardLayout from '../layouts/DashboardLayout';
 import PageBreadcrumb from '../components/PageBreadcrumb';
 import BorderStatCard from '../components/BorderStatCard';
@@ -24,7 +25,7 @@ const AccuracyAssessmentToolPage: React.FC = () => {
                         >
                             <span
                                 className="material-symbols-outlined text-[22px] shrink-0 mt-0.5"
-                                style={{ color: 'var(--green)' }}
+                                style={{ color: '#1f8f6d' }}
                             >
                                 info
                             </span>
@@ -113,11 +114,11 @@ const AccuracyAssessmentToolPage: React.FC = () => {
                                                 </div>
                                                 <div className="flex items-center gap-4 text-xs text-slate-400 font-medium flex-wrap">
                                                     <span className="flex items-center gap-1">
-                                                        <span className="material-symbols-outlined text-[14px]">schedule</span>
+                                                        <Icon icon="schedule" className="text-[14px]" />
                                                         2:30 min
                                                     </span>
                                                     <span className="flex items-center gap-1">
-                                                        <span className="material-symbols-outlined text-[14px]">history</span>
+                                                        <Icon icon="history" className="text-[14px]" />
                                                         Taken 3 times
                                                     </span>
                                                 </div>
@@ -157,11 +158,11 @@ const AccuracyAssessmentToolPage: React.FC = () => {
                                                 </div>
                                                 <div className="flex items-center gap-4 text-xs text-slate-400 font-medium flex-wrap">
                                                     <span className="flex items-center gap-1">
-                                                        <span className="material-symbols-outlined text-[14px]">schedule</span>
+                                                        <Icon icon="schedule" className="text-[14px]" />
                                                         5:15 min
                                                     </span>
                                                     <span className="flex items-center gap-1">
-                                                        <span className="material-symbols-outlined text-[14px]">bolt</span>
+                                                        <Icon icon="bolt" className="text-[14px]" />
                                                         Intermediate
                                                     </span>
                                                 </div>
@@ -215,7 +216,7 @@ const AccuracyAssessmentToolPage: React.FC = () => {
                                                     className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"
                                                     style={{ color: 'var(--green)' }}
                                                 >
-                                                    <span className="material-symbols-outlined">play_arrow</span>
+                                                    <Icon icon="play_arrow" />
                                                 </div>
                                             </div>
                                         </div>
@@ -260,7 +261,7 @@ const AccuracyAssessmentToolPage: React.FC = () => {
                                                     className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"
                                                     style={{ color: 'var(--green)' }}
                                                 >
-                                                    <span className="material-symbols-outlined">play_arrow</span>
+                                                    <Icon icon="play_arrow" />
                                                 </div>
                                             </div>
                                         </div>
@@ -358,7 +359,7 @@ const AccuracyAssessmentToolPage: React.FC = () => {
                                             style={{ color: 'var(--green)' }}
                                         >
                                             Download Style Guide PDF
-                                            <span className="material-symbols-outlined text-sm">download</span>
+                                            <Icon icon="download" className="text-sm" />
                                         </a>
                                     </div>
                                 </div>

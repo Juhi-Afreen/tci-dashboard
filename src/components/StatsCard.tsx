@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from './Icon';
 
 interface StatsCardProps {
     icon: string;
@@ -16,7 +17,7 @@ const StatsCard: React.FC<StatsCardProps> = ({ icon, label, value, valueLabel, i
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{label}</p>
             <div className="flex items-center gap-3">
                 <div className="size-10 rounded-full flex items-center justify-center shrink-0" style={{ background: iconBg, color: iconColor }}>
-                    <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>{icon}</span>
+                    <Icon icon={icon} style={{ fontSize: 20 }} />
                 </div>
                 <div className="flex items-baseline gap-1" style={{ color: textColor }}>
                     <span className="text-xl font-bold leading-none">{value}</span>

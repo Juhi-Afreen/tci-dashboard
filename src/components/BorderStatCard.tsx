@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from './Icon';
 
 interface BorderStatCardProps {
     label: string;
@@ -14,12 +15,11 @@ const BorderStatCard: React.FC<BorderStatCardProps> = ({ label, value, icon, bor
             <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-2">{label}</p>
             <div className="flex items-end justify-between">
                 <span className="text-2xl font-black text-slate-900">{value}</span>
-                <span
-                    className="material-symbols-outlined text-3xl"
+                <Icon
+                    icon={icon}
+                    className="text-3xl"
                     style={{ color: iconColor || borderColor, opacity: 0.18 }}
-                >
-                    {icon}
-                </span>
+                />
             </div>
         </div>
     );

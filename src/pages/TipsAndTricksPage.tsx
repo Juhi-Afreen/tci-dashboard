@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Icon } from '../components/Icon';
 import DashboardLayout from '../layouts/DashboardLayout';
 import PageBreadcrumb from '../components/PageBreadcrumb';
 import BorderStatCard from '../components/BorderStatCard';
@@ -95,15 +96,15 @@ const tipsData: Tip[] = [
 
 const categoryMeta: Record<Tip['category'], { label: string; color: string; bg: string; border: string }> = {
     confidentiality: { label: 'Confidentiality', color: 'var(--green)', bg: 'var(--green-light)', border: '#a7d7c8' },
-    media:          { label: 'Media Handling',  color: 'var(--blue)',  bg: '#EEF4FF',            border: '#b3caef' },
-    legal:          { label: 'Legal & NDA',     color: 'var(--purple)',bg: '#EEF0FF',            border: '#c4bfef' },
+    media: { label: 'Media Handling', color: 'var(--blue)', bg: '#EEF4FF', border: '#b3caef' },
+    legal: { label: 'Legal & NDA', color: 'var(--purple)', bg: '#EEF0FF', border: '#c4bfef' },
 };
 
 const FILTERS = [
-    { id: 'all',             label: 'All Tips' },
+    { id: 'all', label: 'All Tips' },
     { id: 'confidentiality', label: 'Confidentiality' },
-    { id: 'media',           label: 'Media Handling' },
-    { id: 'legal',           label: 'Legal & NDA' },
+    { id: 'media', label: 'Media Handling' },
+    { id: 'legal', label: 'Legal & NDA' },
 ] as const;
 
 type FilterId = typeof FILTERS[number]['id'];
@@ -111,8 +112,8 @@ type FilterId = typeof FILTERS[number]['id'];
 // ── Component ─────────────────────────────────────────────────────────────────
 
 const TipsAndTricksPage: React.FC = () => {
-    const [openId, setOpenId]     = useState<number | null>(null);
-    const [filter, setFilter]     = useState<FilterId>('all');
+    const [openId, setOpenId] = useState<number | null>(null);
+    const [filter, setFilter] = useState<FilterId>('all');
 
     const filtered = filter === 'all' ? tipsData : tipsData.filter(t => t.category === filter);
 
@@ -133,7 +134,7 @@ const TipsAndTricksPage: React.FC = () => {
                         >
                             <span
                                 className="material-symbols-outlined text-[22px] shrink-0 mt-0.5"
-                                style={{ color: 'var(--green)' }}
+                                style={{ color: '#1f8f6d' }}
                             >
                                 tips_and_updates
                             </span>
@@ -149,10 +150,10 @@ const TipsAndTricksPage: React.FC = () => {
 
                     {/* ── Stats ── */}
                     <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <BorderStatCard label="Total Tips"        value={String(tipsData.length)}  icon="tips_and_updates" borderColor="var(--green)"  iconColor="var(--green)"  />
-                        <BorderStatCard label="Confidentiality"   value={String(tipsData.filter(t => t.category === 'confidentiality').length)} icon="lock"            borderColor="var(--green)"  iconColor="var(--green)"  />
-                        <BorderStatCard label="Media Handling"    value={String(tipsData.filter(t => t.category === 'media').length)}           icon="no_sim"          borderColor="var(--blue)"   iconColor="var(--blue)"   />
-                        <BorderStatCard label="Legal & NDA"       value={String(tipsData.filter(t => t.category === 'legal').length)}           icon="gavel"           borderColor="var(--purple)" iconColor="var(--purple)" />
+                        <BorderStatCard label="Total Tips" value={String(tipsData.length)} icon="tips_and_updates" borderColor="var(--green)" iconColor="var(--green)" />
+                        <BorderStatCard label="Confidentiality" value={String(tipsData.filter(t => t.category === 'confidentiality').length)} icon="lock" borderColor="var(--green)" iconColor="var(--green)" />
+                        <BorderStatCard label="Media Handling" value={String(tipsData.filter(t => t.category === 'media').length)} icon="no_sim" borderColor="var(--blue)" iconColor="var(--blue)" />
+                        <BorderStatCard label="Legal & NDA" value={String(tipsData.filter(t => t.category === 'legal').length)} icon="gavel" borderColor="var(--purple)" iconColor="var(--purple)" />
                     </section>
 
                     {/* ── Filter bar ── */}
@@ -190,8 +191,8 @@ const TipsAndTricksPage: React.FC = () => {
                         {/* ── Accordion list ── */}
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                             {filtered.map(tip => {
-                                const isOpen  = openId === tip.id;
-                                const meta    = categoryMeta[tip.category];
+                                const isOpen = openId === tip.id;
+                                const meta = categoryMeta[tip.category];
                                 return (
                                     <div
                                         key={tip.id}
@@ -329,9 +330,7 @@ const TipsAndTricksPage: React.FC = () => {
                                     color: 'var(--text-secondary)', fontSize: '14px',
                                 }}
                             >
-                                <span className="material-symbols-outlined" style={{ fontSize: '40px', display: 'block', marginBottom: '12px' }}>
-                                    search_off
-                                </span>
+                                <Icon icon="search_off" style={{ fontSize: 40, display: 'block', marginBottom: 12, color: 'var(--text-secondary)' }} />
                                 No tips found for this category.
                             </div>
                         )}

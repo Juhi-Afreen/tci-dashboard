@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Icon } from '../components/Icon';
 import DashboardLayout from '../layouts/DashboardLayout';
 import PageBreadcrumb from '../components/PageBreadcrumb';
 import BorderStatCard from '../components/BorderStatCard';
@@ -31,9 +32,9 @@ const practiceData: DifficultyGroup[] = [
         border: '#a7d7c8',
         icon: 'signal_cellular_1_bar',
         items: [
-            { id: 1, title: 'One Speaker',                          audio: BASE + 'goodquality1spk.mp3',                        doc: BASE + 'goodquality1spk.doc' },
-            { id: 2, title: 'One Speaker Presentation',             audio: BASE + 'onespeakerpresentation.mp3',                 doc: BASE + 'onespeakerpresentation.doc' },
-            { id: 3, title: 'One on One Interview – Good',          audio: BASE + 'oneonone_interview_good.mp3',                doc: BASE + 'oneonone_interview_good.doc' },
+            { id: 1, title: 'One Speaker', audio: BASE + 'goodquality1spk.mp3', doc: BASE + 'goodquality1spk.doc' },
+            { id: 2, title: 'One Speaker Presentation', audio: BASE + 'onespeakerpresentation.mp3', doc: BASE + 'onespeakerpresentation.doc' },
+            { id: 3, title: 'One on One Interview – Good', audio: BASE + 'oneonone_interview_good.mp3', doc: BASE + 'oneonone_interview_good.doc' },
             { id: 4, title: 'Good 1 Speaker Time Stamps Every 30 Sec', audio: BASE + 'Good_1_Speaker_time_stamps_every_30_sec.mp3', doc: BASE + 'Good_1_Speaker_time_stamps_every_30_sec.doc' },
         ],
     },
@@ -44,10 +45,10 @@ const practiceData: DifficultyGroup[] = [
         border: '#b3caef',
         icon: 'signal_cellular_2_bar',
         items: [
-            { id: 1, title: 'Family Therapy – Intermediate', audio: BASE + 'familytherapy.mp3',               doc: BASE + 'familytherapy.doc' },
-            { id: 2, title: 'Police Interrogation',          audio: BASE + 'policeinterrogation.mp3',          doc: BASE + 'policeinterrogation.doc' },
-            { id: 3, title: 'Focus Group',                   audio: BASE + 'focusgroup.mp3',                   doc: BASE + 'focusgroup.doc' },
-            { id: 4, title: '2 Speaker Fair Audio Verbatim', audio: BASE + '2_Speaker_Fair_Audio_Verbatim.mp3',doc: BASE + '2_Speaker_Fair_Audio_Verbatim.doc' },
+            { id: 1, title: 'Family Therapy – Intermediate', audio: BASE + 'familytherapy.mp3', doc: BASE + 'familytherapy.doc' },
+            { id: 2, title: 'Police Interrogation', audio: BASE + 'policeinterrogation.mp3', doc: BASE + 'policeinterrogation.doc' },
+            { id: 3, title: 'Focus Group', audio: BASE + 'focusgroup.mp3', doc: BASE + 'focusgroup.doc' },
+            { id: 4, title: '2 Speaker Fair Audio Verbatim', audio: BASE + '2_Speaker_Fair_Audio_Verbatim.mp3', doc: BASE + '2_Speaker_Fair_Audio_Verbatim.doc' },
         ],
     },
     {
@@ -57,11 +58,11 @@ const practiceData: DifficultyGroup[] = [
         border: '#f5c49a',
         icon: 'signal_cellular_alt',
         items: [
-            { id: 1, title: 'German Accent',           audio: BASE + 'Germanaccent_interviewTimeStamps.mp3', doc: BASE + 'Germanaccent_interviewTimeStamps.doc' },
-            { id: 2, title: 'Roundtable Meeting',      audio: BASE + 'roundtablemeeting.mp3',               doc: BASE + 'roundtablemeeting.doc' },
-            { id: 3, title: 'Family Therapy – Difficult', audio: BASE + 'therapy_diff.mp3',                 doc: BASE + 'therapy_diff.doc' },
-            { id: 4, title: '2 Speaker Difficult',     audio: BASE + '2_Speaker_Difficult_Audio.mp3',       doc: BASE + '2_Speaker_Difficult_Audio.doc' },
-            { id: 5, title: 'Difficult Focus Group',   audio: BASE + 'Difficult_Focus_Group.mp3',           doc: BASE + 'Difficult_Focus_Group.doc' },
+            { id: 1, title: 'German Accent', audio: BASE + 'Germanaccent_interviewTimeStamps.mp3', doc: BASE + 'Germanaccent_interviewTimeStamps.doc' },
+            { id: 2, title: 'Roundtable Meeting', audio: BASE + 'roundtablemeeting.mp3', doc: BASE + 'roundtablemeeting.doc' },
+            { id: 3, title: 'Family Therapy – Difficult', audio: BASE + 'therapy_diff.mp3', doc: BASE + 'therapy_diff.doc' },
+            { id: 4, title: '2 Speaker Difficult', audio: BASE + '2_Speaker_Difficult_Audio.mp3', doc: BASE + '2_Speaker_Difficult_Audio.doc' },
+            { id: 5, title: 'Difficult Focus Group', audio: BASE + 'Difficult_Focus_Group.mp3', doc: BASE + 'Difficult_Focus_Group.doc' },
         ],
     },
 ];
@@ -81,7 +82,7 @@ function downloadAll() {
     practiceData.forEach(group =>
         group.items.forEach(item => {
             downloadFile(item.audio, item.audio.split('/').pop()!);
-            downloadFile(item.doc,   item.doc.split('/').pop()!);
+            downloadFile(item.doc, item.doc.split('/').pop()!);
         })
     );
 }
@@ -106,7 +107,7 @@ const PracticeTranscriptionPage: React.FC = () => {
                             className="mt-4 flex items-start gap-3 rounded-xl px-5 py-4"
                             style={{ background: 'var(--green-light)', border: '1.5px solid #a7d7c8' }}
                         >
-                            <span className="material-symbols-outlined text-[22px] shrink-0 mt-0.5" style={{ color: 'var(--green)' }}>
+                            <span className="material-symbols-outlined text-[22px] shrink-0 mt-0.5" style={{ color: '#1f8f6d' }}>
                                 mic
                             </span>
                             <p className="text-sm leading-relaxed" style={{ color: '#1a5c47' }}>
@@ -119,10 +120,10 @@ const PracticeTranscriptionPage: React.FC = () => {
 
                     {/* ── Stats ── */}
                     <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <BorderStatCard label="Total Exercises" value={String(totalItems)}                                                      icon="headphones"          borderColor="var(--green)"  iconColor="var(--green)"  />
-                        <BorderStatCard label="Easy"            value={String(practiceData.find(g => g.level === 'Easy')!.items.length)}         icon="signal_cellular_1_bar" borderColor="var(--green)"  iconColor="var(--green)"  />
-                        <BorderStatCard label="Intermediate"    value={String(practiceData.find(g => g.level === 'Intermediate')!.items.length)} icon="signal_cellular_2_bar" borderColor="var(--blue)"   iconColor="var(--blue)"   />
-                        <BorderStatCard label="Difficult"       value={String(practiceData.find(g => g.level === 'Difficult')!.items.length)}    icon="signal_cellular_alt"   borderColor="var(--orange)" iconColor="var(--orange)" />
+                        <BorderStatCard label="Total Exercises" value={String(totalItems)} icon="headphones" borderColor="var(--green)" iconColor="var(--green)" />
+                        <BorderStatCard label="Easy" value={String(practiceData.find(g => g.level === 'Easy')!.items.length)} icon="signal_cellular_1_bar" borderColor="var(--green)" iconColor="var(--green)" />
+                        <BorderStatCard label="Intermediate" value={String(practiceData.find(g => g.level === 'Intermediate')!.items.length)} icon="signal_cellular_2_bar" borderColor="var(--blue)" iconColor="var(--blue)" />
+                        <BorderStatCard label="Difficult" value={String(practiceData.find(g => g.level === 'Difficult')!.items.length)} icon="signal_cellular_alt" borderColor="var(--orange)" iconColor="var(--orange)" />
                     </section>
 
                     {/* ── Tabs + content ── */}
@@ -223,7 +224,7 @@ const PracticeTranscriptionPage: React.FC = () => {
                                                 onMouseOver={e => (e.currentTarget.style.opacity = '0.85')}
                                                 onMouseOut={e => (e.currentTarget.style.opacity = '1')}
                                             >
-                                                <span className="material-symbols-outlined" style={{ fontSize: '15px' }}>headphones</span>
+                                                <Icon icon="headphones" />
                                                 Audio
                                             </a>
                                             <a
@@ -240,7 +241,7 @@ const PracticeTranscriptionPage: React.FC = () => {
                                                 onMouseOver={e => (e.currentTarget.style.opacity = '0.85')}
                                                 onMouseOut={e => (e.currentTarget.style.opacity = '1')}
                                             >
-                                                <span className="material-symbols-outlined" style={{ fontSize: '15px' }}>description</span>
+                                                <Icon icon="description" />
                                                 Document
                                             </a>
                                         </div>
@@ -267,7 +268,7 @@ const PracticeTranscriptionPage: React.FC = () => {
                                 onMouseOver={e => { e.currentTarget.style.opacity = '0.9'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
                                 onMouseOut={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)'; }}
                             >
-                                <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>download</span>
+                                <Icon icon="download" />
                                 Download All
                             </button>
                         </div>

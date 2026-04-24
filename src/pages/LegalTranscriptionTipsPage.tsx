@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Icon } from '../components/Icon';
 import DashboardLayout from '../layouts/DashboardLayout';
 import PageBreadcrumb from '../components/PageBreadcrumb';
 import BorderStatCard from '../components/BorderStatCard';
@@ -403,7 +404,7 @@ const LegalTranscriptionTipsPage: React.FC = () => {
                         <PageBreadcrumb pageName="Legal Transcription Tips" />
                         <h2 className="text-3xl font-black text-slate-900 tracking-tight mb-1">Legal Transcription Tips</h2>
                         <div className="mt-4 flex items-start gap-3 rounded-xl px-5 py-4" style={{ background: 'var(--green-light)', border: '1.5px solid #a7d7c8' }}>
-                            <span className="material-symbols-outlined text-[22px] shrink-0 mt-0.5" style={{ color: 'var(--green)' }}>gavel</span>
+                            <Icon icon="gavel" className="text-[22px] shrink-0 mt-0.5" style={{ color: '#1f8f6d' }} />
                             <p className="text-sm leading-relaxed" style={{ color: '#1a5c47' }}>
                                 Master legal transcription with our comprehensive glossary of legal terms and court format template.&nbsp;
                                 <a href="#" className="font-extrabold uppercase tracking-wide underline underline-offset-2" style={{ color: 'var(--green)', textDecorationColor: 'var(--green)' }}>Download Resources.</a>
@@ -456,7 +457,7 @@ const LegalTranscriptionTipsPage: React.FC = () => {
                             <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start', flexWrap: 'wrap', marginBottom: '24px' }}>
                                 {/* Search */}
                                 <div style={{ position: 'relative', flex: 1, minWidth: '240px' }}>
-                                    <span className="material-symbols-outlined" style={{ position: 'absolute', left: '13px', top: '50%', transform: 'translateY(-50%)', fontSize: '18px', color: 'var(--text-muted)', pointerEvents: 'none' }}>search</span>
+                                    <Icon icon="search" />
                                     <input
                                         type="text"
                                         placeholder="Search legal terms…"
@@ -477,7 +478,7 @@ const LegalTranscriptionTipsPage: React.FC = () => {
 
                                 {/* Stats badge */}
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '10px 16px', background: 'var(--green-light)', borderRadius: '10px', fontSize: '13px', fontWeight: 600, color: 'var(--green)', whiteSpace: 'nowrap' }}>
-                                    <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>auto_stories</span>
+                                    <Icon icon="auto_stories" />
                                     {totalTerms} terms across 18 letters
                                 </div>
                             </div>
@@ -515,7 +516,7 @@ const LegalTranscriptionTipsPage: React.FC = () => {
                             {/* Glossary groups */}
                             {filteredGlossary.length === 0 ? (
                                 <div style={{ textAlign: 'center', padding: '60px 20px', background: '#fff', borderRadius: '14px', border: '1px solid var(--border)' }}>
-                                    <span className="material-symbols-outlined" style={{ fontSize: '40px', color: 'var(--text-muted)', display: 'block', marginBottom: '12px' }}>search_off</span>
+                                    <Icon icon="search_off" />
                                     <p style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '6px' }}>No terms found</p>
                                     <p style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Try a different search term or clear the filter.</p>
                                 </div>
@@ -575,7 +576,7 @@ const LegalTranscriptionTipsPage: React.FC = () => {
                             {/* Intro banner */}
                             <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: '14px', padding: '24px 28px', display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
                                 <div style={{ width: '50px', height: '50px', borderRadius: '12px', background: 'var(--green-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                                    <span className="material-symbols-outlined" style={{ fontSize: '26px', color: 'var(--green)' }}>description</span>
+                                    <Icon icon="description" />
                                 </div>
                                 <div>
                                     <h2 style={{ margin: '0 0 6px', fontSize: '16px', fontWeight: 700, color: 'var(--text-primary)' }}>Court Format Template</h2>
@@ -613,7 +614,7 @@ const LegalTranscriptionTipsPage: React.FC = () => {
                                 {/* Header bar */}
                                 <div style={{ background: 'var(--green)', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                        <span className="material-symbols-outlined" style={{ fontSize: '20px', color: 'white' }}>article</span>
+                                        <Icon icon="article" />
                                         <div>
                                             <p style={{ margin: 0, fontSize: '14px', fontWeight: 700, color: 'white' }}>Sample Interrogation Transcript</p>
                                             <p style={{ margin: 0, fontSize: '11px', color: 'rgba(255,255,255,.75)', marginTop: '2px' }}>Court Format Template — Practice Document</p>
@@ -671,7 +672,7 @@ const LegalTranscriptionTipsPage: React.FC = () => {
                                 <div style={{ padding: '14px 24px', background: '#F9FAFB', borderTop: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                     <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Source: TCI Court Format Practice Template</span>
                                     <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-                                        <span className="material-symbols-outlined" style={{ fontSize: '15px', color: 'var(--text-muted)' }}>info</span>
+                                        <Icon icon="info" />
                                         <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>For practice purposes only</span>
                                     </div>
                                 </div>
@@ -680,7 +681,7 @@ const LegalTranscriptionTipsPage: React.FC = () => {
                             {/* Quick reference card */}
                             <div style={{ background: 'linear-gradient(135deg, #EEF0FF 0%, #E8F5F1 100%)', border: '1px solid var(--border)', borderRadius: '14px', padding: '24px 28px' }}>
                                 <h3 style={{ margin: '0 0 16px', fontSize: '14px', fontWeight: 700, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                    <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'var(--purple)' }}>bolt</span>
+                                    <Icon icon="bolt" />
                                     Quick Reference Checklist
                                 </h3>
                                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '10px' }}>
@@ -697,7 +698,7 @@ const LegalTranscriptionTipsPage: React.FC = () => {
                                         'Mark timestamps if required by the client',
                                     ].map((item, i) => (
                                         <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '9px', background: '#fff', borderRadius: '9px', padding: '10px 14px', border: '1px solid var(--border)' }}>
-                                            <span className="material-symbols-outlined" style={{ fontSize: '16px', color: 'var(--green)', flexShrink: 0, marginTop: '1px' }}>check_circle</span>
+                                            <Icon icon="check_circle" />
                                             <span style={{ fontSize: '12.5px', color: 'var(--text-secondary)', lineHeight: 1.5 }}>{item}</span>
                                         </div>
                                     ))}

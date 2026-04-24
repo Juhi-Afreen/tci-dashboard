@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Icon } from '../components/Icon';
 import DashboardLayout from '../layouts/DashboardLayout';
 import PageBreadcrumb from '../components/PageBreadcrumb';
 import BorderStatCard from '../components/BorderStatCard';
@@ -63,7 +64,7 @@ const GrammarQuizzesPage: React.FC = () => {
                         <PageBreadcrumb pageName="Grammar Quizzes" />
                         <h2 className="text-3xl font-black text-slate-900 tracking-tight mb-1">Grammar Quizzes</h2>
                         <div className="mt-4 flex items-start gap-3 rounded-xl px-5 py-4" style={{ background: 'var(--green-light)', border: '1.5px solid #a7d7c8' }}>
-                            <span className="material-symbols-outlined text-[22px] shrink-0 mt-0.5" style={{ color: 'var(--green)' }}>quiz</span>
+                            <Icon icon="quiz" className="text-[22px] shrink-0 mt-0.5" style={{ color: '#1f8f6d' }} />
                             <p className="text-sm leading-relaxed" style={{ color: '#1a5c47' }}>
                                 Practice transcription grammar rules to improve your accuracy. Master punctuation, capitalization, numbers, and more.&nbsp;
                                 <a href="#" className="font-extrabold uppercase tracking-wide underline underline-offset-2" style={{ color: 'var(--green)', textDecorationColor: 'var(--green)' }}>View All Topics.</a>
@@ -120,7 +121,7 @@ const GrammarQuizzesPage: React.FC = () => {
                                 {filtered.length === 0 ? (
                                     <div className="text-center py-12">
                                         <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: 'var(--green-light)', color: 'var(--green)' }}>
-                                            <span className="material-symbols-outlined text-3xl">quiz</span>
+                                            <Icon icon="quiz" className="text-3xl" />
                                         </div>
                                         <h4 className="font-bold text-slate-900 mb-2">No quizzes found</h4>
                                         <p className="text-sm text-slate-500">There are no quizzes in this category.</p>
@@ -234,7 +235,7 @@ const GrammarQuizzesPage: React.FC = () => {
                                 {/* Tips */}
                                 <div className="tips-card">
                                     <div className="flex items-center gap-2 mb-4" style={{ paddingTop: '24px' }}>
-                                        <span className="material-symbols-outlined text-[20px]" style={{ color: 'var(--green)' }}>lightbulb</span>
+                                        <Icon icon="lightbulb" className="text-[20px]" />
                                         <h4 className="font-bold text-slate-900 uppercase tracking-wider text-xs">Quick Tips</h4>
                                     </div>
                                     <ul className="space-y-4">

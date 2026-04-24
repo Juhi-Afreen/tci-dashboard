@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { Icon } from '../components/Icon';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../layouts/DashboardLayout';
 
@@ -110,22 +111,22 @@ const AccuracyDonut: React.FC<{ pct: number; color: string }> = ({ pct, color })
     const circ = 2 * Math.PI * r;
     return (
         <svg width={size} height={size}>
-            <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={color + '18'} strokeWidth={stroke} />
-            <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={color}
+            <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={color + '18'} strokeWidth={stroke} />
+            <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={color}
                 strokeWidth={stroke} strokeDasharray={circ}
                 strokeDashoffset={circ * (1 - pct / 100)} strokeLinecap="round"
-                transform={`rotate(-90 ${size/2} ${size/2})`} />
-            <text x={size/2} y={size/2 + 5} textAnchor="middle"
+                transform={`rotate(-90 ${size / 2} ${size / 2})`} />
+            <text x={size / 2} y={size / 2 + 5} textAnchor="middle"
                 fontSize={15} fontWeight={800} fill="var(--text-primary)">{pct}%</text>
         </svg>
     );
 };
 
 const STATS = [
-    { key: 'lessons',  icon: 'menu_book',             label: 'Lessons Completed', value: '24',   unit: '',    sub: '+3 this week', color: '#3B82F6', bg: '#EFF6FF' },
-    { key: 'streak',   icon: 'local_fire_department', label: 'Day Streak',         value: '12',   unit: 'days', sub: 'Keep it up!', color: '#F97316', bg: '#FFF3EB' },
-    { key: 'hours',    icon: 'schedule',               label: 'Study Hours',        value: '48.5', unit: 'hrs',  sub: '6h this week', color: '#A855F7', bg: '#F5F0FF' },
-    { key: 'accuracy', icon: 'track_changes',          label: 'Accuracy Score',     value: '94',   unit: '%',   sub: '↑ 2% vs last', color: '#36C5D9', bg: '#E8FAFB' },
+    { key: 'lessons', icon: 'menu_book', label: 'Lessons Completed', value: '24', unit: '', sub: '+3 this week', color: '#3B82F6', bg: '#EFF6FF' },
+    { key: 'streak', icon: 'local_fire_department', label: 'Day Streak', value: '12', unit: 'days', sub: 'Keep it up!', color: '#F97316', bg: '#FFF3EB' },
+    { key: 'hours', icon: 'schedule', label: 'Study Hours', value: '48.5', unit: 'hrs', sub: '6h this week', color: '#A855F7', bg: '#F5F0FF' },
+    { key: 'accuracy', icon: 'track_changes', label: 'Accuracy Score', value: '94', unit: '%', sub: '↑ 2% vs last', color: '#36C5D9', bg: '#E8FAFB' },
 ];
 
 const StatCard: React.FC<typeof STATS[0]> = ({ key: _k, icon, label, value, unit, sub, color, bg }) => {
@@ -170,8 +171,8 @@ const StatCard: React.FC<typeof STATS[0]> = ({ key: _k, icon, label, value, unit
             {/* Bottom: full-bleed chart strip */}
             <div style={{ padding: '10px 18px 12px' }}>
                 {label === 'Lessons Completed' && <LessonsBarChart color={color} bg={bg} />}
-                {label === 'Day Streak'         && <StreakGrid      color={color} bg={bg} />}
-                {label === 'Study Hours'        && <StudySparkline  color={color} bg={bg} />}
+                {label === 'Day Streak' && <StreakGrid color={color} bg={bg} />}
+                {label === 'Study Hours' && <StudySparkline color={color} bg={bg} />}
                 {isAccuracy && (
                     <div style={{ display: 'flex', gap: 6 }}>
                         {[88, 91, 89, 93, 92, 94].map((v, i) => (
@@ -279,10 +280,10 @@ const ContinueLearningCard: React.FC<typeof COURSES[0] & { onResume: () => void;
                         background: 'var(--green-light)', borderRadius: 8,
                         width: 30, height: 30, display: 'flex', alignItems: 'center', justifyContent: 'center',
                     }}>
-                        <span className="material-symbols-outlined" style={{ fontSize: 18, color: 'var(--green)' }}>play_circle</span>
+                        <Icon icon="play_circle" />
                     </div>
                     Resume Lesson
-                    <span className="material-symbols-outlined" style={{ fontSize: 16 }}>arrow_forward</span>
+                    <Icon icon="arrow_forward" />
                 </button>
                 <button
                     onClick={onViewAll}
@@ -301,22 +302,22 @@ const ContinueLearningCard: React.FC<typeof COURSES[0] & { onResume: () => void;
 // ── Quick access ───────────────────────────────────────────────────────────────
 
 const QUICK_LINKS = [
-    { icon: 'track_changes', label: 'Accuracy Tool',    sub: 'Test your transcript',  to: '/tools/accuracy',      color: '#1F8F6D', bg: '#E8F5F1' },
-    { icon: 'work',          label: 'Job Board',        sub: 'Browse open positions', to: '/tools/job-board',     color: '#3B82F6', bg: '#EFF6FF' },
-    { icon: 'forum',         label: 'Discussions',      sub: 'Join the community',    to: '/tools/discussions',   color: '#7C6FCD', bg: '#EEF0FF' },
-    { icon: 'assessment',    label: 'My Progress',      sub: 'View detailed report',  to: '/progress',            color: '#F59E0B', bg: '#FEF3C7' },
-    { icon: 'spellcheck',    label: 'Grammar Quizzes',  sub: 'Practice your grammar', to: '/resources/quizzes',   color: '#F43F5E', bg: '#FFF1F4' },
-    { icon: 'keyboard',      label: 'Practice Files',   sub: '26 audio exercises',    to: '/resources/practice',  color: '#06B6D4', bg: '#ECFEFF' },
+    { icon: 'track_changes', label: 'Accuracy Tool', sub: 'Test your transcript', to: '/tools/accuracy', color: '#1F8F6D', bg: '#E8F5F1' },
+    { icon: 'work', label: 'Job Board', sub: 'Browse open positions', to: '/tools/job-board', color: '#3B82F6', bg: '#EFF6FF' },
+    { icon: 'forum', label: 'Discussions', sub: 'Join the community', to: '/tools/discussions', color: '#7C6FCD', bg: '#EEF0FF' },
+    { icon: 'assessment', label: 'My Progress', sub: 'View detailed report', to: '/progress', color: '#F59E0B', bg: '#FEF3C7' },
+    { icon: 'spellcheck', label: 'Grammar Quizzes', sub: 'Practice your grammar', to: '/resources/quizzes', color: '#F43F5E', bg: '#FFF1F4' },
+    { icon: 'keyboard', label: 'Practice Files', sub: '26 audio exercises', to: '/resources/practice', color: '#06B6D4', bg: '#ECFEFF' },
 ];
 
 // ── Recent activity ────────────────────────────────────────────────────────────
 
 const ACTIVITY = [
-    { icon: 'check_circle', color: '#1F8F6D', text: 'Completed "Speaker Identification Rules"',  time: '2h ago'   },
-    { icon: 'quiz',         color: '#F59E0B', text: 'Scored 88% on Module 2 Quiz',                time: '5h ago'   },
-    { icon: 'keyboard',     color: '#3B82F6', text: 'Submitted Practice File #14',               time: 'Yesterday' },
-    { icon: 'forum',        color: '#7C6FCD', text: 'Replied to "Best foot pedal for beginners"', time: '2 days ago' },
-    { icon: 'star',         color: '#F97316', text: 'Earned 12-day streak badge',                 time: '2 days ago' },
+    { icon: 'check_circle', color: '#1F8F6D', text: 'Completed "Speaker Identification Rules"', time: '2h ago' },
+    { icon: 'quiz', color: '#F59E0B', text: 'Scored 88% on Module 2 Quiz', time: '5h ago' },
+    { icon: 'keyboard', color: '#3B82F6', text: 'Submitted Practice File #14', time: 'Yesterday' },
+    { icon: 'forum', color: '#7C6FCD', text: 'Replied to "Best foot pedal for beginners"', time: '2 days ago' },
+    { icon: 'star', color: '#F97316', text: 'Earned 12-day streak badge', time: '2 days ago' },
 ];
 
 // ── Course Library ─────────────────────────────────────────────────────────────
@@ -464,10 +465,10 @@ const DashboardPage: React.FC = () => {
                                         </h3>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                                             <button type="button" className="course-carousel-btn" onClick={() => scrollCarousel('prev')} aria-label="Previous courses">
-                                                <span className="material-symbols-outlined" style={{ fontSize: 18 }}>chevron_left</span>
+                                                <Icon icon="chevron_left" />
                                             </button>
                                             <button type="button" className="course-carousel-btn" onClick={() => scrollCarousel('next')} aria-label="Next courses">
-                                                <span className="material-symbols-outlined" style={{ fontSize: 18 }}>chevron_right</span>
+                                                <Icon icon="chevron_right" />
                                             </button>
                                         </div>
                                     </div>
@@ -607,7 +608,7 @@ const DashboardPage: React.FC = () => {
                                                             background: 'var(--green)', display: 'flex',
                                                             alignItems: 'center', justifyContent: 'center',
                                                         }}>
-                                                            <span className="material-symbols-outlined" style={{ fontSize: 11, color: '#fff' }}>check</span>
+                                                            <Icon icon="check" style={{ color: '#ffffff', fontSize: 11, lineHeight: 1, display: 'block' }} />
                                                         </div>
                                                         <span style={{
                                                             fontSize: 14, color: '#94A3B8',
@@ -680,7 +681,7 @@ const DashboardPage: React.FC = () => {
                                             background: 'none', border: 'none', cursor: 'pointer', padding: 0,
                                             color: 'rgba(255,255,255,0.7)', display: 'flex', alignItems: 'center',
                                         }}>
-                                            <span className="material-symbols-outlined" style={{ fontSize: 16 }}>calendar_today</span>
+                                            <Icon icon="calendar_today" />
                                         </button>
                                     </div>
 
@@ -717,7 +718,7 @@ const DashboardPage: React.FC = () => {
                                                     }),
                                                 }}>
                                                     {d.past
-                                                        ? <span className="material-symbols-outlined" style={{ fontSize: 14 }}>check</span>
+                                                        ? <Icon icon="check" />
                                                         : d.day}
                                                 </div>
                                                 {(d.today || d.eventDot) && (
@@ -751,17 +752,17 @@ const DashboardPage: React.FC = () => {
                                                         Interactive Live Q&amp;A
                                                     </p>
                                                     <p style={{ margin: '4px 0 0', fontSize: 10, fontWeight: 600, color: 'rgba(255,255,255,0.75)', display: 'flex', alignItems: 'center', gap: 4 }}>
-                                                        <span className="material-symbols-outlined" style={{ fontSize: 13, color: 'rgba(255,255,255,0.75)' }}>event</span>
+                                                        <Icon icon="event" />
                                                         Tomorrow at 2:00 PM
                                                     </p>
                                                 </div>
                                                 <div style={{
-                                                    width: 24, height: 24, borderRadius: '50%',
+                                                    width: 20, height: 20, borderRadius: '50%',
                                                     background: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.3)',
                                                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                                                     flexShrink: 0,
                                                 }}>
-                                                    <span className="material-symbols-outlined" style={{ fontSize: 14, color: '#fff' }}>arrow_outward</span>
+                                                    <Icon icon="arrow_outward" style={{ color: '#ffffff', fontSize: 12, lineHeight: 1, display: 'block' }} />
                                                 </div>
                                             </div>
                                         </a>
@@ -782,17 +783,17 @@ const DashboardPage: React.FC = () => {
                                                         Module 3 Assignment Due
                                                     </p>
                                                     <p style={{ margin: '4px 0 0', fontSize: 10, fontWeight: 600, color: 'rgba(255,255,255,0.75)', display: 'flex', alignItems: 'center', gap: 4 }}>
-                                                        <span className="material-symbols-outlined" style={{ fontSize: 13, color: '#FFCB44' }}>assignment</span>
+                                                        <Icon icon="assignment" />
                                                         Sunday, Apr 20
                                                     </p>
                                                 </div>
                                                 <div style={{
-                                                    width: 24, height: 24, borderRadius: '50%',
+                                                    width: 20, height: 20, borderRadius: '50%',
                                                     background: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.3)',
                                                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                                                     flexShrink: 0,
                                                 }}>
-                                                    <span className="material-symbols-outlined" style={{ fontSize: 14, color: '#fff' }}>arrow_outward</span>
+                                                    <Icon icon="arrow_outward" style={{ color: '#ffffff', fontSize: 12, lineHeight: 1, display: 'block' }} />
                                                 </div>
                                             </div>
                                         </a>

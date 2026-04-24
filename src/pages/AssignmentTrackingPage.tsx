@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Icon } from '../components/Icon';
 import DashboardLayout from '../layouts/DashboardLayout';
 import PageBreadcrumb from '../components/PageBreadcrumb';
 import BorderStatCard from '../components/BorderStatCard';
@@ -202,7 +203,7 @@ const AssignmentTrackingPage: React.FC = () => {
                         <PageBreadcrumb pageName="Assignment Tracking" />
                         <h2 className="text-3xl font-black text-slate-900 tracking-tight mb-1">Assignment Tracking</h2>
                         <div className="mt-4 flex items-start gap-3 rounded-xl px-5 py-4" style={{ background: 'var(--green-light)', border: '1.5px solid #a7d7c8' }}>
-                            <span className="material-symbols-outlined text-[22px] shrink-0 mt-0.5" style={{ color: 'var(--green)' }}>info</span>
+                            <Icon icon="info" className="text-[22px] shrink-0 mt-0.5" style={{ color: '#1f8f6d' }} />
                             <p className="text-sm leading-relaxed" style={{ color: '#1a5c47' }}>
                                 Track your transcription assignments, monitor deadlines, and review your grades all in one place.&nbsp;
                                 <button type="button" className="font-extrabold uppercase tracking-wide underline underline-offset-2" style={{ color: 'var(--green)', textDecorationColor: 'var(--green)', background: 'transparent', border: 'none', padding: 0, cursor: 'pointer' }} onClick={() => { /* TODO: navigate to grading guidelines */ }}>
@@ -263,7 +264,7 @@ const AssignmentTrackingPage: React.FC = () => {
                                     {filtered.length === 0 ? (
                                         <div className="text-center py-12">
                                             <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: 'var(--green-light)', color: 'var(--green)' }}>
-                                                <span className="material-symbols-outlined text-3xl">assignment</span>
+                                                <Icon icon="assignment" className="text-3xl" />
                                             </div>
                                             <h4 className="font-bold text-slate-900 mb-2">No assignments found</h4>
                                             <p className="text-sm text-slate-500">There are no assignments in this category.</p>
@@ -282,7 +283,7 @@ const AssignmentTrackingPage: React.FC = () => {
                                                         </div>
                                                         <div className="flex items-center gap-4 text-xs text-slate-400 font-medium flex-wrap">
                                                             <span className="flex items-center gap-1">
-                                                                <span className="material-symbols-outlined text-[14px]">school</span> {a.course}
+                                                                <Icon icon="school" className="text-[14px]" /> {a.course}
                                                             </span>
                                                             <span className="flex items-center gap-1">
                                                                 <span className="material-symbols-outlined text-[14px]">{a.dateIcon}</span> {a.dateLabel}
@@ -334,7 +335,7 @@ const AssignmentTrackingPage: React.FC = () => {
                                     <div className="mt-4 pt-4 border-t border-slate-100">
                                         <button type="button" className="text-xs font-bold flex items-center justify-center gap-1 transition-all" style={{ color: 'var(--green)', background: 'transparent', border: 'none', padding: 0, cursor: 'pointer' }} onClick={() => { /* TODO: show all deadlines */ }}>
                                             View All Deadlines
-                                            <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                                            <Icon icon="arrow_forward" className="text-sm" />
                                         </button>
                                     </div>
                                 </SideCard>
@@ -360,7 +361,7 @@ const AssignmentTrackingPage: React.FC = () => {
                                     <div className="mt-4 pt-4 border-t border-slate-100">
                                         <a href="#" className="text-xs font-bold flex items-center justify-center gap-1 transition-all" style={{ color: 'var(--green)' }}>
                                             View All Activity
-                                            <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                                            <Icon icon="arrow_forward" className="text-sm" />
                                         </a>
                                     </div>
                                 </SideCard> */}
@@ -368,7 +369,7 @@ const AssignmentTrackingPage: React.FC = () => {
                                 {/* Quick Tips */}
                                 <div className="tips-card">
                                     <div className="flex items-center gap-2 mb-4" style={{ paddingTop: '24px' }}>
-                                        <span className="material-symbols-outlined text-[20px]" style={{ color: 'var(--green)' }}>lightbulb</span>
+                                        <Icon icon="lightbulb" className="text-[20px]" />
                                         <h4 className="font-bold text-slate-900 uppercase tracking-wider text-xs">Quick Tips</h4>
                                     </div>
                                     <ul className="space-y-4">

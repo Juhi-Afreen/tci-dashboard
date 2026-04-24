@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from '../components/Icon';
 import DashboardLayout from '../layouts/DashboardLayout';
 import PageBreadcrumb from '../components/PageBreadcrumb';
 
@@ -109,7 +110,7 @@ const UpdatesPage: React.FC = () => {
                     {/* Empty State */}
                     {UPDATES.length === 0 && (
                         <div className="text-center py-12">
-                            <span className="material-symbols-outlined text-6xl text-slate-300 mb-4 block">notifications_none</span>
+                            <Icon icon="notifications_none" className="text-6xl text-slate-300 mb-4 block" />
                             <h3 className="text-xl font-bold text-slate-900 mb-2">No updates yet</h3>
                             <p className="text-slate-600">Check back soon for the latest news and improvements.</p>
                         </div>

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Icon } from '../components/Icon';
 import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {

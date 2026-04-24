@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { Icon } from './Icon';
 
 interface CourseLibraryCardProps {
     title: string;
@@ -92,15 +93,15 @@ const CourseLibrary: React.FC = () => {
                         className="course-carousel-btn"
                         aria-label="Previous courses"
                     >
-                        <span className="material-symbols-outlined text-sm">chevron_left</span>
-                    </button>
-                    <button
-                        type="button"
-                        onClick={() => scroll('next')}
-                        className="course-carousel-btn"
-                        aria-label="Next courses"
-                    >
-                        <span className="material-symbols-outlined text-sm">chevron_right</span>
+<Icon icon="chevron_left" className="text-sm" />
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => scroll('next')}
+                                                className="course-carousel-btn"
+                                                aria-label="Next courses"
+                                            >
+                                                <Icon icon="chevron_right" className="text-sm" />
                     </button>
                 </div>
             </div>

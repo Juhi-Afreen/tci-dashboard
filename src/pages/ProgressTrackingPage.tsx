@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Icon } from '../components/Icon';
 import DashboardLayout from '../layouts/DashboardLayout';
 import PageBreadcrumb from '../components/PageBreadcrumb';
 import BorderStatCard from '../components/BorderStatCard';
@@ -52,16 +53,16 @@ const COURSES: Course[] = [
         completedModules: 7,
         overallScore: 91,
         modules: [
-            { id: 1,  title: 'Introduction to Transcription',          status: 'completed',   score: 96, completedOn: 'Jan 10, 2026' },
-            { id: 2,  title: 'Punctuation Rules',                       status: 'completed',   score: 88, completedOn: 'Jan 18, 2026' },
-            { id: 3,  title: 'Grammar Fundamentals',                    status: 'completed',   score: 92, completedOn: 'Jan 25, 2026' },
-            { id: 4,  title: 'Speaker Identification',                  status: 'completed',   score: 85, completedOn: 'Feb 03, 2026' },
-            { id: 5,  title: 'Verbatim vs. Non-Verbatim',               status: 'completed',   score: 94, completedOn: 'Feb 12, 2026' },
-            { id: 6,  title: 'Timestamps & Formatting',                 status: 'completed',   score: 89, completedOn: 'Feb 22, 2026' },
-            { id: 7,  title: 'Handling Difficult Audio',                status: 'completed',   score: 87, completedOn: 'Mar 05, 2026' },
-            { id: 8,  title: 'Professional Transcription Standards',    status: 'in-progress' },
-            { id: 9,  title: 'Quality Review & Proofreading',           status: 'locked' },
-            { id: 10, title: 'Final Certification Exam',                status: 'locked' },
+            { id: 1, title: 'Introduction to Transcription', status: 'completed', score: 96, completedOn: 'Jan 10, 2026' },
+            { id: 2, title: 'Punctuation Rules', status: 'completed', score: 88, completedOn: 'Jan 18, 2026' },
+            { id: 3, title: 'Grammar Fundamentals', status: 'completed', score: 92, completedOn: 'Jan 25, 2026' },
+            { id: 4, title: 'Speaker Identification', status: 'completed', score: 85, completedOn: 'Feb 03, 2026' },
+            { id: 5, title: 'Verbatim vs. Non-Verbatim', status: 'completed', score: 94, completedOn: 'Feb 12, 2026' },
+            { id: 6, title: 'Timestamps & Formatting', status: 'completed', score: 89, completedOn: 'Feb 22, 2026' },
+            { id: 7, title: 'Handling Difficult Audio', status: 'completed', score: 87, completedOn: 'Mar 05, 2026' },
+            { id: 8, title: 'Professional Transcription Standards', status: 'in-progress' },
+            { id: 9, title: 'Quality Review & Proofreading', status: 'locked' },
+            { id: 10, title: 'Final Certification Exam', status: 'locked' },
         ],
     },
     {
@@ -73,29 +74,29 @@ const COURSES: Course[] = [
         completedModules: 3,
         overallScore: 88,
         modules: [
-            { id: 1,  title: 'Introduction to Legal Transcription',     status: 'completed',   score: 91, completedOn: 'Mar 10, 2026' },
-            { id: 2,  title: 'Legal Terminology Basics',                status: 'completed',   score: 86, completedOn: 'Mar 20, 2026' },
-            { id: 3,  title: 'Court Proceedings & Depositions',         status: 'completed',   score: 88, completedOn: 'Apr 01, 2026' },
-            { id: 4,  title: 'Legal Document Formatting',               status: 'in-progress' },
-            { id: 5,  title: 'Verbatim Requirements in Legal Settings', status: 'locked' },
-            { id: 6,  title: 'Handling Exhibits & Evidence',            status: 'locked' },
-            { id: 7,  title: 'Confidentiality & Ethics',                status: 'locked' },
-            { id: 8,  title: 'Advanced Legal Terminology',              status: 'locked' },
-            { id: 9,  title: 'Mock Deposition Transcription',           status: 'locked' },
-            { id: 10, title: 'Legal Certification Exam',                status: 'locked' },
+            { id: 1, title: 'Introduction to Legal Transcription', status: 'completed', score: 91, completedOn: 'Mar 10, 2026' },
+            { id: 2, title: 'Legal Terminology Basics', status: 'completed', score: 86, completedOn: 'Mar 20, 2026' },
+            { id: 3, title: 'Court Proceedings & Depositions', status: 'completed', score: 88, completedOn: 'Apr 01, 2026' },
+            { id: 4, title: 'Legal Document Formatting', status: 'in-progress' },
+            { id: 5, title: 'Verbatim Requirements in Legal Settings', status: 'locked' },
+            { id: 6, title: 'Handling Exhibits & Evidence', status: 'locked' },
+            { id: 7, title: 'Confidentiality & Ethics', status: 'locked' },
+            { id: 8, title: 'Advanced Legal Terminology', status: 'locked' },
+            { id: 9, title: 'Mock Deposition Transcription', status: 'locked' },
+            { id: 10, title: 'Legal Certification Exam', status: 'locked' },
         ],
     },
 ];
 
 const QUIZ_RESULTS: QuizResult[] = [
-    { id: 1,  quiz: 'Punctuation Quiz 1',        score: 18, total: 20, date: 'Jan 20, 2026', badge: 'A' },
-    { id: 2,  quiz: 'Grammar Quiz 1',            score: 16, total: 20, date: 'Jan 28, 2026', badge: 'B+' },
-    { id: 3,  quiz: 'Punctuation Quiz 2',        score: 20, total: 20, date: 'Feb 05, 2026', badge: 'A+' },
-    { id: 4,  quiz: 'Grammar Quiz 2',            score: 17, total: 20, date: 'Feb 15, 2026', badge: 'A-' },
-    { id: 5,  quiz: 'Punctuation Quiz 3',        score: 19, total: 20, date: 'Feb 24, 2026', badge: 'A' },
-    { id: 6,  quiz: 'Grammar Quiz 3',            score: 15, total: 20, date: 'Mar 08, 2026', badge: 'B' },
-    { id: 7,  quiz: 'Legal Terminology Quiz 1',  score: 17, total: 20, date: 'Mar 22, 2026', badge: 'A-' },
-    { id: 8,  quiz: 'Legal Terminology Quiz 2',  score: 16, total: 20, date: 'Apr 05, 2026', badge: 'B+' },
+    { id: 1, quiz: 'Punctuation Quiz 1', score: 18, total: 20, date: 'Jan 20, 2026', badge: 'A' },
+    { id: 2, quiz: 'Grammar Quiz 1', score: 16, total: 20, date: 'Jan 28, 2026', badge: 'B+' },
+    { id: 3, quiz: 'Punctuation Quiz 2', score: 20, total: 20, date: 'Feb 05, 2026', badge: 'A+' },
+    { id: 4, quiz: 'Grammar Quiz 2', score: 17, total: 20, date: 'Feb 15, 2026', badge: 'A-' },
+    { id: 5, quiz: 'Punctuation Quiz 3', score: 19, total: 20, date: 'Feb 24, 2026', badge: 'A' },
+    { id: 6, quiz: 'Grammar Quiz 3', score: 15, total: 20, date: 'Mar 08, 2026', badge: 'B' },
+    { id: 7, quiz: 'Legal Terminology Quiz 1', score: 17, total: 20, date: 'Mar 22, 2026', badge: 'A-' },
+    { id: 8, quiz: 'Legal Terminology Quiz 2', score: 16, total: 20, date: 'Apr 05, 2026', badge: 'B+' },
 ];
 
 const ACCURACY_HISTORY: AccuracyEntry[] = [
@@ -187,14 +188,14 @@ const ProgressTrackingPage: React.FC = () => {
     const [expandedCourse, setExpandedCourse] = useState<string | null>('general');
 
     const totalCompleted = COURSES.reduce((s, c) => s + c.completedModules, 0);
-    const totalModules   = COURSES.reduce((s, c) => s + c.totalModules, 0);
-    const avgScore       = Math.round(COURSES.reduce((s, c) => s + c.overallScore, 0) / COURSES.length);
-    const avgAccuracy    = Math.round(ACCURACY_HISTORY.reduce((s, a) => s + a.score, 0) / ACCURACY_HISTORY.length);
+    const totalModules = COURSES.reduce((s, c) => s + c.totalModules, 0);
+    const avgScore = Math.round(COURSES.reduce((s, c) => s + c.overallScore, 0) / COURSES.length);
+    const avgAccuracy = Math.round(ACCURACY_HISTORY.reduce((s, a) => s + a.score, 0) / ACCURACY_HISTORY.length);
 
     const TABS = [
-        { id: 'overview',  label: 'Course Progress', icon: 'school' },
-        { id: 'quizzes',   label: 'Quiz Results',    icon: 'quiz' },
-        { id: 'accuracy',  label: 'Accuracy Trend',  icon: 'trending_up' },
+        { id: 'overview', label: 'Course Progress', icon: 'school' },
+        { id: 'quizzes', label: 'Quiz Results', icon: 'quiz' },
+        { id: 'accuracy', label: 'Accuracy Trend', icon: 'trending_up' },
     ] as const;
 
     return (
@@ -208,7 +209,7 @@ const ProgressTrackingPage: React.FC = () => {
                         <h2 className="text-3xl font-black text-slate-900 tracking-tight mb-1">Progress Tracking</h2>
                         <div className="mt-4 flex items-start gap-3 rounded-xl px-5 py-4"
                             style={{ background: 'var(--green-light)', border: '1.5px solid #a7d7c8' }}>
-                            <span className="material-symbols-outlined text-[22px] shrink-0 mt-0.5" style={{ color: 'var(--green)' }}>assessment</span>
+                            <Icon icon="assessment" className="text-[22px] shrink-0 mt-0.5" style={{ color: '#1f8f6d' }} />
                             <p className="text-sm leading-relaxed" style={{ color: '#1a5c47' }}>
                                 Track your learning progress, module completion, quiz scores, and accuracy improvements across all your TCI courses.
                             </p>
@@ -217,10 +218,10 @@ const ProgressTrackingPage: React.FC = () => {
 
                     {/* Stats */}
                     <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <BorderStatCard label="Modules Done"   value={`${totalCompleted}/${totalModules}`} icon="check_circle"  borderColor="var(--green)"  iconColor="var(--green)"  />
-                        <BorderStatCard label="Avg Score"      value={`${avgScore}%`}                      icon="stars"         borderColor="var(--blue)"   iconColor="var(--blue)"   />
-                        <BorderStatCard label="Quizzes Taken"  value={String(QUIZ_RESULTS.length)}         icon="quiz"          borderColor="var(--purple)" iconColor="var(--purple)" />
-                        <BorderStatCard label="Avg Accuracy"   value={`${avgAccuracy}%`}                   icon="trending_up"   borderColor="var(--orange)" iconColor="var(--orange)" />
+                        <BorderStatCard label="Modules Done" value={`${totalCompleted}/${totalModules}`} icon="check_circle" borderColor="var(--green)" iconColor="var(--green)" />
+                        <BorderStatCard label="Avg Score" value={`${avgScore}%`} icon="stars" borderColor="var(--blue)" iconColor="var(--blue)" />
+                        <BorderStatCard label="Quizzes Taken" value={String(QUIZ_RESULTS.length)} icon="quiz" borderColor="var(--purple)" iconColor="var(--purple)" />
+                        <BorderStatCard label="Avg Accuracy" value={`${avgAccuracy}%`} icon="trending_up" borderColor="var(--orange)" iconColor="var(--orange)" />
                     </section>
 
                     {/* Tabs */}
@@ -287,11 +288,7 @@ const ProgressTrackingPage: React.FC = () => {
                                                         <div style={{ height: '100%', width: `${pct}%`, background: course.color, borderRadius: '99px', transition: 'width .6s ease' }} />
                                                     </div>
                                                 </div>
-                                                <span className="material-symbols-outlined" style={{
-                                                    fontSize: '22px', color: 'var(--text-secondary)',
-                                                    transform: open ? 'rotate(180deg)' : 'rotate(0)',
-                                                    transition: 'transform .25s',
-                                                }}>expand_more</span>
+                                                <Icon icon="expand_more" style={{ fontSize: 18 }} />
                                             </button>
 
                                             {/* Module list */}
@@ -413,7 +410,7 @@ const ProgressTrackingPage: React.FC = () => {
                                     <AccuracyChart data={ACCURACY_HISTORY} />
                                     <div style={{ marginTop: '16px', padding: '12px', background: '#F4F7F6', borderRadius: '10px' }}>
                                         <p style={{ margin: 0, fontSize: '12.5px', color: '#1a5c47', fontWeight: 500 }}>
-                                            <span className="material-symbols-outlined" style={{ fontSize: '15px', verticalAlign: 'middle', marginRight: '6px', color: 'var(--green)' }}>trending_up</span>
+                                            <Icon icon="trending_up" />
                                             Your accuracy improved by <strong>{ACCURACY_HISTORY[ACCURACY_HISTORY.length - 1].score - ACCURACY_HISTORY[0].score}%</strong> over {ACCURACY_HISTORY.length} practice tests. Most employers require 98%+ — keep practicing!
                                         </p>
                                     </div>
@@ -422,7 +419,7 @@ const ProgressTrackingPage: React.FC = () => {
                                 {/* History table */}
                                 <div style={{ background: '#fff', borderRadius: '14px', border: '1.5px solid var(--border)', overflow: 'hidden' }}>
                                     <div style={{ padding: '16px 24px', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                        <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'var(--green)' }}>history</span>
+                                        <Icon icon="history" />
                                         <h3 style={{ margin: 0, fontSize: '14px', fontWeight: 700, color: 'var(--text-primary)' }}>Score History</h3>
                                     </div>
                                     {[...ACCURACY_HISTORY].reverse().map((entry, i) => (

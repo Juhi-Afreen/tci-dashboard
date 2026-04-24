@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Icon } from '../components/Icon';
 import { useParams, useNavigate } from 'react-router-dom';
 import DashboardLayout from '../layouts/DashboardLayout';
 import PageBreadcrumb from '../components/PageBreadcrumb';
@@ -173,17 +174,17 @@ const COURSES: Record<string, CourseData> = {
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
 const typeConfig: Record<LessonType, { icon: string; label: string; color: string; bg: string }> = {
-    video:      { icon: 'play_circle', label: 'Video',      color: '#3B82F6', bg: '#EFF6FF' },
-    reading:    { icon: 'menu_book',   label: 'Reading',    color: '#7C6FCD', bg: '#EEF0FF' },
-    quiz:       { icon: 'quiz',        label: 'Quiz',       color: '#F59E0B', bg: '#FEF3C7' },
-    practice:   { icon: 'keyboard',    label: 'Practice',   color: '#1F8F6D', bg: '#E8F5F1' },
-    assignment: { icon: 'assignment',  label: 'Assignment', color: '#F43F5E', bg: '#FFF1F4' },
+    video: { icon: 'play_circle', label: 'Video', color: '#3B82F6', bg: '#EFF6FF' },
+    reading: { icon: 'menu_book', label: 'Reading', color: '#7C6FCD', bg: '#EEF0FF' },
+    quiz: { icon: 'quiz', label: 'Quiz', color: '#F59E0B', bg: '#FEF3C7' },
+    practice: { icon: 'keyboard', label: 'Practice', color: '#1F8F6D', bg: '#E8F5F1' },
+    assignment: { icon: 'assignment', label: 'Assignment', color: '#F43F5E', bg: '#FFF1F4' },
 };
 
 const statusConfig: Record<LessonStatus, { icon: string; color: string; label: string }> = {
-    completed:   { icon: 'check_circle', color: '#1F8F6D', label: 'Completed'   },
-    'in-progress': { icon: 'play_arrow',  color: '#3B82F6', label: 'In Progress' },
-    locked:      { icon: 'lock',         color: '#9CA3AF', label: 'Locked'      },
+    completed: { icon: 'check_circle', color: '#1F8F6D', label: 'Completed' },
+    'in-progress': { icon: 'play_arrow', color: '#3B82F6', label: 'In Progress' },
+    locked: { icon: 'lock', color: '#9CA3AF', label: 'Locked' },
 };
 
 // ── Sub-components ─────────────────────────────────────────────────────────────
@@ -510,7 +511,7 @@ const CourseLessonsPage: React.FC = () => {
                             padding: '0 0 20px',
                         }}
                     >
-                        <span className="material-symbols-outlined" style={{ fontSize: 18 }}>arrow_back</span>
+                        <Icon icon="arrow_back" style={{ color: '#1f8f6d' }} />
                         Back to Course
                     </button>
 
@@ -734,7 +735,7 @@ const CourseLessonsPage: React.FC = () => {
                                             gap: 8,
                                         }}
                                     >
-                                        <span className="material-symbols-outlined" style={{ fontSize: 18 }}>play_arrow</span>
+                                        <Icon icon="play_arrow" />
                                         Resume Lesson
                                     </button>
 

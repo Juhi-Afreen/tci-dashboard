@@ -1,11 +1,12 @@
 import React from 'react';
+import { Icon } from '../components/Icon';
 
 const PageFooter: React.FC = () => {
     return (
         <footer style={{ borderTop: '1px solid var(--border)', padding: '24px 32px', marginTop: 'auto', background: '#fff' }}>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)' }}>
-                    <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>school</span>
+                    <Icon icon="" style={{ fontSize: 18 }} />
                     <p style={{ fontSize: '13px', margin: 0 }}>© 2024 Transcription Certification Institute. All rights reserved.</p>
                 </div>
                 <div style={{ display: 'flex', gap: '24px' }}>

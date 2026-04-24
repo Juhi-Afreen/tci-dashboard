@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from './Icon';
 
 const Goals: React.FC = () => {
     return (
@@ -10,13 +11,13 @@ const Goals: React.FC = () => {
             <div className="space-y-3.5">
                 <div className="flex items-center gap-3">
                     <div className="size-5 rounded-full bg-primary flex items-center justify-center text-white shrink-0">
-                        <span className="material-symbols-outlined text-xs">check</span>
+                        <Icon icon="check" className="text-xs" />
                     </div>
                     <span className="text-sm text-slate-400 line-through">Complete 2 lessons</span>
                 </div>
                 <div className="flex items-center gap-3">
                     <div className="size-5 rounded-full bg-primary flex items-center justify-center text-white shrink-0">
-                        <span className="material-symbols-outlined text-xs">check</span>
+                        <Icon icon="check" className="text-xs" />
                     </div>
                     <span className="text-sm text-slate-400 line-through">Practice transcription</span>
                 </div>

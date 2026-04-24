@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from '../components/Icon';
 import DashboardLayout from '../layouts/DashboardLayout';
 import PageBreadcrumb from '../components/PageBreadcrumb';
 
@@ -82,7 +83,7 @@ const MyPurchasesPage: React.FC = () => {
                                         </div>
                                         <button className="px-6 py-2.5 rounded-lg font-bold text-white transition-all flex items-center gap-2" style={{ background: 'var(--green)' }}>
                                             View Details
-                                            <span className="material-symbols-outlined text-lg">arrow_forward</span>
+                                            <Icon icon="arrow_forward" className="text-lg" />
                                         </button>
                                     </div>
                                 </div>
@@ -93,7 +94,7 @@ const MyPurchasesPage: React.FC = () => {
                     {/* Empty State */}
                     {PURCHASES.length === 0 && (
                         <div className="text-center py-12">
-                            <span className="material-symbols-outlined text-6xl text-slate-300 mb-4 block">shopping_bag</span>
+                            <Icon icon="shopping_bag" className="text-6xl text-slate-300 mb-4 block" />
                             <h3 className="text-xl font-bold text-slate-900 mb-2">No purchases yet</h3>
                             <p className="text-slate-600">Start your learning journey by exploring our courses.</p>
                         </div>

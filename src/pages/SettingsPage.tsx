@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Icon } from '../components/Icon';
 import DashboardLayout from '../layouts/DashboardLayout';
 import PageBreadcrumb from '../components/PageBreadcrumb';
 
@@ -387,9 +388,7 @@ const ProfileTab: React.FC = () => {
                         }}
                     >
                         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                            <span className="material-symbols-outlined" style={{ color: 'var(--green)', fontSize: 22 }}>
-                                description
-                            </span>
+                            <Icon icon="description" style={{ color: 'var(--green)', fontSize: 22 }} />
                             <div>
                                 <p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>
                                     {cvFile.name}
@@ -411,7 +410,7 @@ const ProfileTab: React.FC = () => {
                             }}
                             title="Remove"
                         >
-                            <span className="material-symbols-outlined" style={{ fontSize: 20 }}>delete</span>
+                            <Icon icon="delete" />
                         </button>
                     </div>
                 ) : (

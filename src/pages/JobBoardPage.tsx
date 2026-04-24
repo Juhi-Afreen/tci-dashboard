@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Icon } from '../components/Icon';
 import DashboardLayout from '../layouts/DashboardLayout';
 import PageBreadcrumb from '../components/PageBreadcrumb';
 import BorderStatCard from '../components/BorderStatCard';
@@ -52,12 +53,12 @@ function locationText(job: Job) {
 }
 
 const jobTypeColor: Record<string, { color: string; bg: string }> = {
-    'Full Time Job':                { color: 'var(--green)',  bg: 'var(--green-light)' },
-    'Part Time Job':                { color: 'var(--blue)',   bg: '#EEF4FF' },
-    'Freelance':                    { color: 'var(--purple)', bg: '#EEF0FF' },
-    'Independent Contractor Gigs':  { color: 'var(--orange)', bg: '#FFF4EC' },
-    'Internship':                   { color: '#0891b2',       bg: '#e0f7fa' },
-    'Temporary':                    { color: '#92600a',       bg: '#FFF8DC' },
+    'Full Time Job': { color: 'var(--green)', bg: 'var(--green-light)' },
+    'Part Time Job': { color: 'var(--blue)', bg: '#EEF4FF' },
+    'Freelance': { color: 'var(--purple)', bg: '#EEF0FF' },
+    'Independent Contractor Gigs': { color: 'var(--orange)', bg: '#FFF4EC' },
+    'Internship': { color: '#0891b2', bg: '#e0f7fa' },
+    'Temporary': { color: '#92600a', bg: '#FFF8DC' },
 };
 function getTypeStyle(type: string) {
     return jobTypeColor[type] ?? { color: 'var(--green)', bg: 'var(--green-light)' };
@@ -148,7 +149,7 @@ const JobCard: React.FC<{ job: Job }> = ({ job }) => {
                             onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
                         />
                     ) : (
-                        <span className="material-symbols-outlined" style={{ fontSize: '22px', color: 'var(--text-secondary)' }}>business</span>
+                        <Icon icon="business" />
                     )}
                 </div>
 
@@ -187,7 +188,7 @@ const JobCard: React.FC<{ job: Job }> = ({ job }) => {
                             onMouseOver={e => (e.currentTarget.style.opacity = '0.85')}
                             onMouseOut={e => (e.currentTarget.style.opacity = '1')}
                         >
-                            <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>open_in_new</span>
+                            <Icon icon="open_in_new" />
                             Apply Now
                         </a>
                     </div>
@@ -245,13 +246,13 @@ const JobCard: React.FC<{ job: Job }> = ({ job }) => {
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 const JobBoardPage: React.FC = () => {
-    const [jobs, setJobs]           = useState<Job[]>([]);
-    const [loading, setLoading]     = useState(true);
+    const [jobs, setJobs] = useState<Job[]>([]);
+    const [loading, setLoading] = useState(true);
     const [loadingMore, setLoadingMore] = useState(false);
-    const [error, setError]         = useState<string | null>(null);
-    const [page, setPage]           = useState(1);
-    const [hasMore, setHasMore]     = useState(false);
-    const [search, setSearch]       = useState('');
+    const [error, setError] = useState<string | null>(null);
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(false);
+    const [search, setSearch] = useState('');
     const [searchInput, setSearchInput] = useState('');
     const [workLocId, setWorkLocId] = useState(0);
     const [jobTypeId, setJobTypeId] = useState(0);
@@ -315,13 +316,13 @@ const JobBoardPage: React.FC = () => {
                                     textDecoration: 'none',
                                 }}
                             >
-                                <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>open_in_new</span>
+                                <Icon icon="open_in_new" />
                                 View Full Job Board
                             </a>
                         </div>
                         <div className="mt-4 flex items-start gap-3 rounded-xl px-5 py-4"
                             style={{ background: 'var(--green-light)', border: '1.5px solid #a7d7c8' }}>
-                            <span className="material-symbols-outlined text-[22px] shrink-0 mt-0.5" style={{ color: 'var(--green)' }}>work</span>
+                            <Icon icon="work" className="text-[22px] shrink-0 mt-0.5" style={{ color: '#1f8f6d' }} />
                             <p className="text-sm leading-relaxed" style={{ color: '#1a5c47' }}>
                                 Browse live transcription and translation job opportunities sourced from the TCI Job Board.
                                 Find full-time, part-time, freelance, and remote positions from top companies hiring right now.
@@ -331,10 +332,10 @@ const JobBoardPage: React.FC = () => {
 
                     {/* ── Stats ── */}
                     <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <BorderStatCard label="Live Jobs"    value={loading ? '...' : String(jobs.length + (hasMore ? '+' : ''))} icon="work"        borderColor="var(--green)"  iconColor="var(--green)"  />
-                        <BorderStatCard label="Remote"       value={loading ? '...' : String(jobs.filter(j => j.WorkLocationName === 'From Home').length)} icon="home_work"    borderColor="var(--blue)"   iconColor="var(--blue)"   />
-                        <BorderStatCard label="Full Time"    value={loading ? '...' : String(jobs.filter(j => j.JobTypeName === 'Full Time Job').length)} icon="badge"       borderColor="var(--purple)" iconColor="var(--purple)" />
-                        <BorderStatCard label="Freelance"    value={loading ? '...' : String(jobs.filter(j => j.JobTypeName === 'Freelance').length)} icon="person"        borderColor="var(--orange)" iconColor="var(--orange)" />
+                        <BorderStatCard label="Live Jobs" value={loading ? '...' : String(jobs.length + (hasMore ? '+' : ''))} icon="work" borderColor="var(--green)" iconColor="var(--green)" />
+                        <BorderStatCard label="Remote" value={loading ? '...' : String(jobs.filter(j => j.WorkLocationName === 'From Home').length)} icon="home_work" borderColor="var(--blue)" iconColor="var(--blue)" />
+                        <BorderStatCard label="Full Time" value={loading ? '...' : String(jobs.filter(j => j.JobTypeName === 'Full Time Job').length)} icon="badge" borderColor="var(--purple)" iconColor="var(--purple)" />
+                        <BorderStatCard label="Freelance" value={loading ? '...' : String(jobs.filter(j => j.JobTypeName === 'Freelance').length)} icon="person" borderColor="var(--orange)" iconColor="var(--orange)" />
                     </section>
 
                     {/* ── Search + Filters ── */}
@@ -343,10 +344,10 @@ const JobBoardPage: React.FC = () => {
                             <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '16px' }}>
                                 {/* Search box */}
                                 <div style={{ flex: '1', minWidth: '220px', position: 'relative' }}>
-                                    <span className="material-symbols-outlined" style={{
+                                    <Icon icon="search" style={{
                                         position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)',
                                         fontSize: '18px', color: 'var(--text-secondary)',
-                                    }}>search</span>
+                                    }} />
                                     <input
                                         type="text"
                                         placeholder="Search job title or keyword..."
@@ -417,7 +418,7 @@ const JobBoardPage: React.FC = () => {
                                     onMouseOver={e => (e.currentTarget.style.opacity = '0.85')}
                                     onMouseOut={e => (e.currentTarget.style.opacity = '1')}
                                 >
-                                    <span className="material-symbols-outlined" style={{ fontSize: '17px' }}>search</span>
+                                    <Icon icon="search" />
                                     Search
                                 </button>
 
@@ -439,7 +440,7 @@ const JobBoardPage: React.FC = () => {
                                             cursor: 'pointer',
                                         }}
                                     >
-                                        <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>close</span>
+                                        <Icon icon="close" />
                                         Clear
                                     </button>
                                 )}
@@ -457,7 +458,7 @@ const JobBoardPage: React.FC = () => {
                                 background: '#fff', borderRadius: '14px',
                                 border: '1.5px solid var(--border)',
                             }}>
-                                <span className="material-symbols-outlined" style={{ fontSize: '42px', color: '#f87171', display: 'block', marginBottom: '12px' }}>error_outline</span>
+                                <Icon icon="error_outline" />
                                 <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>{error}</p>
                             </div>
                         ) : jobs.length === 0 ? (
@@ -466,7 +467,7 @@ const JobBoardPage: React.FC = () => {
                                 background: '#fff', borderRadius: '14px',
                                 border: '1.5px solid var(--border)',
                             }}>
-                                <span className="material-symbols-outlined" style={{ fontSize: '42px', color: 'var(--text-secondary)', display: 'block', marginBottom: '12px' }}>search_off</span>
+                                <Icon icon="search_off" />
                                 <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>No jobs found matching your search.</p>
                             </div>
                         ) : (
@@ -494,12 +495,12 @@ const JobBoardPage: React.FC = () => {
                                         >
                                             {loadingMore ? (
                                                 <>
-                                                    <span className="material-symbols-outlined" style={{ fontSize: '17px', animation: 'spin 1s linear infinite' }}>progress_activity</span>
+                                                    <Icon icon="progress_activity" />
                                                     Loading...
                                                 </>
                                             ) : (
                                                 <>
-                                                    <span className="material-symbols-outlined" style={{ fontSize: '17px' }}>expand_more</span>
+                                                    <Icon icon="expand_more" />
                                                     Load More Jobs
                                                 </>
                                             )}

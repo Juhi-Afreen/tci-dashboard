@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from './Icon';
 
 const LearningPlan: React.FC = () => {
     const days = [
@@ -19,7 +20,7 @@ const LearningPlan: React.FC = () => {
                     <span className="text-[10px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded-md border border-slate-100 dark:border-slate-700">March</span>
                 </div>
                 <button className="text-slate-400 hover:text-primary transition-colors">
-                    <span className="material-symbols-outlined text-sm">calendar_today</span>
+                    <Icon icon="calendar_today" className="text-sm" />
                 </button>
             </div>
 
@@ -30,7 +31,7 @@ const LearningPlan: React.FC = () => {
 
                         {day.status === 'done' && (
                             <div className="size-8 rounded-lg bg-green-50 text-primary dark:bg-primary/10 dark:text-primary text-[10px] font-bold flex items-center justify-center mx-auto border border-green-100 dark:border-primary/20 transition-colors">
-                                <span className="material-symbols-outlined text-[14px]">check</span>
+                                <Icon icon="check" className="text-[14px]" />
                             </div>
                         )}
 
@@ -63,12 +64,12 @@ const LearningPlan: React.FC = () => {
                         <div>
                             <p className="text-[12px] font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">Interactive Live Q&A</p>
                             <p className="text-[10px] font-semibold text-slate-500 mt-1 flex items-center gap-1.5">
-                                <span className="material-symbols-outlined text-[13px] text-primary/70">event</span>
+                                <Icon icon="event" className="text-[13px]" style={{ color: 'var(--green)' }} />
                                 Tomorrow at 2:00 PM
                             </p>
                         </div>
                         <div className="size-6 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-400 group-hover:text-primary group-hover:border-primary/40 transition-colors">
-                            <span className="material-symbols-outlined text-[14px]">arrow_outward</span>
+                            <Icon icon="arrow_outward" className="text-[14px]" />
                         </div>
                     </div>
                 </a>

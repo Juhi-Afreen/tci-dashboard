@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Icon } from '../components/Icon';
 import DashboardLayout from '../layouts/DashboardLayout';
 import PageBreadcrumb from '../components/PageBreadcrumb';
 import BorderStatCard from '../components/BorderStatCard';
@@ -174,7 +175,7 @@ const FreeEbookPage: React.FC = () => {
                             className="mt-4 flex items-start gap-3 rounded-xl px-5 py-4"
                             style={{ background: 'var(--green-light)', border: '1.5px solid #a7d7c8' }}
                         >
-                            <span className="material-symbols-outlined text-[22px] shrink-0 mt-0.5" style={{ color: 'var(--green)' }}>
+                            <span className="material-symbols-outlined text-[22px] shrink-0 mt-0.5" style={{ color: '#1f8f6d' }}>
                                 auto_stories
                             </span>
                             <p className="text-sm leading-relaxed" style={{ color: '#1a5c47' }}>
@@ -263,7 +264,7 @@ const FreeEbookPage: React.FC = () => {
 
                                             {/* Format info */}
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '16px' }}>
-                                                <span className="material-symbols-outlined" style={{ fontSize: '15px', color: 'var(--text-secondary)' }}>picture_as_pdf</span>
+                                                <Icon icon="picture_as_pdf" />
                                                 <span style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 500 }}>PDF Document · Free Download</span>
                                             </div>
 
@@ -289,7 +290,7 @@ const FreeEbookPage: React.FC = () => {
                                                     onMouseOver={e => (e.currentTarget.style.opacity = '0.8')}
                                                     onMouseOut={e => (e.currentTarget.style.opacity = '1')}
                                                 >
-                                                    <span className="material-symbols-outlined" style={{ fontSize: '15px' }}>open_in_new</span>
+                                                    <Icon icon="open_in_new" />
                                                     Read Online
                                                 </a>
 
@@ -311,7 +312,7 @@ const FreeEbookPage: React.FC = () => {
                                                     onMouseOver={e => (e.currentTarget.style.opacity = '0.85')}
                                                     onMouseOut={e => (e.currentTarget.style.opacity = '1')}
                                                 >
-                                                    <span className="material-symbols-outlined" style={{ fontSize: '15px' }}>download</span>
+                                                    <Icon icon="download" />
                                                     Download
                                                 </a>
 

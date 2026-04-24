@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from './Icon';
 import { Link } from 'react-router-dom';
 
 interface ContinueLearningCardProps {
@@ -26,10 +27,10 @@ const ContinueLearningCard: React.FC<ContinueLearningCardProps> = ({ title, imag
                 </div>
                 <Link to="#" className="resume-lesson-link mt-4 inline-flex items-center gap-2 text-primary font-bold text-sm">
                     <div className="bg-primary/10 text-primary p-1.5 rounded-lg flex items-center justify-center">
-                        <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>play_circle</span>
+                        <Icon icon="play_circle" style={{ fontSize: 18 }} />
                     </div>
                     <span className="resume-lesson-text">Resume Lesson</span>
-                    <span className="material-symbols-outlined resume-lesson-arrow">arrow_forward</span>
+                    <Icon icon="arrow_forward" className="resume-lesson-arrow" />
                 </Link>
             </div>
         </div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Icon } from '../components/Icon';
 import DashboardLayout from '../layouts/DashboardLayout';
 import PageBreadcrumb from '../components/PageBreadcrumb';
 import BorderStatCard from '../components/BorderStatCard';
@@ -15,28 +16,28 @@ interface VerbatimItem {
 }
 
 const verbatimItems: VerbatimItem[] = [
-    { id: 1,  title: 'Interview 1',          audio: BASE + 'Interview1.wav',           doc: BASE + 'Interview1.docx' },
-    { id: 2,  title: 'Interview 2',          audio: BASE + 'Interview2.wav',           doc: BASE + 'Interview2.docx' },
-    { id: 3,  title: 'Interview 3',          audio: BASE + 'Interview3.wav',           doc: BASE + 'Interview3.docx' },
-    { id: 4,  title: 'Interview 4',          audio: BASE + 'Interview4.wav',           doc: BASE + 'Interview4.docx' },
-    { id: 5,  title: 'Interview 5',          audio: BASE + 'Interview5.wav',           doc: BASE + 'Interview5.docx' },
-    { id: 6,  title: 'Interview 6',          audio: BASE + 'Interview6.wav',           doc: BASE + 'Interview6.docx' },
-    { id: 7,  title: 'Interview 7',          audio: BASE + 'Interview7.wav',           doc: BASE + 'Interview7.docx' },
-    { id: 8,  title: 'Interview 8',          audio: BASE + 'Interview8.wav',           doc: BASE + 'Interview8.docx' },
-    { id: 9,  title: 'Interview 9',          audio: BASE + 'Interview9.wav',           doc: BASE + 'Interview9.docx' },
-    { id: 10, title: 'Interview 10',         audio: BASE + 'Interview10.wav',          doc: BASE + 'Interview10.docx' },
-    { id: 11, title: 'Interview 11',         audio: BASE + 'Interview11.wav',          doc: BASE + 'Interview11.docx' },
-    { id: 12, title: 'Male Speaker 1',       audio: BASE + 'Male-Speaker1.wav',        doc: BASE + 'Male-Speaker-1.docx' },
-    { id: 13, title: 'Male Speaker 2',       audio: BASE + 'Male-Speaker2.wav',        doc: BASE + 'Male-Speaker-2.docx' },
-    { id: 14, title: 'Male Speaker 3',       audio: BASE + 'Male-Speaker3.wav',        doc: BASE + 'Male-Speaker-3.docx' },
-    { id: 15, title: 'One Speaker (PC) 1',   audio: BASE + 'One-Speaker(PC)1.wav',     doc: BASE + 'One-Speaker(PC)-1.docx' },
-    { id: 16, title: 'One Speaker (PC) 2',   audio: BASE + 'One-Speaker(PC)2.wav',     doc: BASE + 'One-Speaker(PC)- 2.docx' },
-    { id: 17, title: 'One Speaker (PC) 3',   audio: BASE + 'One-Speaker(PC)3.wav',     doc: BASE + 'One-Speaker(PC)-3.docx' },
-    { id: 18, title: 'Two Male Speakers 1',  audio: BASE + 'Two-Male-Speakers1.wav',   doc: BASE + 'Two-Male-Speakers-1.docx' },
-    { id: 19, title: 'Two Male Speakers 2',  audio: BASE + 'Two-Male-Speakers2.wav',   doc: BASE + 'Two-Male-Speakers-2.docx' },
-    { id: 20, title: 'Two Male Speakers 3',  audio: BASE + 'Two-Male-Speakers3.wav',   doc: BASE + 'Two-Male-Speakers-3.docx' },
-    { id: 21, title: 'Two Male Speakers 4',  audio: BASE + 'Two-Male-Speakers4.wav',   doc: BASE + 'Two-Male-Speakers-4.docx' },
-    { id: 22, title: 'Voicemail',            audio: BASE + 'Voicemail.m4a',            doc: BASE + 'Voicemail.docx' },
+    { id: 1, title: 'Interview 1', audio: BASE + 'Interview1.wav', doc: BASE + 'Interview1.docx' },
+    { id: 2, title: 'Interview 2', audio: BASE + 'Interview2.wav', doc: BASE + 'Interview2.docx' },
+    { id: 3, title: 'Interview 3', audio: BASE + 'Interview3.wav', doc: BASE + 'Interview3.docx' },
+    { id: 4, title: 'Interview 4', audio: BASE + 'Interview4.wav', doc: BASE + 'Interview4.docx' },
+    { id: 5, title: 'Interview 5', audio: BASE + 'Interview5.wav', doc: BASE + 'Interview5.docx' },
+    { id: 6, title: 'Interview 6', audio: BASE + 'Interview6.wav', doc: BASE + 'Interview6.docx' },
+    { id: 7, title: 'Interview 7', audio: BASE + 'Interview7.wav', doc: BASE + 'Interview7.docx' },
+    { id: 8, title: 'Interview 8', audio: BASE + 'Interview8.wav', doc: BASE + 'Interview8.docx' },
+    { id: 9, title: 'Interview 9', audio: BASE + 'Interview9.wav', doc: BASE + 'Interview9.docx' },
+    { id: 10, title: 'Interview 10', audio: BASE + 'Interview10.wav', doc: BASE + 'Interview10.docx' },
+    { id: 11, title: 'Interview 11', audio: BASE + 'Interview11.wav', doc: BASE + 'Interview11.docx' },
+    { id: 12, title: 'Male Speaker 1', audio: BASE + 'Male-Speaker1.wav', doc: BASE + 'Male-Speaker-1.docx' },
+    { id: 13, title: 'Male Speaker 2', audio: BASE + 'Male-Speaker2.wav', doc: BASE + 'Male-Speaker-2.docx' },
+    { id: 14, title: 'Male Speaker 3', audio: BASE + 'Male-Speaker3.wav', doc: BASE + 'Male-Speaker-3.docx' },
+    { id: 15, title: 'One Speaker (PC) 1', audio: BASE + 'One-Speaker(PC)1.wav', doc: BASE + 'One-Speaker(PC)-1.docx' },
+    { id: 16, title: 'One Speaker (PC) 2', audio: BASE + 'One-Speaker(PC)2.wav', doc: BASE + 'One-Speaker(PC)- 2.docx' },
+    { id: 17, title: 'One Speaker (PC) 3', audio: BASE + 'One-Speaker(PC)3.wav', doc: BASE + 'One-Speaker(PC)-3.docx' },
+    { id: 18, title: 'Two Male Speakers 1', audio: BASE + 'Two-Male-Speakers1.wav', doc: BASE + 'Two-Male-Speakers-1.docx' },
+    { id: 19, title: 'Two Male Speakers 2', audio: BASE + 'Two-Male-Speakers2.wav', doc: BASE + 'Two-Male-Speakers-2.docx' },
+    { id: 20, title: 'Two Male Speakers 3', audio: BASE + 'Two-Male-Speakers3.wav', doc: BASE + 'Two-Male-Speakers-3.docx' },
+    { id: 21, title: 'Two Male Speakers 4', audio: BASE + 'Two-Male-Speakers4.wav', doc: BASE + 'Two-Male-Speakers-4.docx' },
+    { id: 22, title: 'Voicemail', audio: BASE + 'Voicemail.m4a', doc: BASE + 'Voicemail.docx' },
 ];
 
 const PREVIEW_COUNT = 5;
@@ -48,7 +49,7 @@ function downloadAll() {
         const a = document.createElement('a');
         a.href = item.audio; a.download = item.audio.split('/').pop()!; a.click();
         const b = document.createElement('a');
-        b.href = item.doc;   b.download = item.doc.split('/').pop()!;   b.click();
+        b.href = item.doc; b.download = item.doc.split('/').pop()!; b.click();
     });
 }
 
@@ -97,7 +98,7 @@ const ItemRow: React.FC<{ item: VerbatimItem }> = ({ item }) => (
                 onMouseOver={e => (e.currentTarget.style.opacity = '0.85')}
                 onMouseOut={e => (e.currentTarget.style.opacity = '1')}
             >
-                <span className="material-symbols-outlined" style={{ fontSize: '15px' }}>headphones</span>
+                <Icon icon="headphones" />
                 Audio
             </a>
             <a
@@ -113,7 +114,7 @@ const ItemRow: React.FC<{ item: VerbatimItem }> = ({ item }) => (
                 onMouseOver={e => (e.currentTarget.style.opacity = '0.85')}
                 onMouseOut={e => (e.currentTarget.style.opacity = '1')}
             >
-                <span className="material-symbols-outlined" style={{ fontSize: '15px' }}>description</span>
+                <Icon icon="description" />
                 Document
             </a>
         </div>
@@ -140,7 +141,7 @@ const VerbatimPage: React.FC = () => {
                             className="mt-4 flex items-start gap-3 rounded-xl px-5 py-4"
                             style={{ background: 'var(--green-light)', border: '1.5px solid #a7d7c8' }}
                         >
-                            <span className="material-symbols-outlined text-[22px] shrink-0 mt-0.5" style={{ color: 'var(--green)' }}>
+                            <span className="material-symbols-outlined text-[22px] shrink-0 mt-0.5" style={{ color: '#1f8f6d' }}>
                                 compare
                             </span>
                             <div>
@@ -163,10 +164,10 @@ const VerbatimPage: React.FC = () => {
 
                     {/* ── Stats ── */}
                     <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <BorderStatCard label="Total Samples"    value={String(verbatimItems.length)} icon="library_music"   borderColor="var(--green)"  iconColor="var(--green)"  />
-                        <BorderStatCard label="Interviews"       value="11"                           icon="record_voice_over" borderColor="var(--blue)"  iconColor="var(--blue)"   />
-                        <BorderStatCard label="Speaker Samples"  value="10"                           icon="people"           borderColor="var(--purple)" iconColor="var(--purple)" />
-                        <BorderStatCard label="Audio Formats"    value="2"                            icon="audio_file"       borderColor="var(--orange)" iconColor="var(--orange)" />
+                        <BorderStatCard label="Total Samples" value={String(verbatimItems.length)} icon="library_music" borderColor="var(--green)" iconColor="var(--green)" />
+                        <BorderStatCard label="Interviews" value="11" icon="record_voice_over" borderColor="var(--blue)" iconColor="var(--blue)" />
+                        <BorderStatCard label="Speaker Samples" value="10" icon="people" borderColor="var(--purple)" iconColor="var(--purple)" />
+                        <BorderStatCard label="Audio Formats" value="2" icon="audio_file" borderColor="var(--orange)" iconColor="var(--orange)" />
                     </section>
 
                     {/* ── File list ── */}
@@ -221,7 +222,7 @@ const VerbatimPage: React.FC = () => {
                                 onMouseOver={e => { e.currentTarget.style.opacity = '0.9'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
                                 onMouseOut={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)'; }}
                             >
-                                <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>download</span>
+                                <Icon icon="download" />
                                 Download All
                             </button>
                         </div>

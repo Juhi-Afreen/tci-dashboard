@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Icon } from '../components/Icon';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../layouts/DashboardLayout';
 
@@ -51,7 +52,7 @@ const GeneralTranscriptionCoursePage: React.FC = () => {
                             {/* Left */}
                             <div className="flex-1 space-y-4">
                                 <div className="inline-flex items-center gap-2 px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full" style={{ background: 'var(--green-light)', color: 'var(--green)' }}>
-                                    <span className="material-symbols-outlined text-sm">verified</span>
+                                    <Icon icon="verified" className="text-sm" />
                                     Enrolled
                                 </div>
                                 <h2 className="text-3xl lg:text-4xl font-bold text-slate-900">General Transcription Course</h2>
@@ -63,7 +64,7 @@ const GeneralTranscriptionCoursePage: React.FC = () => {
                                 <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-6 max-w-xl" style={{ transition: 'border-color .2s' }}>
                                     <div className="flex items-center gap-4">
                                         <div className="h-14 w-14 rounded-lg flex items-center justify-center shrink-0" style={{ background: '#EEF0FF', color: 'var(--purple)' }}>
-                                            <span className="material-symbols-outlined text-3xl">history_edu</span>
+                                            <Icon icon="history_edu" className="text-3xl" />
                                         </div>
                                         <div>
                                             <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-0.5">Last Activity: 2 hours ago</p>
@@ -73,7 +74,7 @@ const GeneralTranscriptionCoursePage: React.FC = () => {
                                     </div>
                                     <button className="shrink-0 px-5 py-2.5 text-white text-sm font-bold rounded-lg flex items-center gap-2 transition-all" style={{ background: 'var(--green)' }} onClick={() => navigate('/courses/general/lessons')}>
                                         Resume
-                                        <span className="material-symbols-outlined text-lg">arrow_forward</span>
+                                        <Icon icon="arrow_forward" className="text-lg" />
                                     </button>
                                 </div>
 
@@ -120,13 +121,13 @@ const GeneralTranscriptionCoursePage: React.FC = () => {
                         {/* Final Exam */}
                         <div className="bg-white border border-slate-200 rounded-xl p-6 flex gap-6 hover:shadow-md transition-shadow group cursor-pointer">
                             <div className="h-12 w-12 shrink-0 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                                <span className="material-symbols-outlined text-2xl">quiz</span>
+                                <Icon icon="quiz" className="text-2xl" />
                             </div>
                             <div className="flex-1 space-y-2">
                                 <h4 className="font-bold text-lg text-slate-900">Final Exam</h4>
                                 <p className="text-slate-600 text-sm">Comprehensive assessment of all modules. Pass with 90% or higher to qualify for the TCI stamp.</p>
                                 <button className="text-sm font-bold flex items-center gap-1 group-hover:underline pt-2" style={{ color: 'var(--green)' }}>
-                                    Take Final Exam <span className="material-symbols-outlined text-sm">lock</span>
+                                    Take Final Exam <Icon icon="lock" className="text-sm" />
                                 </button>
                             </div>
                         </div>
@@ -137,19 +138,19 @@ const GeneralTranscriptionCoursePage: React.FC = () => {
                             <div className="relative z-10 flex justify-between items-start gap-4">
                                 <div className="flex gap-4 items-start flex-1">
                                     <div className="h-12 w-12 shrink-0 rounded-lg bg-white/20 backdrop-blur-md flex items-center justify-center">
-                                        <span className="material-symbols-outlined text-2xl">card_membership</span>
+                                        <Icon icon="card_membership" className="text-2xl" />
                                     </div>
                                     <div className="flex-1 space-y-2">
                                         <h3 className="text-xl font-bold text-white">Get Certificate</h3>
                                         <p className="text-white/80 text-sm leading-snug">Download your digital certificate or order a physical copy for your professional portfolio.</p>
                                         <button className="text-white text-sm font-bold flex items-center gap-1 group-hover:underline pt-2">
-                                            Download PDF <span className="material-symbols-outlined text-sm">download</span>
+                                            Download PDF <Icon icon="download" className="text-sm" />
                                         </button>
                                     </div>
                                 </div>
                                 <div className="text-right shrink-0">
                                     <p className="text-[10px] font-bold opacity-80 uppercase tracking-widest">Eligibility</p>
-                                    <p className="text-base font-bold flex items-center gap-1 justify-end">Locked <span className="material-symbols-outlined text-sm">lock</span></p>
+                                    <p className="text-base font-bold flex items-center gap-1 justify-end">Locked <Icon icon="lock" className="text-sm" /></p>
                                 </div>
                             </div>
                         </div>
@@ -171,7 +172,7 @@ const GeneralTranscriptionCoursePage: React.FC = () => {
                                                 <span className="material-symbols-outlined" style={{ color: 'var(--green)' }}>{item.icon}</span>
                                                 {item.title}
                                             </div>
-                                            <span className="material-symbols-outlined transition-transform" style={{ transform: openAccordion === index ? 'rotate(180deg)' : 'rotate(0deg)' }}>expand_more</span>
+                                            <Icon icon="expand_more" className="transition-transform" />
                                         </button>
                                         {openAccordion === index && (
                                             <div className="p-5 pt-0 text-slate-600 text-sm border-t border-slate-100">
@@ -206,7 +207,7 @@ const GeneralTranscriptionCoursePage: React.FC = () => {
                                 ))}
                                 <div className="pt-4">
                                     <button className="w-full py-4 bg-slate-900 text-white font-bold rounded-xl flex items-center justify-center gap-2 hover:scale-[1.02] transition-all shadow-xl" onClick={() => navigate('/dashboard')}>
-                                        <span className="material-symbols-outlined">explore</span>
+                                        <Icon icon="explore" />
                                         Explore More Resources
                                     </button>
                                 </div>

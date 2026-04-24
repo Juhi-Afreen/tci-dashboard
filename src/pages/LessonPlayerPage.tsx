@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { Icon } from '../components/Icon';
 import { useParams, useNavigate } from 'react-router-dom';
 import DashboardLayout from '../layouts/DashboardLayout';
 import PageBreadcrumb from '../components/PageBreadcrumb';
@@ -204,7 +205,7 @@ const LessonPlayerPage: React.FC = () => {
                             padding: '0 0 20px',
                         }}
                     >
-                        <span className="material-symbols-outlined" style={{ fontSize: 18 }}>arrow_back</span>
+                        <Icon icon="arrow_back" />
                         Back to Lessons
                     </button>
 
@@ -259,7 +260,7 @@ const LessonPlayerPage: React.FC = () => {
                                     cursor: 'pointer',
                                 }}
                             >
-                                <span className="material-symbols-outlined" style={{ fontSize: 17 }}>edit_note</span>
+                                <Icon icon="edit_note" />
                                 Notes
                             </button>
                             <button
@@ -278,7 +279,7 @@ const LessonPlayerPage: React.FC = () => {
                                     cursor: 'pointer',
                                 }}
                             >
-                                <span className="material-symbols-outlined" style={{ fontSize: 17 }}>download</span>
+                                <Icon icon="download" />
                                 Download Transcript
                             </button>
                         </div>
@@ -322,9 +323,7 @@ const LessonPlayerPage: React.FC = () => {
                                     }}
                                 >
                                     <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                                        <span className="material-symbols-outlined" style={{ color: 'var(--green)', fontSize: 22 }}>
-                                            check_circle
-                                        </span>
+                                        <Icon icon="check_circle" style={{ color: 'var(--green)', fontSize: 22 }} />
                                         <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--green)' }}>
                                             Lesson complete! Great work.
                                         </span>
@@ -346,7 +345,7 @@ const LessonPlayerPage: React.FC = () => {
                                         }}
                                     >
                                         Next Lesson
-                                        <span className="material-symbols-outlined" style={{ fontSize: 17 }}>arrow_forward</span>
+                                        <Icon icon="arrow_forward" />
                                     </button>
                                 </div>
                             )}
@@ -427,9 +426,7 @@ const LessonPlayerPage: React.FC = () => {
                                 }}
                             >
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                    <span className="material-symbols-outlined" style={{ fontSize: 18, color: 'var(--green)' }}>
-                                        subtitles
-                                    </span>
+                                    <Icon icon="description" style={{ fontSize: 18, color: 'var(--green)' }} />
                                     <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)' }}>
                                         Transcript
                                     </span>
@@ -525,7 +522,7 @@ const LessonPlayerPage: React.FC = () => {
                                         cursor: 'pointer',
                                     }}
                                 >
-                                    <span className="material-symbols-outlined" style={{ fontSize: 17 }}>download</span>
+                                    <Icon icon="download" />
                                     Download Transcript (.txt)
                                 </button>
                             </div>

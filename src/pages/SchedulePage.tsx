@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Icon } from '../components/Icon';
 import DashboardLayout from '../layouts/DashboardLayout';
 import PageBreadcrumb from '../components/PageBreadcrumb';
 import BorderStatCard from '../components/BorderStatCard';
@@ -33,35 +34,35 @@ function relDate(offsetDays: number) {
 }
 
 const TYPE_CONFIG: Record<EventType, { label: string; color: string; bg: string; icon: string }> = {
-    study:      { label: 'Study Session',  color: 'var(--green)',  bg: 'var(--green-light)',    icon: 'menu_book' },
-    quiz:       { label: 'Quiz',           color: 'var(--blue)',   bg: 'var(--blue-light)',      icon: 'quiz' },
-    assignment: { label: 'Assignment',     color: 'var(--purple)', bg: 'var(--purple-light)',    icon: 'assignment' },
-    exam:       { label: 'Exam',           color: '#ef4444',       bg: '#fef2f2',                icon: 'school' },
-    practice:   { label: 'Practice',       color: 'var(--orange)', bg: 'var(--orange-light)',    icon: 'headphones' },
+    study: { label: 'Study Session', color: 'var(--green)', bg: 'var(--green-light)', icon: 'menu_book' },
+    quiz: { label: 'Quiz', color: 'var(--blue)', bg: 'var(--blue-light)', icon: 'quiz' },
+    assignment: { label: 'Assignment', color: 'var(--purple)', bg: 'var(--purple-light)', icon: 'assignment' },
+    exam: { label: 'Exam', color: '#ef4444', bg: '#fef2f2', icon: 'school' },
+    practice: { label: 'Practice', color: 'var(--orange)', bg: 'var(--orange-light)', icon: 'headphones' },
 };
 
 // ── Events data ────────────────────────────────────────────────────────────────
 
 const EVENTS: ScheduleEvent[] = [
     // Past (completed)
-    { id: 1,  title: 'Module 7 Study Session',         type: 'study',      date: relDate(-8), time: '9:00 AM',  duration: '2h',   course: 'General Transcription',   completed: true },
-    { id: 2,  title: 'Grammar Quiz 3',                 type: 'quiz',       date: relDate(-6), time: '11:00 AM', duration: '30m',  course: 'General Transcription',   completed: true },
-    { id: 3,  title: 'Module 7 Assignment',            type: 'assignment', date: relDate(-4), time: '2:00 PM',  duration: '1.5h', course: 'General Transcription',   completed: true },
-    { id: 4,  title: 'Practice Test Session',          type: 'practice',   date: relDate(-2), time: '10:00 AM', duration: '1h',   course: 'Accuracy Tool',           completed: true },
+    { id: 1, title: 'Module 7 Study Session', type: 'study', date: relDate(-8), time: '9:00 AM', duration: '2h', course: 'General Transcription', completed: true },
+    { id: 2, title: 'Grammar Quiz 3', type: 'quiz', date: relDate(-6), time: '11:00 AM', duration: '30m', course: 'General Transcription', completed: true },
+    { id: 3, title: 'Module 7 Assignment', type: 'assignment', date: relDate(-4), time: '2:00 PM', duration: '1.5h', course: 'General Transcription', completed: true },
+    { id: 4, title: 'Practice Test Session', type: 'practice', date: relDate(-2), time: '10:00 AM', duration: '1h', course: 'Accuracy Tool', completed: true },
     // Today
-    { id: 5,  title: 'Module 8 Study Session',         type: 'study',      date: relDate(0),  time: '9:30 AM',  duration: '2h',   course: 'General Transcription',   notes: 'Professional Transcription Standards' },
-    { id: 6,  title: 'Legal Terminology Quiz 2 Review',type: 'study',      date: relDate(0),  time: '3:00 PM',  duration: '1h',   course: 'Legal Transcription' },
+    { id: 5, title: 'Module 8 Study Session', type: 'study', date: relDate(0), time: '9:30 AM', duration: '2h', course: 'General Transcription', notes: 'Professional Transcription Standards' },
+    { id: 6, title: 'Legal Terminology Quiz 2 Review', type: 'study', date: relDate(0), time: '3:00 PM', duration: '1h', course: 'Legal Transcription' },
     // Upcoming
-    { id: 7,  title: 'Legal Module 4 Study',           type: 'study',      date: relDate(1),  time: '10:00 AM', duration: '2h',   course: 'Legal Transcription' },
-    { id: 8,  title: 'Practice Transcription',         type: 'practice',   date: relDate(2),  time: '9:00 AM',  duration: '1.5h', course: 'Practice Files' },
-    { id: 9,  title: 'Punctuation Quiz Retake',        type: 'quiz',       date: relDate(3),  time: '11:00 AM', duration: '30m',  course: 'General Transcription' },
-    { id: 10, title: 'Module 8 Assignment Due',        type: 'assignment', date: relDate(4),  time: '11:59 PM', course: 'General Transcription',   notes: 'Submit via Assignment Tracking' },
-    { id: 11, title: 'Accuracy Practice Session',      type: 'practice',   date: relDate(5),  time: '2:00 PM',  duration: '1h',   course: 'Accuracy Tool' },
-    { id: 12, title: 'Legal Module 4 Review',          type: 'study',      date: relDate(6),  time: '10:00 AM', duration: '1.5h', course: 'Legal Transcription' },
-    { id: 13, title: 'Weekly Progress Review',         type: 'study',      date: relDate(7),  time: '9:00 AM',  duration: '30m',  notes: 'Review all module notes' },
-    { id: 14, title: 'Module 9 Preparation',           type: 'study',      date: relDate(9),  time: '10:00 AM', duration: '2h',   course: 'General Transcription' },
-    { id: 15, title: 'Mid-Course Practice Exam',       type: 'exam',       date: relDate(11), time: '9:00 AM',  duration: '3h',   course: 'General Transcription',   notes: 'Prepare all module notes beforehand' },
-    { id: 16, title: 'Legal Terminology Quiz 3',       type: 'quiz',       date: relDate(14), time: '11:00 AM', duration: '30m',  course: 'Legal Transcription' },
+    { id: 7, title: 'Legal Module 4 Study', type: 'study', date: relDate(1), time: '10:00 AM', duration: '2h', course: 'Legal Transcription' },
+    { id: 8, title: 'Practice Transcription', type: 'practice', date: relDate(2), time: '9:00 AM', duration: '1.5h', course: 'Practice Files' },
+    { id: 9, title: 'Punctuation Quiz Retake', type: 'quiz', date: relDate(3), time: '11:00 AM', duration: '30m', course: 'General Transcription' },
+    { id: 10, title: 'Module 8 Assignment Due', type: 'assignment', date: relDate(4), time: '11:59 PM', course: 'General Transcription', notes: 'Submit via Assignment Tracking' },
+    { id: 11, title: 'Accuracy Practice Session', type: 'practice', date: relDate(5), time: '2:00 PM', duration: '1h', course: 'Accuracy Tool' },
+    { id: 12, title: 'Legal Module 4 Review', type: 'study', date: relDate(6), time: '10:00 AM', duration: '1.5h', course: 'Legal Transcription' },
+    { id: 13, title: 'Weekly Progress Review', type: 'study', date: relDate(7), time: '9:00 AM', duration: '30m', notes: 'Review all module notes' },
+    { id: 14, title: 'Module 9 Preparation', type: 'study', date: relDate(9), time: '10:00 AM', duration: '2h', course: 'General Transcription' },
+    { id: 15, title: 'Mid-Course Practice Exam', type: 'exam', date: relDate(11), time: '9:00 AM', duration: '3h', course: 'General Transcription', notes: 'Prepare all module notes beforehand' },
+    { id: 16, title: 'Legal Terminology Quiz 3', type: 'quiz', date: relDate(14), time: '11:00 AM', duration: '30m', course: 'Legal Transcription' },
 ];
 
 // ── Calendar helpers ───────────────────────────────────────────────────────────
@@ -73,8 +74,8 @@ function getFirstDayOfMonth(year: number, month: number) {
     return new Date(year, month, 1).getDay();
 }
 
-const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-const DAY_NAMES   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 // ── Mini event chip ────────────────────────────────────────────────────────────
 
@@ -123,13 +124,13 @@ const EventRow: React.FC<{ event: ScheduleEvent; showDate?: boolean }> = ({ even
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '3px' }}>
                     {showDate && (
                         <span style={{ fontSize: '11.5px', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '3px' }}>
-                            <span className="material-symbols-outlined" style={{ fontSize: '13px' }}>calendar_today</span>
+                            <Icon icon="calendar_today" />
                             {new Date(event.date + 'T00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                         </span>
                     )}
                     {event.time && (
                         <span style={{ fontSize: '11.5px', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '3px' }}>
-                            <span className="material-symbols-outlined" style={{ fontSize: '13px' }}>schedule</span>
+                            <Icon icon="schedule" />
                             {event.time}{event.duration ? ` · ${event.duration}` : ''}
                         </span>
                     )}
@@ -153,9 +154,9 @@ const EventRow: React.FC<{ event: ScheduleEvent; showDate?: boolean }> = ({ even
 // ── Page ───────────────────────────────────────────────────────────────────────
 
 const SchedulePage: React.FC = () => {
-    const [view, setView]     = useState<'calendar' | 'list'>('calendar');
+    const [view, setView] = useState<'calendar' | 'list'>('calendar');
     const [calMonth, setCalMonth] = useState(TODAY.getMonth());
-    const [calYear,  setCalYear]  = useState(TODAY.getFullYear());
+    const [calYear, setCalYear] = useState(TODAY.getFullYear());
     const [selectedDate, setSelectedDate] = useState(isoDate(TODAY));
 
     const upcoming = EVENTS.filter(e => e.date >= isoDate(TODAY) && !e.completed).slice(0, 5);
@@ -164,7 +165,7 @@ const SchedulePage: React.FC = () => {
 
     // Calendar grid
     const daysInMonth = getDaysInMonth(calYear, calMonth);
-    const firstDay    = getFirstDayOfMonth(calYear, calMonth);
+    const firstDay = getFirstDayOfMonth(calYear, calMonth);
     const cells: (number | null)[] = [
         ...Array(firstDay).fill(null),
         ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
@@ -190,7 +191,7 @@ const SchedulePage: React.FC = () => {
     };
 
     const listUpcoming = EVENTS.filter(e => e.date >= isoDate(TODAY)).sort((a, b) => a.date.localeCompare(b.date));
-    const listPast     = EVENTS.filter(e => e.date < isoDate(TODAY)).sort((a, b) => b.date.localeCompare(a.date));
+    const listPast = EVENTS.filter(e => e.date < isoDate(TODAY)).sort((a, b) => b.date.localeCompare(a.date));
 
     // Group list by date
     function groupByDate(evts: ScheduleEvent[]) {
@@ -203,12 +204,12 @@ const SchedulePage: React.FC = () => {
     }
 
     const upcomingGrouped = groupByDate(listUpcoming);
-    const pastGrouped     = groupByDate(listPast);
+    const pastGrouped = groupByDate(listPast);
 
     function dateLabel(dateStr: string) {
         const d = new Date(dateStr + 'T00:00');
         if (dateStr === isoDate(TODAY)) return 'Today';
-        if (dateStr === relDate(1))     return 'Tomorrow';
+        if (dateStr === relDate(1)) return 'Tomorrow';
         return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
     }
 
@@ -223,7 +224,7 @@ const SchedulePage: React.FC = () => {
                         <h2 className="text-3xl font-black text-slate-900 tracking-tight mb-1">Schedule</h2>
                         <div className="mt-4 flex items-start gap-3 rounded-xl px-5 py-4"
                             style={{ background: 'var(--green-light)', border: '1.5px solid #a7d7c8' }}>
-                            <span className="material-symbols-outlined text-[22px] shrink-0 mt-0.5" style={{ color: 'var(--green)' }}>calendar_today</span>
+                            <Icon icon="calendar_today" className="text-[22px] shrink-0 mt-0.5" style={{ color: '#1f8f6d' }} />
                             <p className="text-sm leading-relaxed" style={{ color: '#1a5c47' }}>
                                 Plan your study sessions, track assignment deadlines, and stay on top of upcoming quizzes and exams. Click any date on the calendar to see that day's events.
                             </p>
@@ -232,10 +233,10 @@ const SchedulePage: React.FC = () => {
 
                     {/* Stats */}
                     <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <BorderStatCard label="Today's Events"   value={String(todayEvents.length)}   icon="today"          borderColor="var(--green)"  iconColor="var(--green)"  />
-                        <BorderStatCard label="Upcoming"         value={String(upcoming.length)}       icon="event_upcoming" borderColor="var(--blue)"   iconColor="var(--blue)"   />
-                        <BorderStatCard label="This Month"       value={String(EVENTS.filter(e => e.date.startsWith(`${calYear}-${String(calMonth+1).padStart(2,'0')}`)).length)} icon="calendar_month" borderColor="var(--purple)" iconColor="var(--purple)" />
-                        <BorderStatCard label="Completed"        value={String(EVENTS.filter(e => e.completed).length)} icon="check_circle" borderColor="var(--orange)" iconColor="var(--orange)" />
+                        <BorderStatCard label="Today's Events" value={String(todayEvents.length)} icon="today" borderColor="var(--green)" iconColor="var(--green)" />
+                        <BorderStatCard label="Upcoming" value={String(upcoming.length)} icon="event_upcoming" borderColor="var(--blue)" iconColor="var(--blue)" />
+                        <BorderStatCard label="This Month" value={String(EVENTS.filter(e => e.date.startsWith(`${calYear}-${String(calMonth + 1).padStart(2, '0')}`)).length)} icon="calendar_month" borderColor="var(--purple)" iconColor="var(--purple)" />
+                        <BorderStatCard label="Completed" value={String(EVENTS.filter(e => e.completed).length)} icon="check_circle" borderColor="var(--orange)" iconColor="var(--orange)" />
                     </section>
 
                     {/* View toggle + content */}
@@ -274,13 +275,13 @@ const SchedulePage: React.FC = () => {
                                     {/* Nav */}
                                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
                                         <button onClick={prevMonth} style={{ background: '#F4F7F6', border: 'none', borderRadius: '8px', width: 32, height: 32, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                            <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'var(--text-secondary)' }}>chevron_left</span>
+                                            <Icon icon="chevron_left" />
                                         </button>
                                         <h3 style={{ margin: 0, fontSize: '15px', fontWeight: 800, color: 'var(--text-primary)' }}>
                                             {MONTH_NAMES[calMonth]} {calYear}
                                         </h3>
                                         <button onClick={nextMonth} style={{ background: '#F4F7F6', border: 'none', borderRadius: '8px', width: 32, height: 32, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                            <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'var(--text-secondary)' }}>chevron_right</span>
+                                            <Icon icon="chevron_right" />
                                         </button>
                                     </div>
 
@@ -347,7 +348,7 @@ const SchedulePage: React.FC = () => {
                                     </h3>
                                     {selectedEvents.length === 0 ? (
                                         <div style={{ textAlign: 'center', padding: '32px 0', color: 'var(--text-secondary)' }}>
-                                            <span className="material-symbols-outlined" style={{ fontSize: '36px', display: 'block', marginBottom: '8px' }}>event_busy</span>
+                                            <Icon icon="event_busy" />
                                             <p style={{ fontSize: '13px', margin: 0 }}>No events scheduled</p>
                                         </div>
                                     ) : (
@@ -377,7 +378,7 @@ const SchedulePage: React.FC = () => {
                                                     borderBottom: '1px solid var(--border)',
                                                     display: 'flex', alignItems: 'center', gap: '8px',
                                                 }}>
-                                                    <span className="material-symbols-outlined" style={{ fontSize: '15px', color: date === isoDate(TODAY) ? 'var(--green)' : 'var(--text-secondary)' }}>calendar_today</span>
+                                                    <Icon icon="calendar_today" />
                                                     <span style={{ fontSize: '12.5px', fontWeight: 700, color: date === isoDate(TODAY) ? 'var(--green)' : 'var(--text-primary)' }}>
                                                         {dateLabel(date)}
                                                     </span>
@@ -403,7 +404,7 @@ const SchedulePage: React.FC = () => {
                                             {Object.entries(pastGrouped).map(([date, evts]) => (
                                                 <div key={date} style={{ background: '#fff', borderRadius: '12px', border: '1.5px solid var(--border)', overflow: 'hidden' }}>
                                                     <div style={{ padding: '10px 20px', background: '#F4F7F6', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                        <span className="material-symbols-outlined" style={{ fontSize: '15px', color: 'var(--text-secondary)' }}>history</span>
+                                                        <Icon icon="history" />
                                                         <span style={{ fontSize: '12.5px', fontWeight: 700, color: 'var(--text-secondary)' }}>{dateLabel(date)}</span>
                                                     </div>
                                                     <div style={{ padding: '0 20px' }}>
